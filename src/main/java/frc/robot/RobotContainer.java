@@ -84,9 +84,9 @@ public class RobotContainer {
   public Turret turret = new Turret();
   //public LED led = new LED();
 
-  private Joystick leftDriveJoystick = new Joystick(0);
-  private Joystick rightDriveJoystick = new Joystick(1);
-  public XboxController driveController = new XboxController(2);
+  private Joystick leftDriveJoystick = new Joystick(0); //should be 0
+  private Joystick rightDriveJoystick = new Joystick(1); //should be 1
+  public XboxController driveController = new XboxController(2); //should be 2
 
   
 
@@ -107,10 +107,10 @@ public class RobotContainer {
         //.whenPressed(() -> driveTrain.setMaxOutput(0.5))
         //.whenReleased(() -> driveTrain.setMaxOutput(1));
 
-    /*new JoystickButton(driveController, xboxLeftBumper)
+    new JoystickButton(driveController, xboxAButton)
         .whileHeld(new IndexCommand(indexer,true), false);
 
-    new JoystickButton(driveController, xboxRightBumper)
+    /*new JoystickButton(driveController, xboxRightBumper)
         .whileHeld(new IndexCommand(indexer), false);
     
     new JoystickButton(driveController, xboxBButton)

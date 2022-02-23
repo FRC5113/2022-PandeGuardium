@@ -26,6 +26,7 @@ public class IndexCommand extends CommandBase {
 
     @Override
     public void execute() {
+        System.out.println("Running");
         indexer.setSpeed(reverse);
     }
 
