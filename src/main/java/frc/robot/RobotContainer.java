@@ -107,7 +107,7 @@ public class RobotContainer {
         //.whenPressed(() -> driveTrain.setMaxOutput(0.5))
         //.whenReleased(() -> driveTrain.setMaxOutput(1));
 
-    new JoystickButton(driveController, xboxAButton)
+    new JoystickButton(driveController, xboxAButton) // toggleWhenActive???
         .whileHeld(new IndexCommand(indexer,true), false);
 
     /*new JoystickButton(driveController, xboxRightBumper)
