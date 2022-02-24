@@ -16,7 +16,7 @@ public class ShooterPulseCommand extends CommandBase{
 
     @Override
     public void execute() {
-        if ((shooter.getPulseTime()/500)%20<=6) {
+        if ((shooter.getPulseTime()/500)%20<=6) { // 0-3, 10-13, desmos: \operatorname{mod}\left((x/.5),20\right)\ \le6
             if (shooter.getSpeed() > speed+500)
                 shooter.coast();
             else

@@ -93,7 +93,8 @@ public class RobotContainer {
         .whenReleased(() -> driveTrain.setMaxOutput(1));
 
     new JoystickButton(driveController, xboxAButton)
-        .whileHeld(new IndexCommand(indexer), false);
+        // .whileHeld(new IndexCommand(indexer), false);
+        .whenPressed(() -> System.out.println("ABUTTON"));
     
     new JoystickButton(driveController, xboxBButton)
         .whileHeld(new IndexCommand(indexer, true), false);

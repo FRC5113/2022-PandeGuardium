@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommand;
 import frc.robot.commands.ShooterPulseCommand;
 
@@ -126,6 +127,8 @@ public class Robot extends TimedRobot {
     m_robotContainer.driveTrain.putSpeed();
     m_robotContainer.driveTrain.showAngle();
     m_robotContainer.driveTrain.getPose();
+    // System.out.println(m_robotContainer.getControllerLeftY());
+    // System.out.println(m_robotContainer.getControllerRightX());
     //m_robotContainer.led.rainbow();
   }
 

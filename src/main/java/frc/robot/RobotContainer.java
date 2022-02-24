@@ -50,10 +50,9 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.CenterTargetRobot;
-import frc.robot.commands.IndexCommand;
+import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.SpinUpCommand;
 import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.HopUp;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -79,15 +78,17 @@ public class RobotContainer {
   public DriveTrain driveTrain = new DriveTrain();
   public Indexer indexer = new Indexer();
   public Limelight limelight = new Limelight();
-  public HopUp hopper = new HopUp();
   public Shooter shooter = new Shooter();
   public Turret turret = new Turret();
   //public LED led = new LED();
 
   private Joystick leftDriveJoystick = new Joystick(0); //should be 0
   private Joystick rightDriveJoystick = new Joystick(1); //should be 1
-  public XboxController driveController = new XboxController(2); //should be 2
+  public XboxController xboxController = new XboxController(2); //should be 2
 
+
+  // xbox controller buttons
+  public JoystickButton aButton = new JoystickButton(xboxController, 1);
   
 
   public RobotContainer() {
@@ -103,37 +104,41 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    //new JoystickButton(driveController, xboxLeftBumper)
+    //new JoystickButton(xboxController, xboxLeftBumper)
         //.whenPressed(() -> driveTrain.setMaxOutput(0.5))
         //.whenReleased(() -> driveTrain.setMaxOutput(1));
 
-    new JoystickButton(driveController, xboxAButton) // toggleWhenActive???
-        .whileHeld(new IndexCommand(indexer,true), false);
-
-    /*new JoystickButton(driveController, xboxRightBumper)
+    // new JoystickButton(xboxController, xboxAButton) // toggleWhenActive???
+    //     .toggleWhenActive(new IndexerCommand(indexer), false);
+    
+    
+    /*new JoystickButton(xboxController, xboxRightBumper)
         .whileHeld(new IndexCommand(indexer), false);
     
-    new JoystickButton(driveController, xboxBButton)
+    new JoystickButton(xboxController, xboxBButton)
         .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet17halffront));
 
-    new JoystickButton(driveController, xboxAButton)
+    new JoystickButton(xboxController, xboxAButton)
         .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet12halffront));
 
-    new JoystickButton(driveController, xboxXButton)
+    new JoystickButton(xboxController, xboxXButton)
         .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet7halffront));
 
-    new JoystickButton(driveController, xboxYButton)
+    new JoystickButton(xboxController, xboxYButton)
         .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet7halfback));
 
-    //new Trigger(() -> (driveController.getRightTriggerAxis() > 0.75))
+    //new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75))
     //    .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet17halffront));
     
-    new Trigger(() -> (driveController.getRightTriggerAxis() > 0.75))
+    new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75))
           .whileActiveContinuous(new IndexCommand(indexer), false);*/
     
-    new Trigger(() -> (driveController.getLeftTriggerAxis() > 0.75))
+    new Trigger(() -> (xboxController.getLeftTriggerAxis() > 0.75))
         .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
-  }
+    
+    aButton.toggleWhenActive(new IndexerCommand(indexer));
+  
+    }
 
   public double getDriveLeftVal() {
     return -leftDriveJoystick.getY();
@@ -144,11 +149,11 @@ public class RobotContainer {
   }
 
   public double getControllerLeftY() {
-    return -driveController.getLeftY();
+    return -xboxController.getLeftY();
   }
 
   public double getControllerRightX() {
-    return driveController.getRightX();
+    return xboxController.getRightX();
   }
 
   public Command getAutoCommand() {

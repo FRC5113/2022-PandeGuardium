@@ -101,17 +101,14 @@ public final class Constants {
 
     public final static class IndexerConstants {
 
-        public static final int EXT_INDEXER_ID = 32;
-        public static final int MID_INDEXER_ID = 33;
+        public static final int INDEXER_ID = 31; // the can id of the indexer
 
-        public static final int BEAM_BREAK_INPUT_ID = 5;
-        public static final int BEAM_BREAK_OUTPUT_ID = 6;
+        //public static final int BEAM_BREAK_INPUT_ID = 5;
+        //public static final int BEAM_BREAK_OUTPUT_ID = 6;
 
         public static final int INDEXER_MAX_CURRENT = 40;
         public static final double INDEXER_MAX_VOLTAGE = 12.3;
-        public static final double EXT_INDEXER_SPEED = 0.8;
-        public static final double MID_INDEXER_SPEED = 0.4;
-    
+        public static final double INDEXER_SPEED = 0.8; // This may need to be lower, otherwise the ball may fly too fast
     }
 
     public final static class HopUpConstants {
@@ -130,7 +127,7 @@ public final class Constants {
         public static final double MAX_VOLTAGE = 12.0;
         public static final double RAMP_RATE = 5;
 
-        public static final double CONVERSION_RATE = 600.0 / 2048;
+        public static final double CONVERSION_RATE = 600.0 / 2048; //check on this
 
         public static final double kP = 7;
         public static final double kI = 0.000001;
