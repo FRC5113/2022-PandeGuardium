@@ -137,8 +137,7 @@ public class RobotContainer {
         .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
     
     aButton.toggleWhenActive(new IndexerCommand(indexer));
-  
-    }
+  }
 
   public double getDriveLeftVal() {
     return -leftDriveJoystick.getY();
@@ -146,6 +145,14 @@ public class RobotContainer {
 
   public double getDriveRightVal() {
     return rightDriveJoystick.getX();
+  }
+
+  public double getJoystickVal(boolean rightSide) {
+    // right joystick x
+    if (rightSide) {
+      return -1 * rightDriveJoystick.getRawAxis(1);
+    }
+    return -1 * leftDriveJoystick.getRawAxis(1);
   }
 
   public double getControllerLeftY() {

@@ -108,7 +108,8 @@ public final class Constants {
 
         public static final int INDEXER_MAX_CURRENT = 40;
         public static final double INDEXER_MAX_VOLTAGE = 12.3;
-        public static final double INDEXER_SPEED = 0.8; // This may need to be lower, otherwise the ball may fly too fast
+        public static final double INDEXER_SPEED = -0.25; // This may need to be lower, otherwise the ball may fly too fast
+        // INDEXER_SPEED is negative because we are intaking (and not outtaking, which would be forward)
     }
 
     public final static class HopUpConstants {
