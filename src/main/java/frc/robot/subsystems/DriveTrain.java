@@ -45,13 +45,14 @@ public class DriveTrain extends SubsystemBase {
         leftChild = new WPI_TalonFX(LEFT_CHILD_ID);
         rightChild = new WPI_TalonFX(RIGHT_CHILD_ID);
 
+
         configureMotor(leftParent, true);
         configureMotor(rightParent, false);
         configureMotor(leftChild, true);
         configureMotor(rightChild, false);
 
-        // rightChild.set(ControlMode.Follower, rightParent.getDeviceID());
-        // leftChild.set(ControlMode.Follower, leftParent.getDeviceID());
+        rightChild.set(ControlMode.Follower, rightParent.getDeviceID());
+        leftChild.set(ControlMode.Follower, leftParent.getDeviceID());
 
         driveBase = new DifferentialDrive(leftParent, rightParent);
         driveBase.setDeadband(DEADBAND);
@@ -78,7 +79,9 @@ public class DriveTrain extends SubsystemBase {
 
     public void tankDrive(double leftSpeed, double rightSpeed) {
         // Controlling the left side and the right side seperately
-        driveBase.tankDrive(leftSpeed, rightSpeed);
+        //driveBase.tankDrive(leftSpeed, rightSpeed);
+        leftParent.set(leftSpeed);
+        rightParent.set(rightSpeed);
     }
 
     public void tankDriveVolts(double leftSpeed, double rightSpeed) {
@@ -179,6 +182,9 @@ public class DriveTrain extends SubsystemBase {
     public void putSpeed() {
         SmartDashboard.putNumber("LeftSpeed", leftParent.getSelectedSensorVelocity()*CONVERSION_RATE_VELOCITY);
         SmartDashboard.putNumber("RightSpeed", rightParent.getSelectedSensorVelocity()*-CONVERSION_RATE_VELOCITY);
+        SmartDashboard.putNumber("LeftEncoder", leftParent.getSelectedSensorPosition());
+        SmartDashboard.putNumber("RightEncoder", rightParent.getSelectedSensorVelocity());
+        
     }
 
 }

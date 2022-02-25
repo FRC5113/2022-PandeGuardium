@@ -91,7 +91,7 @@ public final class Constants {
 
     public final static class IntakeConstants {
 
-        public static final int INTAKE_ID = 31;
+        public static final int INTAKE_ID = 30;
         public static final double INTAKE_MAX_VOLTAGE = 12.3;
         public static final int INTAKE_CURRENT_LIMIT = 60;
 

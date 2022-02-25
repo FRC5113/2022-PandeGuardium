@@ -29,6 +29,10 @@ public class DriveCommand extends CommandBase {
         //driveTrain.curvatureDrive(scale(leftValue.getAsDouble()), scale(rightValue.getAsDouble()));
     }
 
+    public void end(){
+        driveTrain.tankDrive(0, 0);
+    }
+
     public double scale(double value) {
         return (0.5 * Math.pow(value, 3) + 0.5 * (value));
     }

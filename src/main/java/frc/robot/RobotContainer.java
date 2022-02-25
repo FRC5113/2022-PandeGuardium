@@ -52,11 +52,13 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.CenterTargetRobot;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.SpinUpCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Intake;
 import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.SPI; 
@@ -76,6 +78,7 @@ public class RobotContainer {
    */
   //private Compressor compressor = new Compressor();
   public DriveTrain driveTrain = new DriveTrain();
+  public Intake intake = new Intake();
   public Indexer indexer = new Indexer();
   public Limelight limelight = new Limelight();
   public Shooter shooter = new Shooter();
@@ -84,11 +87,12 @@ public class RobotContainer {
 
   private Joystick leftDriveJoystick = new Joystick(0); //should be 0
   private Joystick rightDriveJoystick = new Joystick(1); //should be 1
+  private JoystickButton rightTrigger = new JoystickButton(rightDriveJoystick, 1);
   public XboxController xboxController = new XboxController(2); //should be 2
 
 
   // xbox controller buttons
-  public JoystickButton aButton = new JoystickButton(xboxController, 1);
+  //public JoystickButton aButton = new JoystickButton(rightDriveJoystick, 3);
   
 
   public RobotContainer() {
@@ -104,6 +108,10 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+
+    rightTrigger.toggleWhenActive(new IntakeCommand(intake));
+
+
     //new JoystickButton(xboxController, xboxLeftBumper)
         //.whenPressed(() -> driveTrain.setMaxOutput(0.5))
         //.whenReleased(() -> driveTrain.setMaxOutput(1));
@@ -133,10 +141,14 @@ public class RobotContainer {
     new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75))
           .whileActiveContinuous(new IndexCommand(indexer), false);*/
     
+          /*
     new Trigger(() -> (xboxController.getLeftTriggerAxis() > 0.75))
         .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
     
     aButton.toggleWhenActive(new IndexerCommand(indexer));
+    */
+
+
   }
 
   public double getDriveLeftVal() {
@@ -150,7 +162,7 @@ public class RobotContainer {
   public double getJoystickVal(boolean rightSide) {
     // right joystick x
     if (rightSide) {
-      return -1 * rightDriveJoystick.getRawAxis(1);
+      return 1 * rightDriveJoystick.getRawAxis(1);
     }
     return -1 * leftDriveJoystick.getRawAxis(1);
   }
