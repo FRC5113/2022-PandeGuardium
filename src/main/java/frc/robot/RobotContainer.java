@@ -7,12 +7,6 @@
 
 package frc.robot;
 
-import static frc.robot.Constants.JoystickConstants.xboxAButton;
-import static frc.robot.Constants.JoystickConstants.xboxBButton;
-import static frc.robot.Constants.JoystickConstants.xboxLeftBumper;
-import static frc.robot.Constants.JoystickConstants.xboxRightBumper;
-import static frc.robot.Constants.JoystickConstants.xboxXButton;
-import static frc.robot.Constants.JoystickConstants.xboxYButton;
 import static frc.robot.Constants.PathweaverConstants.kDriveKinematics;
 import static frc.robot.Constants.PathweaverConstants.kMaxAccelerationMetersPerSecondSquared;
 import static frc.robot.Constants.PathweaverConstants.kMaxSpeedMetersPerSecond;
@@ -22,10 +16,6 @@ import static frc.robot.Constants.PathweaverConstants.kRamseteZeta;
 import static frc.robot.Constants.PathweaverConstants.kaVoltSecondsSquaredPerMeter;
 import static frc.robot.Constants.PathweaverConstants.ksVolts;
 import static frc.robot.Constants.PathweaverConstants.kvVoltSecondsPerMeter;
-import static frc.robot.Constants.ShooterConstants.feet12halffront;
-import static frc.robot.Constants.ShooterConstants.feet17halffront;
-import static frc.robot.Constants.ShooterConstants.feet7halfback;
-import static frc.robot.Constants.ShooterConstants.feet7halffront;
 import static edu.wpi.first.math.util.Units.*;
 
 import java.util.List;
@@ -44,24 +34,15 @@ import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.CenterTargetRobot;
-import frc.robot.commands.IndexerCommand;
-import frc.robot.commands.SpinUpCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
-import frc.robot.subsystems.Turret;
 import frc.robot.subsystems.Intake;
-import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.SPI; 
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -82,7 +63,6 @@ public class RobotContainer {
   public Indexer indexer = new Indexer();
   public Limelight limelight = new Limelight();
   public Shooter shooter = new Shooter();
-  public Turret turret = new Turret();
   //public LED led = new LED();
 
   private Joystick leftDriveJoystick = new Joystick(0); //should be 0

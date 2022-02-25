@@ -14,7 +14,7 @@ public class LED extends SubsystemBase {
     private AddressableLEDBuffer m_ledBuffer;
 
     private int m_rainbowFirstPixelHue;
-    
+
     public LED() {
         m_led = new AddressableLED(LED_PORT);
 
@@ -31,10 +31,10 @@ public class LED extends SubsystemBase {
             // Set the value
             m_ledBuffer.setHSV(i, hue, 255, 128);
         }
-    m_rainbowFirstPixelHue += 3;
-    m_rainbowFirstPixelHue %= 180;
+        m_rainbowFirstPixelHue += 3;
+        m_rainbowFirstPixelHue %= 180;
 
-    //updates the value of the physical LED
-    m_led.setData(m_ledBuffer);
+        // updates the value of the physical LED
+        m_led.setData(m_ledBuffer);
     }
 }

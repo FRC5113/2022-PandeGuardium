@@ -11,5 +11,4 @@ public class ShootCommand extends ParallelCommandGroup{
     public ShootCommand(Shooter shooter, Indexer indexer, double speed) {
         super(new SpinUpCommand(shooter, speed), new SequentialCommandGroup(new WaitCommand(5), new IndexerCommand(indexer)));
     }
-    
 }

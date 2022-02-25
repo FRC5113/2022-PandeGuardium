@@ -7,13 +7,10 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.DriveCommand;
-import frc.robot.commands.ShooterPulseCommand;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -37,7 +34,6 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    
   }
 
   /**
@@ -66,7 +62,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    //m_robotContainer.driveTrain.setAllToCoast();
+    // m_robotContainer.driveTrain.setAllToCoast();
   }
 
   @Override
@@ -80,7 +76,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_robotContainer.getBarrelPath();
-    //m_robotContainer.driveTrain.setAllToBrake();
+    // m_robotContainer.driveTrain.setAllToBrake();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -110,12 +106,11 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.driveTrain.setDefaultCommand(
         new DriveCommand(m_robotContainer.driveTrain,
-        () -> m_robotContainer.getJoystickVal(false),
-        () -> m_robotContainer.getJoystickVal(true)));
-    
-    
-    //m_robotContainer.shooter.setDefaultCommand(
-    //    new ShooterPulseCommand(m_robotContainer.shooter, 2000));
+            () -> m_robotContainer.getJoystickVal(false),
+            () -> m_robotContainer.getJoystickVal(true)));
+
+    // m_robotContainer.shooter.setDefaultCommand(
+    // new ShooterPulseCommand(m_robotContainer.shooter, 2000));
   }
 
   /**
@@ -124,13 +119,13 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     m_robotContainer.shooter.getSpeed();
-    m_robotContainer.shooter.getCurrent();   
+    m_robotContainer.shooter.getCurrent();
     m_robotContainer.driveTrain.putSpeed();
     m_robotContainer.driveTrain.showAngle();
     m_robotContainer.driveTrain.getPose();
     // System.out.println(m_robotContainer.getControllerLeftY());
     // System.out.println(m_robotContainer.getControllerRightX());
-    //m_robotContainer.led.rainbow();
+    // m_robotContainer.led.rainbow();
   }
 
   @Override

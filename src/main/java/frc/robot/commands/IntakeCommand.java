@@ -7,21 +7,21 @@ import static frc.robot.Constants.IntakeConstants.*;
 
 public class IntakeCommand extends CommandBase {
 
-    private Intake intake;
+    private Intake mIntake;
 
     public IntakeCommand(Intake intake) {
         addRequirements(intake);
-        this.intake = intake;
+        mIntake = intake;
     }
 
     @Override
     public void execute() {
-        this.intake.setSpeed(INTAKE_SPEED);
+        mIntake.setSpeed(INTAKE_SPEED);
     }
 
     @Override
     public void end(boolean interrupted) {
-        this.intake.stop();
+        mIntake.stop();
     }
 
 }

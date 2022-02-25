@@ -8,6 +8,7 @@ import static frc.robot.Constants.IndexerConstants.*;
 public class IndexerCommand extends CommandBase {
 
     private Indexer mIndexer;
+    
     public IndexerCommand(Indexer indexer) {
         addRequirements(indexer);
         mIndexer = indexer;

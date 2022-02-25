@@ -112,15 +112,6 @@ public final class Constants {
         // INDEXER_SPEED is negative because we are intaking (and not outtaking, which would be forward)
     }
 
-    public final static class HopUpConstants {
-
-        public static final int HOPUP_ID = 34;
-
-        public static final int HOPUP_MAX_CURRENT = 30;
-        public static final double HOPUP_MAX_VOLTAGE = 12.3;
-
-    }
-
     public final static class ShooterConstants {
 
         public static final int SHOOTER_PARENT_ID = 42;
@@ -140,20 +131,10 @@ public final class Constants {
         public static final double feet7halfback = 5100;
 
         public static final double testVal = 3000;
-
     }
 
     public final static class LEDConstants {
         public static final int LED_PORT = 9;
         public static final int LED_LENGTH = 60;
-    }
-
-    public final static class TurretConstants {
-        public static final int turret_ID = 1;
-        public static final int TURRET_MAX_CURRENT = 12;
-        public static final int TURRET_MAX_VOLTAGE = 60;
-        public static final double TurretP = 0.055;
-        public static final double TurretI = 0.0001;
-        public static final double TurretD = 0.002;
     }
 }

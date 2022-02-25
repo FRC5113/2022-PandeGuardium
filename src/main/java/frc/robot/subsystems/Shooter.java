@@ -33,7 +33,6 @@ public class Shooter extends SubsystemBase {
         shooterChild.setInverted(true);
 
         startTime = System.currentTimeMillis();
-
     }
 
     public void configMotor(WPI_TalonFX motor) {
