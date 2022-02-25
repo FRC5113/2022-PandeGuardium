@@ -135,6 +135,43 @@ deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
 
+// Write branch name to deploy, owner: vlad
+tasks.register("writeDeployText") {
+    // Define an output stream to write to instead of terminal
+    def stdout = new ByteArrayOutputStream()
+    def stdout2 = new ByteArrayOutputStream()
+
+    // Execute the git command
+    exec {
+        commandLine "git", "rev-parse", "--abbrev-ref", "HEAD"
+        // Write to the output stream instead of terminal
+        standardOutput = stdout
+    }
+
+    // Parse the output into a string
+    def branch = stdout.toString().trim()
+
+    exec {
+        commandLine "git", "rev-parse", "HEAD"
+        standardOutput = stdout2
+    }
+
+    def commitHash = stdout2.toString().trim()
+
+    // Create a new file
+    new File(
+            // Join project directory and deploy directory
+            projectDir.toString() + "/src/main/deploy",
+            // File name to write to
+            "deploy_data.txt"
+            ).text = branch + " - " + commitHash // Set the contents of the file to the variable branch
+}
+
+// register the tasks to build and deploy
 tasks.named('build') {
-    dependsOn('spotlessApply')
+    dependsOn('spotlessApply', 'writeDeployText')
+}
+
+tasks.named('deploy') {
+    dependsOn('spotlessApply', 'writeDeployText')
 }
