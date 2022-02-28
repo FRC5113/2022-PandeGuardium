@@ -40,13 +40,13 @@ public class Limelight extends SubsystemBase {
     return valid;
   }
 
-  public double getDistaceToTarget() {
+  public double getDistanceToTarget() {
     update();
-    return 0.0;
+    double distance = (targetHeight - limelightHeight) / Math.tan(ANGLE + y);
+    return distance;
     // Add constants once we have them
     /*
     double distance = (targetHeight - limelightHeight ) / Math.tan(ANGLE+y);
-    return distance;
     */
   }
 }

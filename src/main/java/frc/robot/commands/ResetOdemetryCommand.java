@@ -13,7 +13,7 @@ public class ResetOdemetryCommand extends CommandBase {
 
     limelight.update();
     Pose2d pos =
-        new Pose2d(new Translation2d(limelight.getDistaceToTarget(), 0.0), new Rotation2d(0.0));
+        new Pose2d(new Translation2d(limelight.getDistanceToTarget(), 0.0), new Rotation2d(0.0));
     driveTrain.resetOdometry(pos);
   }
 }

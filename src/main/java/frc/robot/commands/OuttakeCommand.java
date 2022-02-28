@@ -27,5 +27,6 @@ public class OuttakeCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     mIntake.stop();
+    mIndexer.stop();
   }
 }
