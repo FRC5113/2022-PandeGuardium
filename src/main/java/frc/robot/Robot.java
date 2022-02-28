@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.FlagConstants.*;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -66,7 +68,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getBarrelPath();
+    // m_autonomousCommand = m_robotContainer.getBarrelPath();
     // m_robotContainer.driveTrain.setAllToBrake();
 
     // schedule the autonomous command (example)
@@ -93,12 +95,22 @@ public class Robot extends TimedRobot {
 
     m_robotContainer.driveTrain.setAllToBrake();
 
-    m_robotContainer.driveTrain.setDefaultCommand(
-        new DriveCommand(
-            m_robotContainer.driveTrain,
-            () -> m_robotContainer.getJoystickVal(false),
-            () -> m_robotContainer.getJoystickVal(true)));
-
+    // implement xbox or joystick
+    if (driveTrainUseJoystick) {
+      // stand alone joystick
+      m_robotContainer.driveTrain.setDefaultCommand(
+          new DriveCommand(
+              m_robotContainer.driveTrain,
+              () -> m_robotContainer.getJoysticksVal(false),
+              () -> m_robotContainer.getJoysticksVal(true)));
+    } else {
+      // xbox controller
+      m_robotContainer.driveTrain.setDefaultCommand(
+          new DriveCommand(
+              m_robotContainer.driveTrain,
+              () -> m_robotContainer.getControllerLeftY(),
+              () -> m_robotContainer.getControllerRightY()));
+    }
     // m_robotContainer.shooter.setDefaultCommand(
     // new ShooterPulseCommand(m_robotContainer.shooter, 2000));
   }
@@ -120,6 +132,7 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands a
     CommandScheduler.getInstance().cancelAll();
+    m_robotContainer.indexer.setSpeed(-.3); // debug run
   }
 
   /** This function is called periodically during test mode. */

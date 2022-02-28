@@ -20,6 +20,11 @@ import edu.wpi.first.math.util.Units;
  */
 public final class Constants {
 
+  public static final class FlagConstants {
+    // use the joystick (just joystick) (true) over xbox thumbpads (false)
+    public static final boolean driveTrainUseJoystick = false;
+  }
+
   public static final class JoystickConstants {
 
     public static final int xboxAButton = 1;
@@ -32,7 +37,7 @@ public final class Constants {
     public static final int xboxStartButton = 8;
   }
 
-  public static final class PathweaverConstants {
+  public static final class DriveConstants {
 
     public static final double ksVolts = 0.02;
     public static final double kvVoltSecondsPerMeter = 0.13;
@@ -82,13 +87,14 @@ public final class Constants {
         Units.inchesToMeters(6.5) * Math.PI / 2048 / 11.5;
   }
 
+  // VLAD: 2/27: TURN THE SPEED WAY DOWN
   public static final class IntakeConstants {
 
     public static final int INTAKE_ID = 30;
     public static final double INTAKE_MAX_VOLTAGE = 12.3;
     public static final int INTAKE_CURRENT_LIMIT = 60;
 
-    public static final double INTAKE_SPEED = 0.75;
+    public static final double INTAKE_SPEED = 0.25;
   }
 
   public static final class IndexerConstants {

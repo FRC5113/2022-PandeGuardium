@@ -7,21 +7,21 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
-public class IntakeCommand extends CommandBase {
+public class OuttakeCommand extends CommandBase {
 
   private Intake mIntake;
   private Indexer mIndexer;
 
-  public IntakeCommand(Intake intake, Indexer indexer) {
-    addRequirements(intake);
+  public OuttakeCommand(Intake intake, Indexer indexer) {
+    addRequirements(intake, indexer);
     mIntake = intake;
     mIndexer = indexer;
   }
 
   @Override
   public void execute() {
-    mIntake.setSpeed(INTAKE_SPEED);
-    mIndexer.setSpeed(INDEXER_SPEED);
+    mIntake.setSpeed(-1 * INTAKE_SPEED);
+    mIndexer.setSpeed(-1 * INDEXER_SPEED);
   }
 
   @Override

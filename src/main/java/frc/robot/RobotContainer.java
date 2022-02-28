@@ -7,35 +7,28 @@
 
 package frc.robot;
 
-import static edu.wpi.first.math.util.Units.*;
-import static frc.robot.Constants.PathweaverConstants.kDriveKinematics;
-import static frc.robot.Constants.PathweaverConstants.kMaxAccelerationMetersPerSecondSquared;
-import static frc.robot.Constants.PathweaverConstants.kMaxSpeedMetersPerSecond;
-import static frc.robot.Constants.PathweaverConstants.kPDriveVel;
-import static frc.robot.Constants.PathweaverConstants.kRamseteB;
-import static frc.robot.Constants.PathweaverConstants.kRamseteZeta;
-import static frc.robot.Constants.PathweaverConstants.kaVoltSecondsSquaredPerMeter;
-import static frc.robot.Constants.PathweaverConstants.ksVolts;
-import static frc.robot.Constants.PathweaverConstants.kvVoltSecondsPerMeter;
-
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.RamseteController;
 import edu.wpi.first.math.controller.SimpleMotorFeedforward;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.GenericHID;
-// import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.OuttakeCommand;
+import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -52,8 +45,7 @@ import java.util.List;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  // private Compressor compressor = new Compressor();
+  /** The container for the robot. Contains subsystems, IO devices, and commands. */
   public DriveTrain driveTrain = new DriveTrain();
 
   public Intake intake = new Intake();
@@ -62,29 +54,31 @@ public class RobotContainer {
   public Shooter shooter = new Shooter();
   // public LED led = new LED();
 
-  private Joystick leftDriveJoystick = new Joystick(0); // should be 0
-  private Joystick rightDriveJoystick = new Joystick(1); // should be 1
-  private JoystickButton rightTrigger = new JoystickButton(rightDriveJoystick, 1);
-  public XboxController xboxController = new XboxController(2); // should be 2
+  // NOTE: The ports can be rearanged (by drag and drop) in the Driver Station Terminal
+  private Joystick leftDriveJoystick = new Joystick(0); // should be in port 0
+  private Joystick rightDriveJoystick = new Joystick(1); // should be in port 1
+  public XboxController xboxController = new XboxController(2); // should be in port 2
 
   // xbox controller buttons
-  // public JoystickButton aButton = new JoystickButton(rightDriveJoystick, 3);
+  public JoystickButton aButton = new JoystickButton(xboxController, 1);
+  public JoystickButton bButton = new JoystickButton(xboxController, 2);
+  public JoystickButton xButton = new JoystickButton(xboxController, 3);
+  public JoystickButton yButton = new JoystickButton(xboxController, 4);
 
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
-    // compressor.setClosedLoopControl(true);
   }
 
   /**
-   * Use this method to define your button->command mappings. Buttons can be created by
+   * Use this method to define your button -> command run mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+   * edu.wpi.first.wpilibj2.command.button.JoystickButton} along with the number of the button.
    */
   private void configureButtonBindings() {
 
-    rightTrigger.toggleWhenActive(new IntakeCommand(intake));
+    // rightTrigger.toggleWhenActive(new IntakeCommand(intake));
 
     // new JoystickButton(xboxController, xboxLeftBumper)
     // .whenPressed(() -> driveTrain.setMaxOutput(0.5))
@@ -115,23 +109,34 @@ public class RobotContainer {
           .whileActiveContinuous(new IndexCommand(indexer), false);*/
 
     /*
-    new Trigger(() -> (xboxController.getLeftTriggerAxis() > 0.75))
-        .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
-
-    aButton.toggleWhenActive(new IndexerCommand(indexer));
+        new Trigger(() -> (xboxController.getLeftTriggerAxis() > 0.75))
+            .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
     */
+    // toggleWhenActive => push to turn on, push to turn off
+    // toggleWhenPressed => ??????
+    // whenPressed => When but pressed
+    // whenActive => ???
+    // aButton.toggleWhenPressed(new IntakeCommand(intake));
 
+    aButton.whenHeld(new IndexerCommand(indexer));
+    bButton.whenHeld(new IntakeCommand(intake, indexer));
+    xButton.whenHeld(new ShootCommand(shooter, indexer, 0.1));
+    yButton.whenHeld(new OuttakeCommand(intake, indexer));
+
+    // aButton.toggleWhenActive(new IntakeCommand(intake));
+    // bButton.toggleWhenActive(new IndexerCommand(indexer));
+    // xButton.toggleWhenActive(new ShootCommand(shooter, indexer, 0.1));
   }
 
-  public double getDriveLeftVal() {
+  public double getLeftJoystickY() {
     return -leftDriveJoystick.getY();
   }
 
-  public double getDriveRightVal() {
+  public double getRightJoystickY() {
     return rightDriveJoystick.getX();
   }
 
-  public double getJoystickVal(boolean rightSide) {
+  public double getJoysticksVal(boolean rightSide) {
     // right joystick x
     if (rightSide) {
       return 1 * rightDriveJoystick.getRawAxis(1);
@@ -143,12 +148,12 @@ public class RobotContainer {
     return -xboxController.getLeftY();
   }
 
-  public double getControllerRightX() {
-    return xboxController.getRightX();
+  public double getControllerRightY() {
+    return -xboxController.getRightY();
   }
 
-  public Command getAutoCommand() {
-    return null;
+  public double getControllerRightX() {
+    return xboxController.getRightX();
   }
 
   /**
@@ -156,154 +161,88 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getSlalomPath() {
+  /**
+   * Use this to pass the autonomous command to the main {@link Robot} class.
+   *
+   * @return the command to run in autonomous
+   */
+  public Command getAutonomousCommand() {
+    DifferentialDriveKinematics difDrive =
+        new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
 
     // Create a voltage constraint to ensure we don't accelerate too fast
     var autoVoltageConstraint =
         new DifferentialDriveVoltageConstraint(
             new SimpleMotorFeedforward(
-                ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
-            kDriveKinematics,
-            10);
+                DriveConstants.ksVolts,
+                DriveConstants.kvVoltSecondsPerMeter,
+                DriveConstants.kaVoltSecondsSquaredPerMeter),
+            difDrive,
+            12);
 
     // Create config for trajectory
     TrajectoryConfig config =
-        new TrajectoryConfig(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared)
+        new TrajectoryConfig(
+                DriveConstants.kMaxSpeedMetersPerSecond,
+                DriveConstants.kMaxAccelerationMetersPerSecondSquared)
             // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(kDriveKinematics)
+            .setKinematics(difDrive)
             // Apply the voltage constraint
             .addConstraint(autoVoltageConstraint);
 
-    config.setReversed(false);
-    // An example trajectory to follow.  All units in meters.
-    Trajectory exampleTrajectory =
+    // An example trajectory to follow. All units in meters.
+
+    // String trajectoryJSON = "paths/output/AutonTestPathRapidReact.wpilib.json";
+    Trajectory trajectory = new Trajectory();
+
+    // try {
+    // System.out.println("Constacting " +
+    // Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON).toString());
+    // Path trajectoryPath =
+    // Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+    // trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+    // } catch (IOException ex) {
+    // // DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON,
+    // ex.getStackTrace());
+    // System.out.println("No, it not work" + ex.getStackTrace());
+    // }
+
+    trajectory =
         TrajectoryGenerator.generateTrajectory(
             // Start at the origin facing the +X direction
-            new Pose2d(inchesToMeters(37.5), inchesToMeters(30), new Rotation2d(0)),
-            List.of(
-                new Translation2d(inchesToMeters(90), inchesToMeters(30)),
-                new Translation2d(inchesToMeters(105), inchesToMeters(90)),
-                new Translation2d(inchesToMeters(255), inchesToMeters(90)),
-                new Translation2d(inchesToMeters(275), inchesToMeters(60)),
-                new Translation2d(inchesToMeters(300), inchesToMeters(30)),
-                new Translation2d(inchesToMeters(340), inchesToMeters(60)),
-                new Translation2d(inchesToMeters(285), inchesToMeters(90)),
-                new Translation2d(inchesToMeters(285), inchesToMeters(30)),
-                new Translation2d(inchesToMeters(190), inchesToMeters(30)),
-                new Translation2d(inchesToMeters(90), inchesToMeters(30)),
-                new Translation2d(inchesToMeters(90), inchesToMeters(60)),
-                new Translation2d(inchesToMeters(80), inchesToMeters(90))),
+            new Pose2d(0, 0, new Rotation2d(0)),
+            // Pass through these two interior waypoints, making an 's' curve path
+            List.of(new Translation2d(3, 0)),
             // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(inchesToMeters(37.5), inchesToMeters(120), new Rotation2d(Math.PI)),
-            // Pass config
+            new Pose2d(3, 0, new Rotation2d(0.0)),
+            // Pass confi
             config);
 
     RamseteCommand ramseteCommand =
         new RamseteCommand(
-            exampleTrajectory,
+            trajectory,
             driveTrain::getPose,
-            new RamseteController(kRamseteB, kRamseteZeta),
+            new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
             new SimpleMotorFeedforward(
-                ksVolts, kvVoltSecondsPerMeter, kaVoltSecondsSquaredPerMeter),
-            kDriveKinematics,
+                DriveConstants.ksVolts,
+                DriveConstants.kvVoltSecondsPerMeter,
+                DriveConstants.kaVoltSecondsSquaredPerMeter),
+            difDrive,
             driveTrain::getWheelSpeeds,
-            new PIDController(kPDriveVel, 0, 0),
-            new PIDController(kPDriveVel, 0, 0),
+            new PIDController(DriveConstants.kPDriveVel, 0, 0),
+            new PIDController(DriveConstants.kPDriveVel, 0, 0),
             // RamseteCommand passes volts to the callback
             driveTrain::tankDriveVolts,
             driveTrain);
 
     // Reset odometry to the starting pose of the trajectory.
-    driveTrain.resetOdometry(exampleTrajectory.getInitialPose());
+    // Pose2d autoPose = new Pose2d(new Translation2d(0.235, 4.326), new
+    // Rotation2d(0.0));
+    driveTrain.resetOdometry(trajectory.getInitialPose());
+    // driveTrain.resetEncoders();
+    // driveTrain.resetGyro();
 
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
-  }
-
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-  // public Command getBarrelPath() {
-
-  //   // Create a voltage constraint to ensure we don't accelerate too fast
-  //   var autoVoltageConstraint =
-  //       new DifferentialDriveVoltageConstraint(
-  //           new SimpleMotorFeedforward(ksVolts,
-  //                                      kvVoltSecondsPerMeter,
-  //                                      kaVoltSecondsSquaredPerMeter),
-  //           kDriveKinematics,
-  //           10);
-
-  //   // Create config for trajectory
-  //   TrajectoryConfig config =
-  //       new TrajectoryConfig(kMaxSpeedMetersPerSecond,
-  //                            kMaxAccelerationMetersPerSecondSquared)
-  //           // Add kinematics to ensure max speed is actually obeyed
-  //           .setKinematics(kDriveKinematics)
-  //           // Apply the voltage constraint
-  //           .addConstraint(autoVoltageConstraint);
-
-  //   config.setReversed(false);
-  //   // An example trajectory to follow.  All units in meters.
-  //   Trajectory exampleTrajectory = TrajectoryGenerator.generateTrajectory(
-  //       // Start at the origin facing the +X direction
-  //       new Pose2d(inchesToMeters(50), inchesToMeters(90), new Rotation2d(0)),
-  //       List.of(
-  //           // navigate around first barrel, centered at D5 (150,60)
-  //     new Translation2d(inchesToMeters(150), inchesToMeters(90)),
-  //     new Translation2d(inchesToMeters(180), inchesToMeters(60)),
-  //     new Translation2d(inchesToMeters(150), inchesToMeters(30)),
-  //     new Translation2d(inchesToMeters(120), inchesToMeters(60)),
-
-  //     // navigate around B8  (240, 120)
-  //     new Translation2d(inchesToMeters(150), inchesToMeters(90)),
-  //     new Translation2d(inchesToMeters(240), inchesToMeters(90)),
-  //     new Translation2d(inchesToMeters(270), inchesToMeters(120)),
-  //     new Translation2d(inchesToMeters(240), inchesToMeters(150)),
-  //     new Translation2d(inchesToMeters(205), inchesToMeters(120)),
-
-  //     // navigate around D10 (300, 60)
-  //     new Translation2d(inchesToMeters(210), inchesToMeters(60)),
-  //     new Translation2d(inchesToMeters(300), inchesToMeters(30)),
-  //     new Translation2d(inchesToMeters(330), inchesToMeters(60)),
-  //     new Translation2d(inchesToMeters(300), inchesToMeters(90)), // shift left slightly
-
-  //     // avoid cones on the way back
-  //     new Translation2d(inchesToMeters(240), inchesToMeters(80)),
-  //     new Translation2d(inchesToMeters(150), inchesToMeters(100))
-  //       ),
-  //       // End 3 meters straight ahead of where we started, facing forward
-  //       new Pose2d(inchesToMeters(60), inchesToMeters(90), new Rotation2d(Math.PI)),
-  //       // Pass config
-  //       config
-  //   );
-
-  //   RamseteCommand ramseteCommand = new RamseteCommand(
-  //       exampleTrajectory,
-  //       driveTrain::getPose,
-  //       new RamseteController(kRamseteB, kRamseteZeta),
-  //       new SimpleMotorFeedforward(ksVolts,
-  //                                  kvVoltSecondsPerMeter,
-  //                                  kaVoltSecondsSquaredPerMeter),
-  //       kDriveKinematics,
-  //       driveTrain::getWheelSpeeds,
-  //       new PIDController(kPDriveVel, 0, 0),
-  //       new PIDController(kPDriveVel, 0, 0),
-  //       // RamseteCommand passes volts to the callback
-  //       driveTrain::tankDriveVolts,
-  //       driveTrain
-  //   );
-
-  //   // Reset odometry to the starting pose of the trajectory.
-  //   driveTrain.resetOdometry(exampleTrajectory.getInitialPose());
-
-  //   // Run path following command, then stop at the end.
-  //   return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
-  // }
-  public Command getBarrelPath() {
-    driveTrain.motorTest();
-    return null;
   }
 }
