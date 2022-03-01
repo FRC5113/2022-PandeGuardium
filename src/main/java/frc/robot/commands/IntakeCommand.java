@@ -13,6 +13,7 @@ public class IntakeCommand extends CommandBase {
   private Indexer mIndexer;
 
   public IntakeCommand(Intake intake, Indexer indexer) {
+    System.out.println("running new intake command");
     addRequirements(intake);
     mIntake = intake;
     mIndexer = indexer;
@@ -20,8 +21,9 @@ public class IntakeCommand extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println("running intake command");
     mIntake.setSpeed(INTAKE_SPEED);
-    mIndexer.setSpeed(INDEXER_SPEED);
+    // mIndexer.setSpeed(INDEXER_SPEED);
   }
 
   @Override

@@ -95,7 +95,7 @@ public final class Constants {
     public static final double INTAKE_MAX_VOLTAGE = 12.3;
     public static final int INTAKE_CURRENT_LIMIT = 60;
 
-    public static final double INTAKE_SPEED = -0.3;
+    public static final double INTAKE_SPEED = -0.75;
   }
 
   public static final class IndexerConstants {
