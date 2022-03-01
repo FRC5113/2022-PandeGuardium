@@ -120,7 +120,7 @@ public class RobotContainer {
 
     aButton.whenHeld(new IndexerCommand(indexer));
     bButton.whenHeld(new IntakeCommand(intake, indexer));
-    xButton.whenHeld(new ShootCommand(shooter, indexer, limelight));
+    xButton.whenHeld(new ShootCommand(shooter, indexer, 0.1));
     yButton.whenHeld(new OuttakeCommand(intake, indexer));
 
     // aButton.toggleWhenActive(new IntakeCommand(intake));

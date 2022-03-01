@@ -22,7 +22,7 @@ public final class Constants {
 
   public static final class FlagConstants {
     // use the joystick (just joystick) (true) over xbox thumbpads (false)
-    public static final boolean driveTrainUseJoystick = true;
+    public static final boolean driveTrainUseJoystick = false;
   }
 
   public static final class JoystickConstants {
@@ -60,8 +60,7 @@ public final class Constants {
   public static final class LimelightConstants {
 
     public static final double ANGLE = 25.0;
-    public static final double targetHeight = 0.0;
-    public static final double limelightHeight = 0.0;
+
     public static final double kP = 0.055;
     public static final double kI = 0.0001;
     public static final double kD = 0.002;
@@ -95,7 +94,7 @@ public final class Constants {
     public static final double INTAKE_MAX_VOLTAGE = 12.3;
     public static final int INTAKE_CURRENT_LIMIT = 60;
 
-    public static final double INTAKE_SPEED = -0.75;
+    public static final double INTAKE_SPEED = -0.5;
   }
 
   public static final class IndexerConstants {
@@ -108,7 +107,7 @@ public final class Constants {
     public static final int INDEXER_MAX_CURRENT = 40;
     public static final double INDEXER_MAX_VOLTAGE = 12.3;
     public static final double INDEXER_SPEED =
-        -0.2; // This may need to be lower, otherwise the ball may fly too fast
+        -0.25; // This may need to be lower, otherwise the ball may fly too fast
     // INDEXER_SPEED is negative because we are intaking (and not outtaking, which would be forward)
   }
 
@@ -124,11 +123,13 @@ public final class Constants {
     public static final double kP = 7;
     public static final double kI = 0.000001;
     public static final double kD = 500;
-    // meters B*tches!!
-    public static final double ballStartHeight = 0.0;
-    public static final double shootAngle = 0.0; // check on this
-    public static final double targetRadius = 0.0; // check on this
-    public static final double velocityConstant = 1.0; // you should probably check on this
+
+    public static final double feet17halffront = 3300;
+    public static final double feet12halffront = 3000;
+    public static final double feet7halffront = 2700;
+    public static final double feet7halfback = 5100;
+
+    public static final double testVal = 3000;
   }
 
   public static final class LEDConstants {

@@ -93,7 +93,6 @@ public class Robot extends TimedRobot {
     }
 
     m_robotContainer.driveTrain.setAllToBrake();
-    // m_robotContainer.shooter.setSpeed(175);
 
     // implement xbox or joystick
     if (driveTrainUseJoystick) {
