@@ -1,8 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
@@ -18,12 +18,15 @@ public class ShootCommand extends ParallelCommandGroup {
 
 */
 
-public class ShootCommand extends SequentialCommandGroup {
+public class AutonCommand extends SequentialCommandGroup {
 
-  public ShootCommand(Shooter shooter, Indexer indexer, Intake intake, Limelight limelight) {
+  public AutonCommand(
+      Shooter shooter, Indexer indexer, Limelight limelight, DriveTrain drivetrain) {
     super(
-        /*new OuttakeSlightlyCommand(indexer),*/
-        new SpinUpCommand(shooter, limelight, true), new IntakeCommand(intake, indexer));
+        new DriveAutonCommand(drivetrain),
+        new OuttakeSlightlyCommand(indexer),
+        new SpinUpCommand(shooter, limelight, false),
+        new IndexerCommand(indexer, true));
     // new SpinDownCommand(shooter));
   }
 }

@@ -25,10 +25,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.AutonCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.SpinDownCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -118,9 +120,18 @@ public class RobotContainer {
     // whenActive => ???
     // aButton.toggleWhenPressed(new IntakeCommand(intake));
 
-    aButton.whenHeld(new IndexerCommand(indexer));
+    aButton.whenHeld(new IndexerCommand(indexer, false));
     bButton.whenHeld(new IntakeCommand(intake, indexer));
-    xButton.whenHeld(new ShootCommand(shooter, indexer, limelight));
+    xButton
+        .whenHeld(new ShootCommand(shooter, indexer, intake, limelight))
+        .whenReleased(new SpinDownCommand(shooter));
+    // xButton.toggleWhenActive();
+
+    /*
+    xButton
+        .whenHeld(new SpinUpCommand(shooter, limelight, true))
+        .whenReleased(new SpinDownCommand(shooter));
+    */
     yButton.whenHeld(new OuttakeCommand(intake, indexer));
 
     // aButton.toggleWhenActive(new IntakeCommand(intake));
@@ -244,5 +255,9 @@ public class RobotContainer {
 
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
+  }
+
+  public Command getAutonCommand() {
+    return new AutonCommand(shooter, indexer, limelight, driveTrain);
   }
 }

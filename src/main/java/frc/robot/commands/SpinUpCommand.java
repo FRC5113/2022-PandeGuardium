@@ -10,13 +10,16 @@ public class SpinUpCommand extends CommandBase {
   private final Limelight limelight;
   private double flyWheelSpeed;
   private double desiredSpeed;
+  private boolean shouldNotStop = false;
 
-  public SpinUpCommand(Shooter shooter, Limelight limelight) {
+  public SpinUpCommand(Shooter shooter, Limelight limelight, boolean shouldNotStop) {
     addRequirements(shooter);
     this.shooter = shooter;
     this.limelight = limelight;
     flyWheelSpeed = shooter.getSpeed();
-    desiredSpeed = 1000; // limelight.getDesiredSpeed();
+    desiredSpeed = 4500; // limelight.getDesiredSpeed();
+    this.shouldNotStop = shouldNotStop;
+    // System.out.println("Running spinup command");
   }
 
   @Override
@@ -28,12 +31,11 @@ public class SpinUpCommand extends CommandBase {
     // shooter.setSpeed(6380); // Why is this not ramping
   }
 
+  @Override
   public boolean isFinished() {
     return flyWheelSpeed >= desiredSpeed;
   }
 
   @Override
-  public void end(boolean interrupted) {
-    shooter.coast();
-  }
+  public void end(boolean interrupted) {}
 }

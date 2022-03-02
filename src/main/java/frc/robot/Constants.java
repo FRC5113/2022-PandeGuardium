@@ -52,9 +52,24 @@ public final class Constants {
     public static final double kMaxSpeedMetersPerSecond = 1.5;
     public static final double kMaxAccelerationMetersPerSecondSquared = 1.5;
 
-    // Reasonable baseline values for a RAMSETE follower in units of meters and seconds
+    // Reasonable baseline values for a RAMSETE follower in units of meters and
+    // seconds
     public static final double kRamseteB = 2;
     public static final double kRamseteZeta = 0.7;
+
+    // scale polynomial constants
+    public static final double SCALE_FACTOR =
+        0.5; // TODO: Make sure this allows for the control required
+
+    // robot constants
+    public static final double gearBoxRatio = 1; // to do
+    public static final double wheelDiameter = 4; // to do
+    public static final double distanceModifier =
+        Math.PI * Units.inchesToMeters(wheelDiameter) / (2048 * gearBoxRatio);
+
+    // auton constants
+    public static final double autonDistance = 2;
+    public static final double autonSpeed = 0.5;
   }
 
   public static final class LimelightConstants {
@@ -108,7 +123,11 @@ public final class Constants {
     public static final double INDEXER_MAX_VOLTAGE = 12.3;
     public static final double INDEXER_SPEED =
         -0.5; // This may need to be lower, otherwise the ball may fly too fast
-    // INDEXER_SPEED is negative because we are intaking (and not outtaking, which would be forward)
+    // INDEXER_SPEED is negative because we are intaking (and not outtaking, which
+    // would be forward)
+    // the amount of times the command to set the moter speed will be called in
+    // periodic
+    public static final int PERIODIC_TICKS = 50;
   }
 
   public static final class ShooterConstants {
@@ -124,10 +143,10 @@ public final class Constants {
     public static final double kI = 0.000001;
     public static final double kD = 500;
 
-    public static final int rampUpRate = 15;
+    public static final int rampUpRate = 30;
     public static final int rampDownRate = 100;
 
-    public static final double testVal = 3000;
+    public static final double testVal = 1000;
   }
 
   public static final class LEDConstants {

@@ -26,8 +26,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
 
-  private final WPI_TalonFX leftParent;
-  private final WPI_TalonFX rightParent;
+  public final WPI_TalonFX leftParent;
+  public final WPI_TalonFX rightParent;
   private final WPI_TalonFX leftChild;
   private final WPI_TalonFX rightChild;
   private final DifferentialDrive driveBase;

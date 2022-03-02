@@ -50,7 +50,23 @@ public class Limelight extends SubsystemBase {
     */
   }
 
+  // Not working physx equation
+  // public double getTargetFlyWheelSpeed(double metersToTarget) {
+  //   return ShooterConstants.velocityConstant
+  //       * Math.sqrt(
+  //           ((-4.9) * (Math.pow(metersToTarget, 2)))
+  //               / Math.pow(Math.cos(Math.toRadians(ShooterConstants.shootAngle)), 2)
+  //               * (LimelightConstants.targetHeight
+  //                   - (ShooterConstants.ballStartHeight
+  //                       + (metersToTarget
+  //                           * Math.tan(
+  //                               Math.toRadians(
+  //                                   ShooterConstants.shootAngle)))))); // dont question; it works
+  // :)
+  // }
+  // "better" line of best fit
   public double getDesiredSpeed() {
+    // TODO
     return 0.0;
   }
 }

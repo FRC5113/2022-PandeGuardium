@@ -44,9 +44,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setSpeed(double speed) {
-    shooterParent.set(ControlMode.Velocity, speed / CONVERSION_RATE);
-    SmartDashboard.putNumber(
-        "FlyWheelVelocity", shooterParent.getSelectedSensorVelocity() * CONVERSION_RATE);
+    shooterParent.set(ControlMode.Velocity, speed);
+    SmartDashboard.putNumber("FlyWheelVelocity", shooterParent.getSelectedSensorVelocity());
   }
 
   public void coast() {
@@ -54,9 +53,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getSpeed() {
-    SmartDashboard.putNumber(
-        "FlyWheelVelocity", shooterParent.getSelectedSensorVelocity() * CONVERSION_RATE);
-    return shooterParent.getSelectedSensorVelocity() * CONVERSION_RATE;
+    SmartDashboard.putNumber("FlyWheelVelocity", shooterParent.getSelectedSensorVelocity());
+    return shooterParent.getSelectedSensorVelocity();
   }
 
   public void getCurrent() {

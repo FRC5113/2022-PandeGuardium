@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getBarrelPath();
+    m_autonomousCommand = m_robotContainer.getAutonCommand();
     // m_robotContainer.driveTrain.setAllToBrake();
 
     // schedule the autonomous command (example)
@@ -110,6 +110,7 @@ public class Robot extends TimedRobot {
               m_robotContainer.driveTrain,
               () -> m_robotContainer.getControllerLeftY(),
               () -> m_robotContainer.getControllerRightY()));
+      // m_robotContainer.shooter.setDefaultCommand(new SpinDownCommand(m_robotContainer.shooter));
     }
     // m_robotContainer.shooter.setDefaultCommand(
     // new ShooterPulseCommand(m_robotContainer.shooter, 2000));
