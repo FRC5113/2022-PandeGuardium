@@ -49,4 +49,8 @@ public class Limelight extends SubsystemBase {
     return distance;
     */
   }
+
+  public double getDesiredSpeed() {
+    return 0.0;
+  }
 }

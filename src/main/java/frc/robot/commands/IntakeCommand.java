@@ -23,11 +23,12 @@ public class IntakeCommand extends CommandBase {
   public void execute() {
     System.out.println("running intake command");
     mIntake.setSpeed(INTAKE_SPEED);
-    // mIndexer.setSpeed(INDEXER_SPEED);
+    mIndexer.setSpeed(INDEXER_SPEED);
   }
 
   @Override
   public void end(boolean interrupted) {
     mIntake.stop();
+    mIndexer.stop();
   }
 }
