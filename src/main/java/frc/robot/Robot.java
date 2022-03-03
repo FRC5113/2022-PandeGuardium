@@ -131,7 +131,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testInit() {
-    // Cancels all running commands a
+    // Cancels all running commands and runs the indexer
     CommandScheduler.getInstance().cancelAll();
     m_robotContainer.indexer.setSpeed(-.3); // debug run
   }

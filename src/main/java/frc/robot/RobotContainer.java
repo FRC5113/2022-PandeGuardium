@@ -30,7 +30,6 @@ import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ShootCommand;
-import frc.robot.commands.SpinDownCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -122,9 +121,8 @@ public class RobotContainer {
 
     aButton.whenHeld(new IndexerCommand(indexer, false));
     bButton.whenHeld(new IntakeCommand(intake, indexer));
-    xButton
-        .whenHeld(new ShootCommand(shooter, indexer, intake, limelight))
-        .whenReleased(new SpinDownCommand(shooter));
+    xButton.toggleWhenActive(new ShootCommand(shooter, indexer, intake, limelight), true);
+    // xButton.whenReleased(new SpinDownCommand(shooter));
     // xButton.toggleWhenActive();
 
     /*

@@ -13,6 +13,7 @@ public class SpinDownCommand extends CommandBase {
     addRequirements(shooter);
     this.shooter = shooter;
     flyWheelSpeed = shooter.getSpeed();
+    System.out.println("running Spindown");
     desiredSpeed = 0;
   }
 

@@ -17,7 +17,7 @@ public class SpinUpCommand extends CommandBase {
     this.shooter = shooter;
     this.limelight = limelight;
     flyWheelSpeed = shooter.getSpeed();
-    desiredSpeed = 4500; // limelight.getDesiredSpeed();
+    desiredSpeed = 9001; // limelight.getDesiredSpeed();
     this.shouldNotStop = shouldNotStop;
     // System.out.println("Running spinup command");
   }
@@ -33,9 +33,14 @@ public class SpinUpCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    if (flyWheelSpeed >= desiredSpeed) {
+      System.out.println("DONESPINUP");
+    }
     return flyWheelSpeed >= desiredSpeed;
   }
 
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    flyWheelSpeed = 0;
+  }
 }
