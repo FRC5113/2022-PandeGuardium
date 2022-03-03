@@ -84,6 +84,7 @@ public class DriveTrain extends SubsystemBase {
     // driveBase.tankDrive(leftSpeed, rightSpeed);
     leftParent.set(leftSpeed);
     rightParent.set(rightSpeed);
+    SmartDashboard.putNumber("Motorspeed", leftSpeed);
   }
 
   public void tankDriveVolts(double leftSpeed, double rightSpeed) {

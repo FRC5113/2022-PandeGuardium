@@ -26,7 +26,7 @@ public class IntakeForShooterCommand extends CommandBase {
   public void execute() {
     // System.out.println("running intake command");
     mIntake.setSpeed(INTAKE_SPEED);
-    mIndexer.setSpeed(INDEXER_SPEED);
+    mIndexer.setSpeed(-100);
   }
 
   @Override

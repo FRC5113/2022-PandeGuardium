@@ -7,19 +7,23 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
 
-public class CenterTargetRobot extends PIDCommand {
+public class CenterTargetRobotCommand extends PIDCommand {
+  private Limelight limelight;
 
-  public CenterTargetRobot(DriveTrain driveTrain, Limelight limelight) {
+  public CenterTargetRobotCommand(DriveTrain driveTrain, Limelight limelight) {
     super(
         new PIDController(kP, kI, kD),
         limelight::getTx,
         0.0,
-        output -> driveTrain.tankDrive(-output, output),
+        output -> driveTrain.tankDrive(-output, -output),
         driveTrain);
+    getController().setTolerance(1);
+    this.limelight = limelight;
   }
 
   @Override
   public boolean isFinished() {
+    System.out.println("HERE -> " + getController().atSetpoint() + " " + limelight.getTx());
     return getController().atSetpoint();
   }
 }

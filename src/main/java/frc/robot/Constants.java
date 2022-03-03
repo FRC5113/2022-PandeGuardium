@@ -74,11 +74,13 @@ public final class Constants {
 
   public static final class LimelightConstants {
 
-    public static final double ANGLE = 25.0;
+    public static final double ANGLE = 56.0;
+    public static final double targetHeight = 8.666;
+    public static final double limelightHeight = 1.3333;
 
-    public static final double kP = 0.055;
-    public static final double kI = 0.0001;
-    public static final double kD = 0.002;
+    public static final double kP = 0.05;
+    public static final double kI = 0.0005;
+    public static final double kD = 0.1;
   }
 
   public static final class DriveTrainConstants {
@@ -122,7 +124,7 @@ public final class Constants {
     public static final int INDEXER_MAX_CURRENT = 40;
     public static final double INDEXER_MAX_VOLTAGE = 12.3;
     public static final double INDEXER_SPEED =
-        -0.5; // This may need to be lower, otherwise the ball may fly too fast
+        -.5; // This may need to be lower, otherwise the ball may fly too fast
     // INDEXER_SPEED is negative because we are intaking (and not outtaking, which
     // would be forward)
     // the amount of times the command to set the moter speed will be called in

@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.AutonCommand;
+import frc.robot.commands.CenterTargetRobotCommand;
 import frc.robot.commands.IndexerCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.OuttakeCommand;
@@ -65,6 +66,7 @@ public class RobotContainer {
   public JoystickButton bButton = new JoystickButton(xboxController, 2);
   public JoystickButton xButton = new JoystickButton(xboxController, 3);
   public JoystickButton yButton = new JoystickButton(xboxController, 4);
+  public JoystickButton rbButton = new JoystickButton(xboxController, 6);
 
   public RobotContainer() {
     // Configure the button bindings
@@ -131,6 +133,8 @@ public class RobotContainer {
         .whenReleased(new SpinDownCommand(shooter));
     */
     yButton.whenHeld(new OuttakeCommand(intake, indexer));
+
+    rbButton.whenHeld(new CenterTargetRobotCommand(driveTrain, limelight));
 
     // aButton.toggleWhenActive(new IntakeCommand(intake));
     // bButton.toggleWhenActive(new IndexerCommand(indexer));

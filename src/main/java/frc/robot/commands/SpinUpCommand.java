@@ -17,7 +17,8 @@ public class SpinUpCommand extends CommandBase {
     this.shooter = shooter;
     this.limelight = limelight;
     flyWheelSpeed = shooter.getSpeed();
-    desiredSpeed = 9001; // limelight.getDesiredSpeed();
+    double distance = 12.66;
+    desiredSpeed = limelight.getDesiredSpeed();
     this.shouldNotStop = shouldNotStop;
     // System.out.println("Running spinup command");
   }

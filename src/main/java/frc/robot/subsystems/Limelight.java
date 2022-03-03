@@ -5,6 +5,7 @@ import static frc.robot.Constants.LimelightConstants.*;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Limelight extends SubsystemBase {
@@ -42,12 +43,11 @@ public class Limelight extends SubsystemBase {
 
   public double getDistaceToTarget() {
     update();
-    return 0.0;
+    // return 0.0;
     // Add constants once we have them
-    /*
-    double distance = (targetHeight - limelightHeight ) / Math.tan(ANGLE+y);
+    double distance = (targetHeight - limelightHeight) / Math.tan(Math.toRadians(ANGLE - y));
+    SmartDashboard.putNumber("distanceToTarget", distance);
     return distance;
-    */
   }
 
   // Not working physx equation
@@ -65,8 +65,9 @@ public class Limelight extends SubsystemBase {
   // :)
   // }
   // "better" line of best fit
-  public double getDesiredSpeed() {
-    // TODO
-    return 0.0;
+  public int getDesiredSpeed() {
+    double distance = getDistaceToTarget();
+    int desiredSpeed = (int) (11420 + 194.15 * distance + 13.64375 * (distance * distance));
+    return desiredSpeed;
   }
 }
