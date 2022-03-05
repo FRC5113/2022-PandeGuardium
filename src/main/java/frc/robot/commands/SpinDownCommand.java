@@ -7,33 +7,45 @@ import frc.robot.subsystems.Shooter;
 public class SpinDownCommand extends CommandBase {
   private final Shooter shooter;
   private double flyWheelSpeed;
-  private double desiredSpeed;
+  // private double desiredSpeed;
 
   public SpinDownCommand(Shooter shooter) {
+    System.out.println("Spinning down");
     addRequirements(shooter);
     this.shooter = shooter;
     flyWheelSpeed = shooter.getSpeed();
-    System.out.println("running Spindown");
-    desiredSpeed = 0;
+    // shooter.coast();
   }
 
   @Override
   public void execute() {
-    if (flyWheelSpeed > desiredSpeed) {
+    if (flyWheelSpeed <= 0) {
+      flyWheelSpeed = shooter.getSpeed();
+    }
+    if (flyWheelSpeed >= 0) {
       flyWheelSpeed -= ShooterConstants.rampDownRate;
     }
-    if (flyWheelSpeed < 0) {
+    if (flyWheelSpeed <= 0) {
+      shooter.coast();
       flyWheelSpeed = 0;
     }
     shooter.setSpeed(flyWheelSpeed);
+
+    // shooter.coast();
   }
 
   public boolean isFinished() {
-    return flyWheelSpeed == 0;
+    System.out.println("!!!!!" + (flyWheelSpeed == 0)); // =kjyt5432  <- xbox controller
+    return flyWheelSpeed <= 0;
   }
 
   @Override
   public void end(boolean interrupted) {
+    shooter.coast();
+  }
+
+  // @Override
+  public void end() {
     shooter.coast();
   }
 }

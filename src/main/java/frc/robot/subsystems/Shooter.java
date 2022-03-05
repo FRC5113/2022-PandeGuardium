@@ -24,6 +24,8 @@ public class Shooter extends SubsystemBase {
 
     shooterChild.set(ControlMode.Follower, shooterParent.getDeviceID());
 
+    // shooterParent.set
+
     shooterParent.config_kP(0, kP);
     shooterParent.config_kI(0, kI);
     shooterParent.config_kD(0, kD);
@@ -53,6 +55,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getSpeed() {
+    System.out.println(shooterParent.getSelectedSensorVelocity());
     SmartDashboard.putNumber("FlyWheelVelocity", shooterParent.getSelectedSensorVelocity());
     return shooterParent.getSelectedSensorVelocity();
   }

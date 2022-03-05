@@ -10,16 +10,30 @@ public class SpinUpCommand extends CommandBase {
   private final Limelight limelight;
   private double flyWheelSpeed;
   private double desiredSpeed;
-  private boolean shouldNotStop = false;
 
   public SpinUpCommand(Shooter shooter, Limelight limelight, boolean shouldNotStop) {
     addRequirements(shooter);
     this.shooter = shooter;
     this.limelight = limelight;
+    // shooter.coast();
     flyWheelSpeed = shooter.getSpeed();
-    double distance = 12.66;
-    desiredSpeed = limelight.getDesiredSpeed();
-    this.shouldNotStop = shouldNotStop;
+    // dirty hack to add some distance
+    // On saturday, note that the ball overshoots at
+    // smaller distances, indicating that the constant
+    // may be too much and should be merged into the
+    // main function. At further distances with the change
+    // it apears to work properly.
+    // Without the change, the balls would almost always
+    // hit the rim, with it being unclear (we didn't test)
+    // how it affects it at shorter distances.
+
+    // over all the suggestion may be to increase the x
+    // term of the polynomial (or even the x^2) so that
+    // the extra ~300 - 500 (the range that we need to add)
+    // so it hits most of the time. At 500 and some ranges
+    // where it was hitting the backboard.
+    desiredSpeed = limelight.getDesiredSpeed(); // + 500;
+    // this.shouldNotStop = shouldNotStop;
     // System.out.println("Running spinup command");
   }
 

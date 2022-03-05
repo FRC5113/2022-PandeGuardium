@@ -22,7 +22,7 @@ public final class Constants {
 
   public static final class FlagConstants {
     // use the joystick (just joystick) (true) over xbox thumbpads (false)
-    public static final boolean driveTrainUseJoystick = true;
+    public static final boolean driveTrainUseJoystick = false;
   }
 
   public static final class JoystickConstants {
@@ -74,7 +74,7 @@ public final class Constants {
 
   public static final class LimelightConstants {
 
-    public static final double ANGLE = 56.0;
+    public static final double ANGLE = 34.0;
     public static final double targetHeight = 8.666;
     public static final double limelightHeight = 1.3333;
 
@@ -102,6 +102,7 @@ public final class Constants {
 
     public static final double CONVERSION_RATE_POSITION =
         Units.inchesToMeters(6.5) * Math.PI / 2048 / 11.5;
+    public static final double rightResistanceAdjustment = 1;
   }
 
   // VLAD: 2/27: TURN THE SPEED WAY DOWN
@@ -145,7 +146,7 @@ public final class Constants {
     public static final double kI = 0.000001;
     public static final double kD = 500;
 
-    public static final int rampUpRate = 30;
+    public static final int rampUpRate = 35;
     public static final int rampDownRate = 100;
 
     public static final double testVal = 1000;

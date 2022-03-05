@@ -68,7 +68,7 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonCommand();
+    //m_autonomousCommand = m_robotContainer.getAutonCommand();
     // m_robotContainer.driveTrain.setAllToBrake();
 
     // schedule the autonomous command (example)
@@ -92,7 +92,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-
+    CommandScheduler.getInstance().cancelAll();
     m_robotContainer.driveTrain.setAllToBrake();
 
     // implement xbox or joystick
@@ -102,14 +102,14 @@ public class Robot extends TimedRobot {
           new DriveCommand(
               m_robotContainer.driveTrain,
               () -> m_robotContainer.getJoysticksVal(false),
-              () -> m_robotContainer.getJoysticksVal(true)));
+              () -> -m_robotContainer.getJoysticksVal(true)));
     } else {
       // xbox controller
       m_robotContainer.driveTrain.setDefaultCommand(
           new DriveCommand(
               m_robotContainer.driveTrain,
               () -> m_robotContainer.getControllerLeftY(),
-              () -> m_robotContainer.getControllerRightY()));
+              () -> -m_robotContainer.getControllerRightY()));
       // m_robotContainer.shooter.setDefaultCommand(new SpinDownCommand(m_robotContainer.shooter));
     }
     // m_robotContainer.shooter.setDefaultCommand(
@@ -133,10 +133,13 @@ public class Robot extends TimedRobot {
   public void testInit() {
     // Cancels all running commands and runs the indexer
     CommandScheduler.getInstance().cancelAll();
-    m_robotContainer.indexer.setSpeed(-.3); // debug run
+    // m_robotContainer.driveTrain.setDefaultCommand(
+    //     new DriveCommand(m_robotContainer.driveTrain, () -> 0.2, () -> 0.2));
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+    m_robotContainer.driveTrain.tankDrive(.2, -.2);
+  }
 }

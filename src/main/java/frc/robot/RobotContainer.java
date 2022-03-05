@@ -24,13 +24,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriveConstants;
-import frc.robot.commands.AutonCommand;
-import frc.robot.commands.CenterTargetRobotCommand;
-import frc.robot.commands.IndexerCommand;
-import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.DriveAutonTimerCommand;
+import frc.robot.commands.IndexAllCommand;
+import frc.robot.commands.IntakeOnlyCommand;
 import frc.robot.commands.OuttakeCommand;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.SpinDownCommand;
+import frc.robot.commands.StopAllMotersCommand;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -67,6 +69,9 @@ public class RobotContainer {
   public JoystickButton xButton = new JoystickButton(xboxController, 3);
   public JoystickButton yButton = new JoystickButton(xboxController, 4);
   public JoystickButton rbButton = new JoystickButton(xboxController, 6);
+  public JoystickButton backButton = new JoystickButton(xboxController, 7);
+  // xbox trigger
+  public Trigger rightTrigger = new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75));
 
   public RobotContainer() {
     // Configure the button bindings
@@ -121,10 +126,18 @@ public class RobotContainer {
     // whenActive => ???
     // aButton.toggleWhenPressed(new IntakeCommand(intake));
 
-    aButton.whenHeld(new IndexerCommand(indexer, false));
-    bButton.whenHeld(new IntakeCommand(intake, indexer));
-    xButton.toggleWhenActive(new ShootCommand(shooter, indexer, intake, limelight), true);
-    // xButton.whenReleased(new SpinDownCommand(shooter));
+    aButton.whenHeld(new IndexAllCommand(indexer, intake, false));
+    bButton.whenHeld(new OuttakeCommand(intake, indexer));
+    xButton.whenHeld(new IntakeOnlyCommand(intake));
+    // bButton.whenHeld(new IndexerOnlyCommand(indexer));
+    // xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight), true);
+
+    yButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight));
+    yButton.whenReleased(new SpinDownCommand(shooter));
+    // rightTrigger.whileActiveContinuous(new ShootCommand(shooter, indexer, intake, limelight),
+    // true);
+    // rightTrigger.whenInactive(new SpinDownCommand(shooter), false);
+
     // xButton.toggleWhenActive();
 
     /*
@@ -132,9 +145,12 @@ public class RobotContainer {
         .whenHeld(new SpinUpCommand(shooter, limelight, true))
         .whenReleased(new SpinDownCommand(shooter));
     */
-    yButton.whenHeld(new OuttakeCommand(intake, indexer));
+    // yButton.whenHeld(new OuttakeCommand(intake, indexer));
+    // yButton.whenHeld(new IndexerOnlyCommand(indexer));
 
-    rbButton.whenHeld(new CenterTargetRobotCommand(driveTrain, limelight));
+    // rbButton.whenHeld(new CenterTargetRobotCommand(driveTrain, limelight));
+
+    backButton.whenPressed(new StopAllMotersCommand(indexer, intake, shooter, driveTrain));
 
     // aButton.toggleWhenActive(new IntakeCommand(intake));
     // bButton.toggleWhenActive(new IndexerCommand(indexer));
@@ -260,6 +276,7 @@ public class RobotContainer {
   }
 
   public Command getAutonCommand() {
-    return new AutonCommand(shooter, indexer, limelight, driveTrain);
+    // return new AutonCommand(shooter, indexer, limelight, driveTrain, intake);
+    return new DriveAutonTimerCommand(driveTrain);
   }
 }

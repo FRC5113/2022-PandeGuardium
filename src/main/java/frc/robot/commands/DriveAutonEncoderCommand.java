@@ -4,11 +4,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveTrain;
 
-public class DriveAutonCommand extends CommandBase {
+public class DriveAutonEncoderCommand extends CommandBase {
 
   private DriveTrain driveTrain;
 
-  public DriveAutonCommand(DriveTrain driveTrain) {
+  public DriveAutonEncoderCommand(DriveTrain driveTrain) {
     this.driveTrain = driveTrain;
     addRequirements(driveTrain);
   }
@@ -28,6 +28,7 @@ public class DriveAutonCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
+    System.out.println(driveTrain.leftParent.getSelectedSensorPosition());
     return driveTrain.leftParent.getSelectedSensorPosition()
         < DriveConstants.distanceModifier * DriveConstants.autonDistance;
   }

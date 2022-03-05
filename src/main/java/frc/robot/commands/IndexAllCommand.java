@@ -1,29 +1,35 @@
 package frc.robot.commands;
 
 import static frc.robot.Constants.IndexerConstants.*;
+import static frc.robot.Constants.IntakeConstants.*;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
 
-public class IndexerCommand extends CommandBase {
+public class IndexAllCommand extends CommandBase {
 
   private Indexer mIndexer;
+  private Intake mIntake;
   private boolean mShouldFinish; // used for auton sequential command
   private Timer timer; // used to count a second when making sure the ball is being shot
 
-  public IndexerCommand(Indexer indexer, boolean shouldFinish) {
-    addRequirements(indexer);
+  public IndexAllCommand(Indexer indexer, Intake intake, boolean shouldFinish) {
+    addRequirements(indexer, intake);
     mIndexer = indexer;
+    mIntake = intake;
     mShouldFinish = shouldFinish;
 
     timer = new Timer();
+    timer.start();
     System.out.println("Running indexer");
   }
 
   @Override
   public void execute() {
     mIndexer.setSpeed(INDEXER_SPEED);
+    mIntake.setSpeed(INTAKE_SPEED);
   }
 
   @Override
@@ -40,5 +46,6 @@ public class IndexerCommand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     mIndexer.stop();
+    mIntake.stop();
   }
 }
