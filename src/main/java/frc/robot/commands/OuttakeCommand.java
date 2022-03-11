@@ -21,12 +21,12 @@ public class OuttakeCommand extends CommandBase {
   @Override
   public void execute() {
     mIntake.setSpeed(-1 * INTAKE_SPEED);
-    mIndexer.setSpeed(-1 * INDEXER_SPEED);
+    // mIndexer.setSpeed(-1 * INDEXER_SPEED);
   }
 
   @Override
   public void end(boolean interrupted) {
     mIntake.stop();
-    mIndexer.stop();
+    // mIndexer.stop();
   }
 }

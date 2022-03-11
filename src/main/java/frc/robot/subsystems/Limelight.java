@@ -50,7 +50,7 @@ public class Limelight extends SubsystemBase {
     double distance = (targetHeight - limelightHeight) / Math.tan(Math.toRadians(ANGLE + y));
     SmartDashboard.putNumber("distanceToTarget", distance);
     System.out.println("Distance: " + distance);
-    return distance + 2 + 1.5; // 1.5 is accounting for slight offset from the center
+    return distance + 2; // 1.5 is accounting for slight offset from the center
   }
 
   // Not working physx equation

@@ -20,7 +20,7 @@ public class SpinDownCommand extends CommandBase {
   @Override
   public void execute() {
     if (flyWheelSpeed <= 0) {
-      flyWheelSpeed = shooter.getSpeed();
+      flyWheelSpeed += ShooterConstants.rampDownRate;
     }
     if (flyWheelSpeed >= 0) {
       flyWheelSpeed -= ShooterConstants.rampDownRate;
@@ -35,8 +35,8 @@ public class SpinDownCommand extends CommandBase {
   }
 
   public boolean isFinished() {
-    System.out.println("!!!!!" + (flyWheelSpeed == 0)); // =kjyt5432  <- xbox controller
-    return flyWheelSpeed <= 0;
+    // System.out.println("!!!!!" + (flyWheelSpeed == 0)); // =kjyt5432  <- xbox controller
+    return flyWheelSpeed <= flyWheelSpeed;
   }
 
   @Override

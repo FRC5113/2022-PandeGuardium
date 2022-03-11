@@ -30,7 +30,7 @@ public class DriveAutonTimerCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return timer.get() >= 1.5; // adjust to go forward or backwards
+    return timer.get() >= 1; // adjust to go forward or backwards
   }
 
   @Override

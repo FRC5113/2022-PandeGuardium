@@ -68,8 +68,8 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    //m_autonomousCommand = m_robotContainer.getAutonCommand();
-    // m_robotContainer.driveTrain.setAllToBrake();
+    m_autonomousCommand = m_robotContainer.getAutonCommand();
+    m_robotContainer.driveTrain.setAllToBrake();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -102,7 +102,7 @@ public class Robot extends TimedRobot {
           new DriveCommand(
               m_robotContainer.driveTrain,
               () -> m_robotContainer.getJoysticksVal(false),
-              () -> -m_robotContainer.getJoysticksVal(true)));
+              () -> m_robotContainer.getJoysticksVal(true)));
     } else {
       // xbox controller
       m_robotContainer.driveTrain.setDefaultCommand(
@@ -112,6 +112,10 @@ public class Robot extends TimedRobot {
               () -> -m_robotContainer.getControllerRightY()));
       // m_robotContainer.shooter.setDefaultCommand(new SpinDownCommand(m_robotContainer.shooter));
     }
+
+    // m_robotContainer.shooter.setDefaultCommand(
+    //   new SpinUpCommand(m_robotContainer.shooter, m_robotContainer.limelight, true)
+    // );
     // m_robotContainer.shooter.setDefaultCommand(
     // new ShooterPulseCommand(m_robotContainer.shooter, 2000));
   }
@@ -140,6 +144,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during test mode. */
   @Override
   public void testPeriodic() {
-    m_robotContainer.driveTrain.tankDrive(.2, -.2);
+    // m_robotContainer.driveTrain.tankDrive(.2, -.2);
+
   }
 }

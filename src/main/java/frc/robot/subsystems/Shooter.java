@@ -8,13 +8,12 @@ import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
 
   private WPI_TalonFX shooterChild;
   private WPI_TalonFX shooterParent;
-  private double pulseTime;
-  private double startTime;
 
   public Shooter() {
     shooterParent = new WPI_TalonFX(SHOOTER_PARENT_ID);
@@ -32,15 +31,13 @@ public class Shooter extends SubsystemBase {
 
     shooterParent.setInverted(false);
     shooterChild.setInverted(true);
-
-    startTime = System.currentTimeMillis();
   }
 
   public void configMotor(WPI_TalonFX motor) {
     motor.configFactoryDefault();
     motor.configVoltageCompSaturation(MAX_VOLTAGE);
     motor.enableVoltageCompensation(true);
-    motor.configClosedloopRamp(RAMP_RATE);
+    motor.configClosedloopRamp(5);
     motor.setNeutralMode(NeutralMode.Coast);
     motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
   }
@@ -64,9 +61,15 @@ public class Shooter extends SubsystemBase {
     SmartDashboard.putNumber("Current", shooterParent.getSupplyCurrent());
   }
 
-  public double getPulseTime() {
-    this.pulseTime = System.currentTimeMillis() - this.startTime;
-    System.out.println((this.pulseTime / 500) % 10);
-    return this.pulseTime;
+  /**
+   * @param desiredSpeed Set the speed at which the shooter should run when it is done
+   * @param marginOfError The difference that is allowed before the spin up is complete
+   * @return Is the shooter at the desired rate
+   */
+  public boolean spinToRate(float desiredSpeed, float marginOfError) {
+    if (Math.abs(getSpeed() - desiredSpeed) <= ShooterConstants.spinUpTolerance) return true;
+
+    setSpeed(getSpeed() + ShooterConstants.rampUpRate);
+    return false;
   }
 }

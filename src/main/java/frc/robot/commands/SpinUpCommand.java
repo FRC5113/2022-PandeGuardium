@@ -39,7 +39,7 @@ public class SpinUpCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (flyWheelSpeed < desiredSpeed) {
+    if (flyWheelSpeed < desiredSpeed + ShooterConstants.rampUpRate + 5) {
       flyWheelSpeed += ShooterConstants.rampUpRate;
     }
     shooter.setSpeed(flyWheelSpeed);

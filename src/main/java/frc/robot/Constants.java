@@ -21,8 +21,8 @@ import edu.wpi.first.math.util.Units;
 public final class Constants {
 
   public static final class FlagConstants {
-    // use the joystick (just joystick) (true) over xbox thumbpads (false)
-    public static final boolean driveTrainUseJoystick = false;
+    /** Use the stand alone joystick (true) over xbox thumbpads (false) */
+    public static final boolean driveTrainUseJoystick = true;
   }
 
   public static final class JoystickConstants {
@@ -103,6 +103,8 @@ public final class Constants {
     public static final double CONVERSION_RATE_POSITION =
         Units.inchesToMeters(6.5) * Math.PI / 2048 / 11.5;
     public static final double rightResistanceAdjustment = 1;
+
+    public static final double rampUpRate = 0.05;
   }
 
   // VLAD: 2/27: TURN THE SPEED WAY DOWN
@@ -112,7 +114,7 @@ public final class Constants {
     public static final double INTAKE_MAX_VOLTAGE = 12.3;
     public static final int INTAKE_CURRENT_LIMIT = 60;
 
-    public static final double INTAKE_SPEED = -0.5;
+    public static final double INTAKE_SPEED = -0.4;
   }
 
   public static final class IndexerConstants {
@@ -125,7 +127,7 @@ public final class Constants {
     public static final int INDEXER_MAX_CURRENT = 40;
     public static final double INDEXER_MAX_VOLTAGE = 12.3;
     public static final double INDEXER_SPEED =
-        -.5; // This may need to be lower, otherwise the ball may fly too fast
+        -.4; // This may need to be lower, otherwise the ball may fly too fast
     // INDEXER_SPEED is negative because we are intaking (and not outtaking, which
     // would be forward)
     // the amount of times the command to set the moter speed will be called in
@@ -133,23 +135,37 @@ public final class Constants {
     public static final int PERIODIC_TICKS = 50;
   }
 
+  public static final class HangerConstants {
+    public static final int HANGER_RIGHT_ROTATE_ID = 51;
+    public static final int HANGER_LEFT_ROTATE_ID = 52;
+    public static final int HANGER_RIGHT_EXTEND_ID = 53;
+    public static final int HANGER_LEFT_EXTEND_ID = 54;
+
+    public static final int MAXIMUM_VOLTAGE = 0;
+    public static final int MAXIMUM_CURRENT = 0;
+  }
+
   public static final class ShooterConstants {
 
     public static final int SHOOTER_PARENT_ID = 42;
     public static final int SHOOTER_CHILD_ID = 41;
     public static final double MAX_VOLTAGE = 12.0;
-    public static final double RAMP_RATE = 5;
+    // public static final double RAMP_RATE = 5;
 
     public static final double CONVERSION_RATE = 600.0 / 2048; // check on this
 
-    public static final double kP = 7;
+    public static final double kP = 8;
     public static final double kI = 0.000001;
     public static final double kD = 500;
 
-    public static final int rampUpRate = 35;
+    public static final int rampUpRate = 30;
     public static final int rampDownRate = 100;
 
     public static final double testVal = 1000;
+    public static final double lowSpinSpeed = 6000;
+
+    /** How much of a difference we will tolerate when spinning to a value */
+    public static final double spinUpTolerance = 200;
   }
 
   public static final class LEDConstants {

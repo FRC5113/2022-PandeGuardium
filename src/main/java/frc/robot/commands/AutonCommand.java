@@ -36,7 +36,7 @@ public class AutonCommand extends CommandBase {
   public int flyWheelSpeed;
   public int desiredSpeed;
   public double intakeStartTime;
-  public boolean runningIntake = false;
+  public boolean shouldstarttimer = true;
 
   public AutonCommand(
       Shooter shooter, Indexer indexer, Limelight limelight, DriveTrain drivetrain, Intake intake) {
@@ -54,39 +54,74 @@ public class AutonCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (flyWheelSpeed < desiredSpeed && !runningIntake) {
+    if (flyWheelSpeed < desiredSpeed && shouldstarttimer) {
       flyWheelSpeed += ShooterConstants.rampUpRate;
     }
+    // 1.34 seconds to drive 1.5 meters
+    if (timer.get() < 2) {
+      drivetrain.tankDrive(0.5 * DriveConstants.autonSpeed, -0.5 * DriveConstants.autonSpeed);
+      intake.setSpeed(4 * IntakeConstants.INTAKE_SPEED);
+    }
 
-    if (timer.get() < 1.5) {
-      drivetrain.tankDrive(-DriveConstants.autonSpeed, DriveConstants.autonSpeed);
-    } else if (timer.get() >= 1.5) {
+    if (timer.get() >= 2 && timer.get() < 2.05) {
+      intake.setSpeed(0);
+    }
+    // 0.7 seconds
+    if (timer.get() >= 2.05 && timer.get() < 2.74) {
       drivetrain.tankDrive(0, 0);
-      desiredSpeed = limelight.getDesiredSpeed();
+      intake.setSpeed(-0.25 * IntakeConstants.INTAKE_SPEED);
+    }
+    // 0.05 seconds
+    if (timer.get() >= 2.74 && timer.get() < 2.79) {
+      intake.setSpeed(0);
+    }
+    // 1.71 seconds to turn 180
+    if (timer.get() >= 2.79 && timer.get() < 4.55) {
+      drivetrain.tankDrive(-0.5 * DriveConstants.autonSpeed, -0.5 * DriveConstants.autonSpeed);
+    }
+
+    if (timer.get() >= 4.55) {
+      drivetrain.tankDrive(0, 0);
+    }
+
+    if (timer.get() >= 6) {
+
+      desiredSpeed = 15000;
+      // limelight.getDesiredSpeed();
       if (shooter.getSpeed() >= desiredSpeed) {
-        if (!runningIntake) {
+        if (shouldstarttimer) {
           timer2.start();
         }
-        runningIntake = true;
-        intake.setSpeed(IntakeConstants.INTAKE_SPEED);
-        indexer.setSpeed(IndexerConstants.INDEXER_SPEED);
-        if (timer2.get() > 3) {
+        shouldstarttimer = false;
+        if (timer2.get() > 7.5) {
           flyWheelSpeed -= ShooterConstants.rampDownRate;
         }
       }
     }
 
-    shooter.setSpeed(flyWheelSpeed);
+    if (timer.get() >= 7.5 && timer.get() < 14) {
+      indexer.setSpeed(IndexerConstants.INDEXER_SPEED);
+      intake.setSpeed(IntakeConstants.INTAKE_SPEED);
+    }
+
+    if (timer.get() >= 14) {
+      indexer.setSpeed(0);
+      intake.setSpeed(0);
+      shooter.setSpeed(0);
+    }
+
+    shooter.setSpeed(flyWheelSpeed); // put this back in
   }
 
   @Override
   public boolean isFinished() {
-    return runningIntake && flyWheelSpeed <= 0;
+    return shouldstarttimer && flyWheelSpeed <= 0;
   }
 
   // @Override
   public void end() {
     intake.setSpeed(0);
-    shooter.coast();
+    indexer.setSpeed(0);
+    // shooter.coast(); put this back in
   }
 }
