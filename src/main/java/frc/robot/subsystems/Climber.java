@@ -1,20 +1,20 @@
 package frc.robot.subsystems;
 
-import static frc.robot.Constants.HangerConstants.*;
+import static frc.robot.Constants.ClimberConstants.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class Hanger extends SubsystemBase {
+public class Climber extends SubsystemBase {
 
   private CANSparkMax rightRotate;
   private CANSparkMax leftRotate;
   private CANSparkMax rightExtend;
   private CANSparkMax leftExtend;
 
-  public Hanger() {
+  public Climber() {
     rightRotate = new CANSparkMax(HANGER_RIGHT_ROTATE_ID, MotorType.kBrushless);
     leftRotate = new CANSparkMax(HANGER_LEFT_ROTATE_ID, MotorType.kBrushless);
     rightExtend = new CANSparkMax(HANGER_RIGHT_EXTEND_ID, MotorType.kBrushless);
@@ -44,6 +44,7 @@ public class Hanger extends SubsystemBase {
     }
   }
 
+  // THE RIGHT COULD BE INVERSED
   public void rotate(boolean right, double speed) {
     if (right) {
       rightRotate.set(speed);

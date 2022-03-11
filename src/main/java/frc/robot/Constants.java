@@ -135,14 +135,23 @@ public final class Constants {
     public static final int PERIODIC_TICKS = 50;
   }
 
-  public static final class HangerConstants {
+  public static final class ClimberConstants {
+    // Can IDs of the four motors: 2 for rotating and 2 for extanding
     public static final int HANGER_RIGHT_ROTATE_ID = 51;
     public static final int HANGER_LEFT_ROTATE_ID = 52;
     public static final int HANGER_RIGHT_EXTEND_ID = 53;
     public static final int HANGER_LEFT_EXTEND_ID = 54;
 
-    public static final int MAXIMUM_VOLTAGE = 0;
-    public static final int MAXIMUM_CURRENT = 0;
+    // Maximum voltage / amp states
+    public static final int MAXIMUM_VOLTAGE = 12;
+    public static final int MAXIMUM_CURRENT = 40;
+
+    // Speeds to get something done
+    public static final double EXTEND_SPEED = 0.2;
+    public static final double RETRACT_SPEED = -0.2;
+
+    public static final double ROTATE_FORWARD_SPEED = 0.2;
+    public static final double ROTATE_BACKWARD_SPEED = -0.2;
   }
 
   public static final class ShooterConstants {

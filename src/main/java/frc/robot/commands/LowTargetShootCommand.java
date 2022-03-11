@@ -23,7 +23,7 @@ public class LowTargetShootCommand extends SequentialCommandGroup {
     super(
         /*new OuttakeSlightlyCommand(indexer),*/
         new LowTargetSpinUpCommand(shooter),
-        new IntakeForShooterCommand(intake, indexer, shooter, false, false));
+        new IntakeForShooterCommand(intake, indexer, shooter, false));
     // new SpinDownCommand(shooter));
   }
 }

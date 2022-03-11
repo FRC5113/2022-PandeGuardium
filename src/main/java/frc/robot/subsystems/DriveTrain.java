@@ -75,15 +75,35 @@ public class DriveTrain extends SubsystemBase {
     motor.setSelectedSensorPosition(0); // reset the encoder to have a value of 0
     motor.configOpenloopRamp(RAMP_RATE); // how long it takes to go from 0 to the set speed
     motor.setSensorPhase(true);
+    // motor.config_kP(0, 0.001);
+    // motor.config_kI(0, 0);
+    // motor.config_kD(0, 0);
+    // motor.config_kF(0, 0);
     // Make sure that both sides' encoders are getting positive values when going
     // forward
+  }
+
+  private double computeSpeed(double currentSpeed, double desiredSpeed) {
+    if (Math.abs(desiredSpeed - currentSpeed) >= 0.01) {
+      if (currentSpeed > desiredSpeed) {
+        return currentSpeed - 0.02;
+      } else {
+        return currentSpeed + 0.02;
+      }
+    }
+    return desiredSpeed;
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
     // Controlling the left side and the right side seperately
     // driveBase.tankDrive(leftSpeed, rightSpeed);
-    leftParent.set(leftSpeed);
-    rightParent.set(rightSpeed);
+    // calculate difs
+    // double leftDiff = leftSpeed - leftParent.get();
+    // double rightDiff = rightSpeed - rightParent.get();
+    // double leftAdjustedSpeed, rightAdjustedSpeed;
+    leftParent.set(computeSpeed(leftParent.get(), leftSpeed));
+    rightParent.set(computeSpeed(rightParent.get(), rightSpeed));
+
     SmartDashboard.putNumber("Motorspeed", leftSpeed);
   }
 

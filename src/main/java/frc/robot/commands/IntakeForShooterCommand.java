@@ -17,17 +17,15 @@ public class IntakeForShooterCommand extends CommandBase {
   private Shooter mShooter;
   private boolean mShouldFinish;
   private Timer timer;
-  private boolean mIsAuton;
 
   public IntakeForShooterCommand(
-      Intake intake, Indexer indexer, Shooter shooter, boolean shouldFinish, boolean isAuton) {
+      Intake intake, Indexer indexer, Shooter shooter, boolean shouldFinish) {
     System.out.println("running new intake command");
     addRequirements(intake);
     mIntake = intake;
     mIndexer = indexer;
     mShooter = shooter;
     mShouldFinish = shouldFinish;
-    mIsAuton = isAuton;
     timer = new Timer();
     timer.start();
     System.out.println(shouldFinish + "!!!!!!!!!!!!");
