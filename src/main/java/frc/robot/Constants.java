@@ -62,14 +62,14 @@ public final class Constants {
         0.5; // TODO: Make sure this allows for the control required
 
     // robot constants
-    public static final double gearBoxRatio = 1; // to do
-    public static final double wheelDiameter = 4; // to do
-    public static final double distanceModifier =
-        Math.PI * Units.inchesToMeters(wheelDiameter) / (2048 * gearBoxRatio);
+    public static final double gearBoxRatio = 11.5;
+    public static final double wheelDiameterMeters = Units.inchesToMeters(6.25);
 
     // auton constants
     public static final double autonDistance = 2;
     public static final double autonSpeed = 0.5;
+
+    public static final double encoderConversionFactor = 2048.0;
   }
 
   public static final class LimelightConstants {

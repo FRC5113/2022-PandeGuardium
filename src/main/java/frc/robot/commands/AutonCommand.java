@@ -76,11 +76,11 @@ public class AutonCommand extends CommandBase {
       intake.setSpeed(0);
     }
     // 1.71 seconds to turn 180
-    if (timer.get() >= 2.79 && timer.get() < 4.55) {
+    if (timer.get() >= 2.79 && timer.get() < 4.33) {
       drivetrain.tankDrive(-0.5 * DriveConstants.autonSpeed, -0.5 * DriveConstants.autonSpeed);
     }
 
-    if (timer.get() >= 4.55) {
+    if (timer.get() >= 4.33) {
       drivetrain.tankDrive(0, 0);
     }
 
@@ -110,7 +110,7 @@ public class AutonCommand extends CommandBase {
       shooter.setSpeed(0);
     }
 
-    shooter.setSpeed(flyWheelSpeed); // put this back in
+    // shooter.setSpeed(flyWheelSpeed); // put this back in
   }
 
   @Override

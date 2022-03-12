@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.subsystems.DriveTrain;
 
 public class DriveAutonTimerCommand extends CommandBase {
@@ -15,6 +14,7 @@ public class DriveAutonTimerCommand extends CommandBase {
 
     timer = new Timer();
     timer.start();
+
     this.driveTrain = driveTrain;
   }
 
@@ -23,7 +23,7 @@ public class DriveAutonTimerCommand extends CommandBase {
 
   @Override
   public void execute() {
-    driveTrain.tankDrive(-DriveConstants.autonSpeed, DriveConstants.autonSpeed);
+    driveTrain.tankDrive(0.2, -0.2);
     // driveTrain.curvatureDrive(scale(leftValue.getAsDouble()),
     // scale(rightValue.getAsDouble()));
   }

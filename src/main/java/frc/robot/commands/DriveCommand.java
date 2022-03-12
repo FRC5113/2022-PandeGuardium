@@ -1,5 +1,6 @@
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import java.util.function.DoubleSupplier;
@@ -28,7 +29,9 @@ public class DriveCommand extends CommandBase {
   @Override
   public void execute() {
     // System.out.println("Driving actualy");
-    System.out.println(leftValue.getAsDouble() + " " + rightValue.getAsDouble());
+    // System.out.println(leftValue.getAsDouble() + " " + rightValue.getAsDouble());
+    SmartDashboard.putString(
+        "Joystick Vals", leftValue.getAsDouble() + " " + rightValue.getAsDouble());
     leftVal = scale(leftValue.getAsDouble());
     rightVal = scale(rightValue.getAsDouble());
     /*

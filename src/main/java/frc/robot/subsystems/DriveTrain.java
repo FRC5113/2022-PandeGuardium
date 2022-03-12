@@ -23,6 +23,7 @@ import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -84,14 +85,19 @@ public class DriveTrain extends SubsystemBase {
   }
 
   private double computeSpeed(double currentSpeed, double desiredSpeed) {
-    if (Math.abs(desiredSpeed - currentSpeed) >= 0.01) {
-      if (currentSpeed > desiredSpeed) {
-        return currentSpeed - 0.02;
-      } else {
-        return currentSpeed + 0.02;
+    if ((desiredSpeed > 0 && desiredSpeed > currentSpeed)
+        || (desiredSpeed < 0 && desiredSpeed < currentSpeed)) {
+      if (Math.abs(desiredSpeed - currentSpeed) >= 0.01) {
+        if (currentSpeed > desiredSpeed) {
+          return currentSpeed - 0.02;
+        } else {
+          return currentSpeed + 0.02;
+        }
       }
+      return desiredSpeed;
+    } else {
+      return desiredSpeed;
     }
-    return desiredSpeed;
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -103,7 +109,8 @@ public class DriveTrain extends SubsystemBase {
     // double leftAdjustedSpeed, rightAdjustedSpeed;
     leftParent.set(computeSpeed(leftParent.get(), leftSpeed));
     rightParent.set(computeSpeed(rightParent.get(), rightSpeed));
-
+    System.out.println(
+        "Speed set to " + leftSpeed + " -> " + computeSpeed(leftParent.get(), leftSpeed));
     SmartDashboard.putNumber("Motorspeed", leftSpeed);
   }
 
@@ -156,6 +163,33 @@ public class DriveTrain extends SubsystemBase {
     rightParent.setNeutralMode(NeutralMode.Brake);
     leftChild.setNeutralMode(NeutralMode.Brake);
     rightChild.setNeutralMode(NeutralMode.Brake);
+  }
+
+  private double encoderTicksToMetersDriven(double ticks) {
+    //     ticks > moter rotations       * gear box ratio
+    return ((ticks * 2 * Math.PI * DriveConstants.wheelDiameterMeters)
+        / (DriveConstants.gearBoxRatio * DriveConstants.gearBoxRatio));
+  }
+
+  public void updateSmartDashboardEncoderValues() {
+    SmartDashboard.putString(
+        "Encoders", getLeftMetersDriven() + "L - " + getRightMetersDriven() + "R");
+  }
+
+  public double getRightMetersDriven() {
+    return encoderTicksToMetersDriven(getRawRightEncoderValue());
+  }
+
+  public double getLeftMetersDriven() {
+    return encoderTicksToMetersDriven(getRawLeftEncoderValue());
+  }
+
+  public double getRawRightEncoderValue() {
+    return rightParent.getSelectedSensorPosition(0);
+  }
+
+  public double getRawLeftEncoderValue() {
+    return leftParent.getSelectedSensorPosition(0);
   }
 
   public void resetEncoders() {

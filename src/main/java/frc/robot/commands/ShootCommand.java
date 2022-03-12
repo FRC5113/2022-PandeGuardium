@@ -1,6 +1,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.enums.ShootTarget;
+import frc.robot.enums.ShouldStop;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -20,11 +22,12 @@ public class ShootCommand extends ParallelCommandGroup {
 
 public class ShootCommand extends SequentialCommandGroup {
 
-  public ShootCommand(Shooter shooter, Indexer indexer, Intake intake, Limelight limelight) {
+  public ShootCommand(
+      Shooter shooter, Indexer indexer, Intake intake, Limelight limelight, ShootTarget target) {
     super(
         /*new OuttakeSlightlyCommand(indexer),*/
-        new SpinUpCommand(shooter, limelight, true),
-        new IntakeForShooterCommand(intake, indexer, shooter, false));
+        new SpinUpCommand(shooter, limelight, target),
+        new IntakeForShooterCommand(intake, indexer, shooter, ShouldStop.Yes));
     // new SpinDownCommand(shooter));
   }
 }

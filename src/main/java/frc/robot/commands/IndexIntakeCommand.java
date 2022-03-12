@@ -5,6 +5,8 @@ import static frc.robot.Constants.IntakeConstants.*;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.enums.IntakeSystemMoters;
+import frc.robot.enums.ShouldStop;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 
@@ -13,19 +15,17 @@ public class IndexIntakeCommand extends CommandBase {
 
   private Indexer mIndexer;
   private Intake mIntake;
-  private boolean shouldFinish; // used for auton sequential command
-  private boolean useIntake; // should run the intake
-  private boolean useIndexer; // should run the indexer
+  private ShouldStop shouldStop; // used for auton sequential command
+  private IntakeSystemMoters useMotors;
   private Timer timer; // used to count a second when making sure the ball is being shot
 
   public IndexIntakeCommand(
-      Indexer indexer, Intake intake, boolean shouldFinish, boolean useIndexer, boolean useIntake) {
+      Indexer indexer, Intake intake, IntakeSystemMoters useMotors, ShouldStop shouldStop) {
     addRequirements(indexer, intake);
     mIndexer = indexer;
     mIntake = intake;
-    this.shouldFinish = shouldFinish;
-    this.useIndexer = useIndexer;
-    this.useIntake = useIntake;
+    this.useMotors = useMotors;
+    this.shouldStop = shouldStop;
 
     timer = new Timer();
     timer.start();
@@ -34,17 +34,24 @@ public class IndexIntakeCommand extends CommandBase {
 
   @Override
   public void execute() {
-    if (useIndexer) {
+    if (useMotors.usingIndexer() && useMotors.isForward()) {
       mIndexer.setSpeed(INDEXER_SPEED);
     }
-    if (useIntake) {
+    if (useMotors.usingIntake() && useMotors.isForward()) {
       mIntake.setSpeed(INTAKE_SPEED);
+    }
+
+    if (useMotors.usingIndexer() && useMotors.isBackward()) {
+      mIndexer.setSpeed(-INDEXER_SPEED);
+    }
+    if (useMotors.usingIntake() && useMotors.isBackward()) {
+      mIntake.setSpeed(-INTAKE_SPEED);
     }
   }
 
   @Override
   public boolean isFinished() {
-    if (shouldFinish) {
+    if (shouldStop.shouldStop()) {
       // timer.get() is in seconds
       if (timer.get() > 1) {
         return true;
@@ -55,10 +62,10 @@ public class IndexIntakeCommand extends CommandBase {
 
   @Override
   public void end(boolean interrupted) {
-    if (useIndexer) {
+    if (useMotors.usingIndexer()) {
       mIndexer.stop();
     }
-    if (useIntake) {
+    if (useMotors.usingIntake()) {
       mIntake.stop();
     }
   }

@@ -6,6 +6,7 @@ import static frc.robot.Constants.ShooterConstants.*;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.enums.ShouldStop;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
@@ -15,20 +16,20 @@ public class IntakeForShooterCommand extends CommandBase {
   private Intake mIntake;
   private Indexer mIndexer;
   private Shooter mShooter;
-  private boolean mShouldFinish;
+  private ShouldStop shouldStop;
   private Timer timer;
 
   public IntakeForShooterCommand(
-      Intake intake, Indexer indexer, Shooter shooter, boolean shouldFinish) {
+      Intake intake, Indexer indexer, Shooter shooter, ShouldStop shouldStop) {
     System.out.println("running new intake command");
-    addRequirements(intake);
+    addRequirements(intake, indexer, shooter);
     mIntake = intake;
     mIndexer = indexer;
     mShooter = shooter;
-    mShouldFinish = shouldFinish;
+    this.shouldStop = shouldStop;
     timer = new Timer();
     timer.start();
-    System.out.println(shouldFinish + "!!!!!!!!!!!!");
+    System.out.println(shouldStop.shouldStop() + "!!!!!!!!!!!!");
   }
 
   @Override
@@ -36,12 +37,11 @@ public class IntakeForShooterCommand extends CommandBase {
     // System.out.println("running intake command");
     mIntake.setSpeed(INTAKE_SPEED);
     mIndexer.setSpeed(INDEXER_SPEED);
-    System.out.println(timer.get());
   }
 
   @Override
   public boolean isFinished() {
-    if (mShouldFinish) {
+    if (shouldStop.shouldStop()) {
       // timer.get() is in seconds
       if (timer.get() > 1.5) {
         return true;

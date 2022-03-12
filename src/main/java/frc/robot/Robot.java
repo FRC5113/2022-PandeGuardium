@@ -10,7 +10,6 @@ package frc.robot;
 import static frc.robot.Constants.FlagConstants.*;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveCommand;
@@ -67,13 +66,11 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {}
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
-  Timer x = new Timer();
-
   @Override
   public void autonomousInit() {
-    // m_autonomousCommand = m_robotContainer.getAutonCommand();
+    m_autonomousCommand = m_robotContainer.getAutonCommand();
+    m_robotContainer.driveTrain.resetEncoders();
     m_robotContainer.driveTrain.setAllToBrake();
-    x.start();
 
     // schedule the autonomous command (example)
     if (m_autonomousCommand != null) {
@@ -85,11 +82,13 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     m_robotContainer.driveTrain.getPose();
-    if (x.get() > 5) {
+    m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
+    /*if (x.get() > 5) {
       m_robotContainer.driveTrain.tankDrive(-1, 1);
     } else {
       m_robotContainer.driveTrain.tankDrive(1, -1);
     }
+    m_robotContainer.*/
   }
 
   @Override
@@ -103,6 +102,7 @@ public class Robot extends TimedRobot {
     }
     CommandScheduler.getInstance().cancelAll();
     m_robotContainer.driveTrain.setAllToBrake();
+    m_robotContainer.driveTrain.resetEncoders();
 
     // implement xbox or joystick
     if (driveTrainUseJoystick) {
@@ -137,6 +137,8 @@ public class Robot extends TimedRobot {
     m_robotContainer.driveTrain.putSpeed();
     m_robotContainer.driveTrain.showAngle();
     m_robotContainer.driveTrain.getPose();
+    m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
+
     // System.out.println(m_robotContainer.getControllerLeftY());
     // System.out.println(m_robotContainer.getControllerRightX());
     // m_robotContainer.led.rainbow();
