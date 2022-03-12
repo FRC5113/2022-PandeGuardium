@@ -33,6 +33,7 @@ import frc.robot.commands.SpinDownCommand;
 import frc.robot.enums.IntakeSystemMoters;
 import frc.robot.enums.ShootTarget;
 import frc.robot.enums.ShouldStop;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -56,6 +57,7 @@ public class RobotContainer {
   public Indexer indexer = new Indexer();
   public Limelight limelight = new Limelight();
   public Shooter shooter = new Shooter();
+  public Climber climber = new Climber();
   // public LED led = new LED();
 
   // NOTE: The ports can be rearanged (by drag and drop) in the Driver Station Terminal

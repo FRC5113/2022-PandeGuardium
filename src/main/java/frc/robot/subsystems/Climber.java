@@ -2,70 +2,71 @@ package frc.robot.subsystems;
 
 import static frc.robot.Constants.ClimberConstants.*;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMax.IdleMode;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase {
 
-  private CANSparkMax rightRotate;
-  private CANSparkMax leftRotate;
-  private CANSparkMax rightExtend;
-  private CANSparkMax leftExtend;
+  private WPI_TalonFX rightRotate;
+  private WPI_TalonFX leftRotate;
+  private WPI_TalonFX rightExtend;
+  private WPI_TalonFX leftExtend;
 
   public Climber() {
-    rightRotate = new CANSparkMax(HANGER_RIGHT_ROTATE_ID, MotorType.kBrushless);
-    leftRotate = new CANSparkMax(HANGER_LEFT_ROTATE_ID, MotorType.kBrushless);
-    rightExtend = new CANSparkMax(HANGER_RIGHT_EXTEND_ID, MotorType.kBrushless);
-    leftExtend = new CANSparkMax(HANGER_LEFT_EXTEND_ID, MotorType.kBrushless);
+    rightRotate = new WPI_TalonFX(HANGER_RIGHT_ROTATE_ID);
+    leftRotate = new WPI_TalonFX(HANGER_LEFT_ROTATE_ID);
+    rightExtend = new WPI_TalonFX(HANGER_RIGHT_EXTEND_ID);
+    leftExtend = new WPI_TalonFX(HANGER_LEFT_EXTEND_ID);
 
-    configMotor(rightRotate);
-    configMotor(leftRotate);
-    configMotor(rightExtend);
-    configMotor(leftExtend);
+    leftRotate.set(ControlMode.Follower, rightRotate.getDeviceID());
+    leftExtend.set(ControlMode.Follower, rightExtend.getDeviceID());
+
+    configureMotor(rightRotate);
+    configureMotor(leftRotate);
+    configureMotor(rightExtend);
+    configureMotor(leftExtend);
 
     // shooterParent.set
   }
 
-  public void configMotor(CANSparkMax motor) {
-    motor.restoreFactoryDefaults();
-    motor.setIdleMode(IdleMode.kBrake);
-    motor.enableVoltageCompensation(MAXIMUM_VOLTAGE);
-    motor.setSmartCurrentLimit(MAXIMUM_CURRENT);
-    motor.burnFlash();
+  private void configureMotor(WPI_TalonFX motor) {
+    motor.configFactoryDefault(); // Resetting the motors to make sure there's no junk on there
+    // before configuring
+    // motor.configVoltageCompSaturation(DRIVE_MAX_VOLTAGE); // only use 12.3 volts regardless of
+    // battery voltage
+    // motor.enableVoltageCompensation(true); // enable ^
+    motor.setNeutralMode(
+        NeutralMode.Brake); // set it so that when the motor is getting no input, it stops
+    motor.configSelectedFeedbackSensor(
+        FeedbackDevice.IntegratedSensor); // configure the encoder (it's inside)
+    motor.setSelectedSensorPosition(0); // reset the encoder to have a value of 0
+    motor.configOpenloopRamp(RAMP_RATE); // how long it takes to go from 0 to the set speed
+    motor.setSensorPhase(true);
+    // motor.config_kP(0, 0.001);
+    // motor.config_kI(0, 0);
+    // motor.config_kD(0, 0);
+    // motor.config_kF(0, 0);
+    // Make sure that both sides' encoders are getting positive values when going
+    // forward
   }
 
-  public void extend(boolean right, double speed) {
-    if (right) {
-      rightExtend.set(speed);
-    } else {
-      leftExtend.set(speed);
-    }
+  public void extend(double speed) {
+    leftExtend.set(speed);
   }
 
   // THE RIGHT COULD BE INVERSED
-  public void rotate(boolean right, double speed) {
-    if (right) {
-      rightRotate.set(speed);
-    } else {
-      leftRotate.set(speed);
-    }
+  public void rotate(double speed) {
+    rightRotate.set(speed);
   }
 
   public void stopExtender(boolean right) {
-    if (right) {
-      rightExtend.set(0);
-    } else {
-      leftExtend.set(0);
-    }
+    rightExtend.set(0);
   }
 
   public void stopRotator(boolean right) {
-    if (right) {
-      rightRotate.set(0);
-    } else {
-      leftRotate.set(0);
-    }
+    rightRotate.set(0);
   }
 }

@@ -143,8 +143,7 @@ public final class Constants {
     public static final int HANGER_LEFT_EXTEND_ID = 54;
 
     // Maximum voltage / amp states
-    public static final int MAXIMUM_VOLTAGE = 12;
-    public static final int MAXIMUM_CURRENT = 40;
+    public static final double RAMP_RATE = 0.3;
 
     // Speeds to get something done
     public static final double EXTEND_SPEED = 0.2;
