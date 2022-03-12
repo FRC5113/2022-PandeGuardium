@@ -1,6 +1,6 @@
 package frc.robot.enums;
 
-public enum IntakeSystemMoters {
+public enum IntakeSystemMotors {
   IndexerForwardOnly(true, false, true),
   IntakeForwardOnly(false, true, true),
   IndexerIntakeForward(true, true, true),
@@ -12,7 +12,7 @@ public enum IntakeSystemMoters {
   private final boolean intake;
   private final boolean forward;
 
-  IntakeSystemMoters(boolean indexer, boolean intake, boolean forward) {
+  IntakeSystemMotors(boolean indexer, boolean intake, boolean forward) {
     this.indexer = indexer;
     this.intake = intake;
     this.forward = forward;

@@ -30,7 +30,7 @@ import frc.robot.commands.AutonCommand;
 import frc.robot.commands.IndexIntakeCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.SpinDownCommand;
-import frc.robot.enums.IntakeSystemMoters;
+import frc.robot.enums.IntakeSystemMotors;
 import frc.robot.enums.ShootTarget;
 import frc.robot.enums.ShouldStop;
 import frc.robot.subsystems.Climber;
@@ -133,15 +133,15 @@ public class RobotContainer {
      */
     aButton.whenHeld(
         new IndexIntakeCommand(
-            indexer, intake, IntakeSystemMoters.IndexerIntakeForward, ShouldStop.No));
+            indexer, intake, IntakeSystemMotors.IndexerIntakeForward, ShouldStop.No));
     bButton.whenHeld(
         new IndexIntakeCommand(
-            indexer, intake, IntakeSystemMoters.IndexerIntakeBackward, ShouldStop.No));
+            indexer, intake, IntakeSystemMotors.IndexerIntakeBackward, ShouldStop.No));
     xButton.whenHeld(
         new IndexIntakeCommand(
             indexer,
             intake,
-            IntakeSystemMoters.IndexerForwardOnly,
+            IntakeSystemMotors.IndexerForwardOnly,
             ShouldStop.No)); // uses only the indexer
     // bButton.whenHeld(new IndexerOnlyCommand(indexer));
     // xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight), true);

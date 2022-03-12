@@ -5,7 +5,7 @@ import static frc.robot.Constants.IntakeConstants.*;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.enums.IntakeSystemMoters;
+import frc.robot.enums.IntakeSystemMotors;
 import frc.robot.enums.ShouldStop;
 import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
@@ -16,11 +16,11 @@ public class IndexIntakeCommand extends CommandBase {
   private Indexer mIndexer;
   private Intake mIntake;
   private ShouldStop shouldStop; // used for auton sequential command
-  private IntakeSystemMoters useMotors;
+  private IntakeSystemMotors useMotors;
   private Timer timer; // used to count a second when making sure the ball is being shot
 
   public IndexIntakeCommand(
-      Indexer indexer, Intake intake, IntakeSystemMoters useMotors, ShouldStop shouldStop) {
+      Indexer indexer, Intake intake, IntakeSystemMotors useMotors, ShouldStop shouldStop) {
     addRequirements(indexer, intake);
     mIndexer = indexer;
     mIntake = intake;
