@@ -28,8 +28,6 @@ public class Climber extends SubsystemBase {
     configureMotor(leftRotate);
     configureMotor(rightExtend);
     configureMotor(leftExtend);
-
-    // shooterParent.set
   }
 
   private void configureMotor(WPI_TalonFX motor) {

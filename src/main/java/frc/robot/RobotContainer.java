@@ -26,8 +26,8 @@ import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriveConstants;
+import frc.robot.commands.AutonCommand;
 import frc.robot.commands.IndexIntakeCommand;
-import frc.robot.commands.SequentialTestCommand;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.SpinDownCommand;
 import frc.robot.enums.IntakeSystemMoters;
@@ -295,7 +295,7 @@ public class RobotContainer {
   public Command getAutonCommand() {
     // return new AutonCommand(shooter, indexer, limelight, driveTrain, intake);
     // return new DriveAutonTimerCommand(driveTrain);
-    // return new AutonCommand(shooter, indexer, limelight, driveTrain, intake);
-    return new SequentialTestCommand(shooter, indexer, intake, driveTrain);
+    return new AutonCommand(shooter, indexer, limelight, driveTrain, intake);
+    // return new SequentialTestCommand(shooter, indexer, intake, driveTrain);
   }
 }

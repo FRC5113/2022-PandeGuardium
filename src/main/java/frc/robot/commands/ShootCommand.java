@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.enums.IntakeSystemMoters;
 import frc.robot.enums.ShootTarget;
 import frc.robot.enums.ShouldStop;
 import frc.robot.subsystems.Indexer;
@@ -27,7 +28,7 @@ public class ShootCommand extends SequentialCommandGroup {
     super(
         /*new OuttakeSlightlyCommand(indexer),*/
         new SpinUpCommand(shooter, limelight, target),
-        new IntakeForShooterCommand(intake, indexer, shooter, ShouldStop.Yes));
+        new IndexIntakeCommand(indexer, intake, IntakeSystemMoters.IndexerIntakeForward, ShouldStop.Yes));
     // new SpinDownCommand(shooter));
   }
 }

@@ -53,7 +53,7 @@ public class IndexIntakeCommand extends CommandBase {
   public boolean isFinished() {
     if (shouldStop.shouldStop()) {
       // timer.get() is in seconds
-      if (timer.get() > 1) {
+      if (timer.get() > 1.5) {
         return true;
       }
     }
