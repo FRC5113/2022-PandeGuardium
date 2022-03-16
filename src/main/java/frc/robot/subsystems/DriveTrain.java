@@ -1,13 +1,6 @@
 package frc.robot.subsystems;
 
 import static frc.robot.Constants.DriveTrainConstants.*;
-import static frc.robot.Constants.DriveTrainConstants.DEADBAND;
-import static frc.robot.Constants.DriveTrainConstants.DRIVE_MAX_VOLTAGE;
-import static frc.robot.Constants.DriveTrainConstants.LEFT_CHILD_ID;
-import static frc.robot.Constants.DriveTrainConstants.LEFT_PARENT_ID;
-import static frc.robot.Constants.DriveTrainConstants.RAMP_RATE;
-import static frc.robot.Constants.DriveTrainConstants.RIGHT_CHILD_ID;
-import static frc.robot.Constants.DriveTrainConstants.RIGHT_PARENT_ID;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
@@ -21,7 +14,6 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
 
@@ -69,6 +61,7 @@ public class DriveTrain extends SubsystemBase {
     // motor.configVoltageCompSaturation(DRIVE_MAX_VOLTAGE); // only use 12.3 volts regardless of
     // battery voltage
     // motor.enableVoltageCompensation(true); // enable ^
+    motor.setInverted(!left);
     motor.setNeutralMode(
         NeutralMode.Brake); // set it so that when the motor is getting no input, it stops
     motor.configSelectedFeedbackSensor(
@@ -109,9 +102,9 @@ public class DriveTrain extends SubsystemBase {
     // double leftAdjustedSpeed, rightAdjustedSpeed;
     leftParent.set(computeSpeed(leftParent.get(), leftSpeed));
     rightParent.set(computeSpeed(rightParent.get(), rightSpeed));
-    System.out.println(
-        "Speed set to " + leftSpeed + " -> " + computeSpeed(leftParent.get(), leftSpeed));
-    SmartDashboard.putNumber("Motorspeed", leftSpeed);
+    // System.out.println(
+    //    "Speed set to " + leftSpeed + " -> " + computeSpeed(leftParent.get(), leftSpeed));
+    // SmartDashboard.putNumber("Motorspeed", leftSpeed);
   }
 
   public void tankDriveVolts(double leftSpeed, double rightSpeed) {
@@ -172,8 +165,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void updateSmartDashboardEncoderValues() {
-    SmartDashboard.putString(
-        "Encoders", getLeftMetersDriven() + "L - " + getRightMetersDriven() + "R");
+    // SmartDashboard.putString(
+    //    "Encoders", getLeftMetersDriven() + "L - " + getRightMetersDriven() + "R");
   }
 
   public double getRightMetersDriven() {
@@ -231,15 +224,15 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void showAngle() {
-    SmartDashboard.putNumber("Angle", gyro.getAngle());
+    // SmartDashboard.putNumber("Angle", gyro.getAngle());
   }
 
   public void putSpeed() {
-    SmartDashboard.putNumber(
-        "LeftSpeed", leftParent.getSelectedSensorVelocity() * CONVERSION_RATE_VELOCITY);
-    SmartDashboard.putNumber(
-        "RightSpeed", rightParent.getSelectedSensorVelocity() * -CONVERSION_RATE_VELOCITY);
-    SmartDashboard.putNumber("LeftEncoder", leftParent.getSelectedSensorPosition());
-    SmartDashboard.putNumber("RightEncoder", rightParent.getSelectedSensorVelocity());
+    // SmartDashboard.putNumber(
+    //    "LeftSpeed", leftParent.getSelectedSensorVelocity() * CONVERSION_RATE_VELOCITY);
+    // SmartDashboard.putNumber(
+    //    "RightSpeed", rightParent.getSelectedSensorVelocity() * -CONVERSION_RATE_VELOCITY);
+    // SmartDashboard.putNumber("LeftEncoder", leftParent.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("RightEncoder", rightParent.getSelectedSensorVelocity());
   }
 }

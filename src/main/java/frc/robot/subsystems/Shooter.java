@@ -37,7 +37,7 @@ public class Shooter extends SubsystemBase {
     motor.configFactoryDefault();
     motor.configVoltageCompSaturation(MAX_VOLTAGE);
     motor.enableVoltageCompensation(true);
-    motor.configClosedloopRamp(5);
+    motor.configClosedloopRamp(RAMP_RATE);
     motor.setNeutralMode(NeutralMode.Coast);
     motor.configSelectedFeedbackSensor(FeedbackDevice.IntegratedSensor);
   }
@@ -52,13 +52,13 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getSpeed() {
-    System.out.println(shooterParent.getSelectedSensorVelocity());
-    SmartDashboard.putNumber("FlyWheelVelocity", shooterParent.getSelectedSensorVelocity());
+    // System.out.println(shooterParent.getSelectedSensorVelocity());
+    // SmartDashboard.putNumber("FlyWheelVelocity", shooterParent.getSelectedSensorVelocity());
     return shooterParent.getSelectedSensorVelocity();
   }
 
   public void getCurrent() {
-    SmartDashboard.putNumber("Current", shooterParent.getSupplyCurrent());
+    // SmartDashboard.putNumber("Current", shooterParent.getSupplyCurrent());
   }
 
   /**

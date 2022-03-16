@@ -28,7 +28,8 @@ public class ShootCommand extends SequentialCommandGroup {
     super(
         /*new OuttakeSlightlyCommand(indexer),*/
         new SpinUpCommand(shooter, limelight, target),
-        new IndexIntakeCommand(indexer, intake, IntakeSystemMotors.IndexerIntakeForward, ShouldStop.Yes));
+        new IndexIntakeCommand(
+            indexer, intake, IntakeSystemMotors.IndexerIntakeForward, ShouldStop.Yes));
     // new SpinDownCommand(shooter));
   }
 }

@@ -36,20 +36,21 @@ public class SpinUpCommand extends CommandBase {
     if (flyWheelSpeed < desiredSpeed + ShooterConstants.rampUpRate + 5) {
       flyWheelSpeed += ShooterConstants.rampUpRate;
     }
-    shooter.setSpeed(flyWheelSpeed);
+    if (target == ShootTarget.HIGH_GOAL) shooter.setSpeed(5000);
+    else shooter.setSpeed(2000);
     // shooter.setSpeed(6380); // Why is this not ramping
   }
 
   @Override
   public boolean isFinished() {
     if (flyWheelSpeed >= desiredSpeed) {
-      System.out.println("DONESPINUP");
+      // System.out.println("DONESPINUP");
     }
-    return flyWheelSpeed >= desiredSpeed;
+    return false; // flyWheelSpeed >= desiredSpeed;
   }
 
   @Override
   public void end(boolean interrupted) {
-    flyWheelSpeed = 0;
+    shooter.coast();
   }
 }

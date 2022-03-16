@@ -137,18 +137,20 @@ public class RobotContainer {
     bButton.whenHeld(
         new IndexIntakeCommand(
             indexer, intake, IntakeSystemMotors.IndexerIntakeBackward, ShouldStop.No));
-    xButton.whenHeld(
-        new IndexIntakeCommand(
-            indexer,
-            intake,
-            IntakeSystemMotors.IndexerForwardOnly,
-            ShouldStop.No)); // uses only the indexer
+    /*xButton.whenHeld(
+    new IndexIntakeCommand(
+        indexer,
+        intake,
+        IntakeSystemMotors.IndexerForwardOnly,
+        ShouldStop.No));*/
+    // uses only the indexer
     // bButton.whenHeld(new IndexerOnlyCommand(indexer));
     // xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight), true);
 
     yButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight, ShootTarget.HIGH_GOAL));
+    xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight, ShootTarget.LOW_GOAL));
     // yButton.whenHeld(new SpinUpCommand(shooter, limelight, false));
-    yButton.whenReleased(new SpinDownCommand(shooter));
+    // yButton.whenReleased(new SpinDownCommand(shooter));
     // rightTrigger.whileActiveContinuous(new ShootCommand(shooter, indexer, intake, limelight),
     // true);
     // rightTrigger.whenInactive(new SpinDownCommand(shooter), false);

@@ -22,7 +22,7 @@ public final class Constants {
 
   public static final class FlagConstants {
     /** Use the stand alone joystick (true) over xbox thumbpads (false) */
-    public static final boolean driveTrainUseJoystick = true;
+    public static final boolean driveTrainUseJoystick = false;
   }
 
   public static final class JoystickConstants {
@@ -91,7 +91,7 @@ public final class Constants {
     public static final int RIGHT_CHILD_ID = 22;
 
     public static final double DRIVE_MAX_VOLTAGE = 12.0;
-    public static final double RAMP_RATE = 0.6;
+    public static final double RAMP_RATE = 0.9;
     public static final double DEADBAND = 0.1;
 
     public static final double CONVERSTIONRATETEST =
@@ -103,8 +103,6 @@ public final class Constants {
     public static final double CONVERSION_RATE_POSITION =
         Units.inchesToMeters(6.5) * Math.PI / 2048 / 11.5;
     public static final double rightResistanceAdjustment = 1;
-
-    public static final double rampUpRate = 0.05;
   }
 
   // VLAD: 2/27: TURN THE SPEED WAY DOWN
@@ -158,7 +156,7 @@ public final class Constants {
     public static final int SHOOTER_PARENT_ID = 42;
     public static final int SHOOTER_CHILD_ID = 41;
     public static final double MAX_VOLTAGE = 12.0;
-    // public static final double RAMP_RATE = 5;
+    public static final double RAMP_RATE = 2.5;
 
     public static final double CONVERSION_RATE = 600.0 / 2048; // check on this
 

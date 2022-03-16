@@ -118,7 +118,7 @@ public class Robot extends TimedRobot {
           new DriveCommand(
               m_robotContainer.driveTrain,
               () -> m_robotContainer.getControllerLeftY(),
-              () -> -m_robotContainer.getControllerRightY()));
+              () -> m_robotContainer.getControllerRightX()));
       // m_robotContainer.shooter.setDefaultCommand(new SpinDownCommand(m_robotContainer.shooter));
     }
 
@@ -132,12 +132,17 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    System.out.println(
+        "Left is being sent "
+            + m_robotContainer.getControllerLeftY()
+            + " Right is being sent "
+            + m_robotContainer.getControllerRightX());
     m_robotContainer.shooter.getSpeed();
     m_robotContainer.shooter.getCurrent();
-    m_robotContainer.driveTrain.putSpeed();
-    m_robotContainer.driveTrain.showAngle();
-    m_robotContainer.driveTrain.getPose();
-    m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
+    // m_robotContainer.driveTrain.putSpeed();
+    // m_robotContainer.driveTrain.showAngle();
+    // m_robotContainer.driveTrain.getPose();
+    // m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
 
     // System.out.println(m_robotContainer.getControllerLeftY());
     // System.out.println(m_robotContainer.getControllerRightX());
