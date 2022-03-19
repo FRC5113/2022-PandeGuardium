@@ -22,7 +22,7 @@ public final class Constants {
 
   public static final class FlagConstants {
     /** Use the stand alone joystick (true) over xbox thumbpads (false) */
-    public static final boolean driveTrainUseJoystick = false;
+    public static final boolean driveTrainUseJoystick = true;
   }
 
   public static final class JoystickConstants {
@@ -164,7 +164,7 @@ public final class Constants {
     public static final double kI = 0.000001;
     public static final double kD = 500;
 
-    public static final int rampUpRate = 30;
+    public static final int rampUpRate = 50;
     public static final int rampDownRate = 100;
 
     public static final double testVal = 1000;

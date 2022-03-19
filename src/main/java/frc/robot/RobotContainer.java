@@ -7,25 +7,12 @@
 
 package frc.robot;
 
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.RamseteController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
-import edu.wpi.first.math.trajectory.Trajectory;
-import edu.wpi.first.math.trajectory.TrajectoryConfig;
-import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.math.trajectory.constraint.DifferentialDriveVoltageConstraint;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.RamseteCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.Constants.DriveConstants;
 import frc.robot.commands.AutonCommand;
 import frc.robot.commands.IndexIntakeCommand;
 import frc.robot.commands.ShootCommand;
@@ -39,7 +26,6 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
-import java.util.List;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -189,7 +175,7 @@ public class RobotContainer {
     if (rightSide) {
       return 1 * rightDriveJoystick.getRawAxis(1);
     }
-    return -1 * leftDriveJoystick.getRawAxis(1);
+    return 1 * leftDriveJoystick.getRawAxis(1);
   }
 
   public double getControllerLeftY() {
@@ -214,6 +200,8 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
+  /*
   public Command getAutonomousCommand() {
     DifferentialDriveKinematics difDrive =
         new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
@@ -293,7 +281,7 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
   }
-
+  */
   public Command getAutonCommand() {
     // return new AutonCommand(shooter, indexer, limelight, driveTrain, intake);
     // return new DriveAutonTimerCommand(driveTrain);

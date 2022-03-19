@@ -35,6 +35,7 @@ public class Robot extends TimedRobot {
     // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
+    System.out.println("Initialized robot");
   }
 
   /**
@@ -81,8 +82,9 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    m_robotContainer.driveTrain.getPose();
-    m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
+    // m_robotContainer.driveTrain.getPose();
+    // m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
+
     /*if (x.get() > 5) {
       m_robotContainer.driveTrain.tankDrive(-1, 1);
     } else {
@@ -132,6 +134,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
+    /*
     System.out.println(
         "Left is being sent "
             + m_robotContainer.getControllerLeftY()
@@ -139,6 +142,7 @@ public class Robot extends TimedRobot {
             + m_robotContainer.getControllerRightX());
     m_robotContainer.shooter.getSpeed();
     m_robotContainer.shooter.getCurrent();
+    */
     // m_robotContainer.driveTrain.putSpeed();
     // m_robotContainer.driveTrain.showAngle();
     // m_robotContainer.driveTrain.getPose();

@@ -22,7 +22,7 @@ public class SpinUpCommand extends CommandBase {
     this.target = target;
 
     if (target == ShootTarget.HIGH_GOAL) {
-      desiredSpeed = limelight.getDesiredSpeed();
+      desiredSpeed = 16000; // limelight.getDesiredSpeed();
     } else {
       // Must be low goal
       desiredSpeed = ShooterConstants.lowSpinSpeed;
@@ -33,11 +33,13 @@ public class SpinUpCommand extends CommandBase {
 
   @Override
   public void execute() {
+    System.out.println("executing shoot command");
     if (flyWheelSpeed < desiredSpeed + ShooterConstants.rampUpRate + 5) {
       flyWheelSpeed += ShooterConstants.rampUpRate;
     }
-    if (target == ShootTarget.HIGH_GOAL) shooter.setSpeed(5000);
-    else shooter.setSpeed(2000);
+    shooter.setSpeed(flyWheelSpeed);
+    // if (target == ShootTarget.HIGH_GOAL) shooter.setSpeed(5000);
+    // else shooter.setSpeed(flyWheelSpeed); // shooter.setSpeed(2000);
     // shooter.setSpeed(6380); // Why is this not ramping
   }
 

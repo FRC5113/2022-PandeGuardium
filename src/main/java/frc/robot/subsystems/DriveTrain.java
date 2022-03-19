@@ -7,15 +7,12 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.math.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants.DriveConstants;
 
 public class DriveTrain extends SubsystemBase {
 
@@ -77,6 +74,7 @@ public class DriveTrain extends SubsystemBase {
     // forward
   }
 
+  /*
   private double computeSpeed(double currentSpeed, double desiredSpeed) {
     if ((desiredSpeed > 0 && desiredSpeed > currentSpeed)
         || (desiredSpeed < 0 && desiredSpeed < currentSpeed)) {
@@ -92,6 +90,7 @@ public class DriveTrain extends SubsystemBase {
       return desiredSpeed;
     }
   }
+  */
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
     // Controlling the left side and the right side seperately
@@ -100,8 +99,10 @@ public class DriveTrain extends SubsystemBase {
     // double leftDiff = leftSpeed - leftParent.get();
     // double rightDiff = rightSpeed - rightParent.get();
     // double leftAdjustedSpeed, rightAdjustedSpeed;
-    leftParent.set(computeSpeed(leftParent.get(), leftSpeed));
-    rightParent.set(computeSpeed(rightParent.get(), rightSpeed));
+    // leftParent.set(computeSpeed(leftParent.get(), leftSpeed));
+    // rightParent.set(computeSpeed(rightParent.get(), rightSpeed));
+    leftParent.set(leftSpeed);
+    rightParent.set(rightSpeed);
     // System.out.println(
     //    "Speed set to " + leftSpeed + " -> " + computeSpeed(leftParent.get(), leftSpeed));
     // SmartDashboard.putNumber("Motorspeed", leftSpeed);
@@ -158,6 +159,7 @@ public class DriveTrain extends SubsystemBase {
     rightChild.setNeutralMode(NeutralMode.Brake);
   }
 
+  /*
   private double encoderTicksToMetersDriven(double ticks) {
     //     ticks > moter rotations       * gear box ratio
     return ((ticks * 2 * Math.PI * DriveConstants.wheelDiameterMeters)
@@ -184,6 +186,7 @@ public class DriveTrain extends SubsystemBase {
   public double getRawLeftEncoderValue() {
     return leftParent.getSelectedSensorPosition(0);
   }
+  */
 
   public void resetEncoders() {
     leftParent.setSelectedSensorPosition(0);
@@ -192,13 +195,17 @@ public class DriveTrain extends SubsystemBase {
     rightChild.setSelectedSensorPosition(0);
   }
 
+  /*
   public void resetOdometry(Pose2d pose) {
     resetEncoders();
     odometry.resetPosition(pose, gyro.getRotation2d());
   }
+  */
 
+  /*
   public void periodic() {
     // Update the odometry in the periodic block
+
     odometry.update(
         gyro.getRotation2d(),
         leftParent.getSelectedSensorPosition() * CONVERSION_RATE_POSITION,
@@ -207,6 +214,7 @@ public class DriveTrain extends SubsystemBase {
     var translation = odometry.getPoseMeters().getTranslation();
     m_xEntry.setNumber(translation.getX());
     m_yEntry.setNumber(translation.getY());
+
   }
 
   public DifferentialDriveWheelSpeeds getWheelSpeeds() {
@@ -235,4 +243,5 @@ public class DriveTrain extends SubsystemBase {
     // SmartDashboard.putNumber("LeftEncoder", leftParent.getSelectedSensorPosition());
     // SmartDashboard.putNumber("RightEncoder", rightParent.getSelectedSensorVelocity());
   }
+  */
 }
