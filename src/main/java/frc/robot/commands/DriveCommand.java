@@ -27,7 +27,7 @@ public class DriveCommand extends CommandBase {
 
   @Override
   public void execute() {
-    System.out.println("Executing drive train");
+    // System.out.println("Executing drive train");
     // System.out.println("Driving actualy");
     // System.out.println(leftValue.getAsDouble() + " " + rightValue.getAsDouble());
     // SmartDashboard.putString(
@@ -47,7 +47,7 @@ public class DriveCommand extends CommandBase {
 
     // driveTrain.tankDrive(0.8 * leftVal, 0.8 * rightVal);
 
-    driveTrain.tankDrive(leftVal, rightVal);
+    driveTrain.tankDrive(-leftVal, -rightVal);
 
     // prevLeftValue = leftVal;
     // prevRightValue = rightVal;

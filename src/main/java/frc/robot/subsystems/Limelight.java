@@ -46,11 +46,11 @@ public class Limelight extends SubsystemBase {
     // return 0.0;
     // Add constants once we have them
     // Note: targetHeight and limelightHeight are in feet!
-    // Also, the output is in feet
+    // Also, the output is in feet: not anymore its inches now
     double distance = (targetHeight - limelightHeight) / Math.tan(Math.toRadians(ANGLE + y));
     SmartDashboard.putNumber("distanceToTarget", distance);
     System.out.println("Distance: " + distance);
-    return distance + 2; // 1.5 is accounting for slight offset from the center
+    return (distance + 2) * 12; // 1.5 is accounting for slight offset from the center
   }
 
   // Not working physx equation
@@ -71,7 +71,7 @@ public class Limelight extends SubsystemBase {
   // "better" line of best fit
   public int getDesiredSpeed() {
     double distance = getDistaceToTarget();
-    int desiredSpeed = (int) (11420 + (194.15 * distance) + 13.64375 * (distance * distance));
+    int desiredSpeed = (int) (10672.77 + (27.198 * distance) + 0.07768734 * (distance * distance));
     return desiredSpeed;
   }
 }

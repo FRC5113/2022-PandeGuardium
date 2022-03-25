@@ -10,30 +10,47 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class Climber extends SubsystemBase {
 
-  private WPI_TalonFX rightRotate;
+  // private WPI_TalonFX rightRotate;
   private WPI_TalonFX leftRotate;
-  private WPI_TalonFX rightExtend;
-  private WPI_TalonFX leftExtend;
+  // private WPI_TalonFX rightArmLeftExtend;
+  // private WPI_TalonFX rightArmRightExtend;
+  private WPI_TalonFX leftArmLeftExtend;
+  private WPI_TalonFX leftArmRightExtend;
 
   public Climber() {
-    rightRotate = new WPI_TalonFX(HANGER_RIGHT_ROTATE_ID);
-    leftRotate = new WPI_TalonFX(HANGER_LEFT_ROTATE_ID);
-    rightExtend = new WPI_TalonFX(HANGER_RIGHT_EXTEND_ID);
-    leftExtend = new WPI_TalonFX(HANGER_LEFT_EXTEND_ID);
+    // rightRotate = new WPI_TalonFX(HANGER_RIGHT_ROTATE_ID);
+    // leftRotate = new WPI_TalonFX(HANGER_LEFT_ROTATE_ID);
 
-    configureMotor(rightRotate);
-    configureMotor(leftRotate);
-    configureMotor(rightExtend);
-    configureMotor(leftExtend);
+    // rightArmLeftExtend = new WPI_TalonFX(HANGER_RIGHT_ARM_LEFT_EXTEND_ID);
+    // rightArmRightExtend = new WPI_TalonFX(HANGER_RIGHT_ARM_RIGHT_EXTEND_ID);
+    leftArmLeftExtend = new WPI_TalonFX(HANGER_LEFT_ARM_LEFT_EXTEND_ID);
+    leftArmRightExtend = new WPI_TalonFX(HANGER_LEFT_ARM_RIGHT_EXTEND_ID);
 
-    leftRotate.set(ControlMode.Follower, rightRotate.getDeviceID());
-    leftExtend.set(ControlMode.Follower, rightExtend.getDeviceID());
+    // configureMotor(rightRotate);
+    // configureMotor(leftRotate);
+
+    // configureMotor(rightArmLeftExtend);
+    // configureMotor(rightArmRightExtend);
+    configureMotor(leftArmLeftExtend);
+    configureMotor(leftArmRightExtend);
+
+    // rightRotate.setInverted(true); //not sure if this line is needed
+    // rightRotate.set(ControlMode.Follower, leftRotate.getDeviceID());
+
+    // leftArmRightExtend.setInverted(true);
+    leftArmRightExtend.set(ControlMode.Follower, leftArmLeftExtend.getDeviceID());
+
+    // rightArmLeftExtend.set(ControlMode.Follower,
+    // leftArmLeftExtend.getDeviceID());
+    // rightArmRightExtend.set(ControlMode.Follower,
+    // rightArmLeftExtend.getDeviceID());
   }
 
   private void configureMotor(WPI_TalonFX motor) {
     motor.configFactoryDefault(); // Resetting the motors to make sure there's no junk on there
     // before configuring
-    // motor.configVoltageCompSaturation(DRIVE_MAX_VOLTAGE); // only use 12.3 volts regardless of
+    // motor.configVoltageCompSaturation(DRIVE_MAX_VOLTAGE); // only use 12.3 volts
+    // regardless of
     // battery voltage
     // motor.enableVoltageCompensation(true); // enable ^
     motor.setNeutralMode(
@@ -52,19 +69,19 @@ public class Climber extends SubsystemBase {
   }
 
   public void extend(double speed) {
-    rightExtend.set(speed);
+    leftArmLeftExtend.set(speed);
   }
 
   // THE RIGHT COULD BE INVERSED
   public void rotate(double speed) {
-    rightRotate.set(speed);
+    leftRotate.set(speed);
   }
 
-  public void stopExtender(boolean right) {
-    rightExtend.set(0);
+  public void stopExtender() {
+    leftArmLeftExtend.set(0);
   }
 
-  public void stopRotator(boolean right) {
-    rightRotate.set(0);
+  public void stopRotator() {
+    leftRotate.set(0);
   }
 }

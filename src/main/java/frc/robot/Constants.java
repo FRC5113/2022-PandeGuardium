@@ -134,11 +134,15 @@ public final class Constants {
   }
 
   public static final class ClimberConstants {
-    // Can IDs of the four motors: 2 for rotating and 2 for extanding
-    public static final int HANGER_RIGHT_ROTATE_ID = 51;
-    public static final int HANGER_LEFT_ROTATE_ID = 52;
-    public static final int HANGER_RIGHT_EXTEND_ID = 53;
-    public static final int HANGER_LEFT_EXTEND_ID = 54;
+    // Can IDs of the six motors: 2 for rotating and 4 for extanding
+
+    public static final int HANGER_LEFT_ROTATE_ID = 50;
+    public static final int HANGER_RIGHT_ROTATE_ID = 50;
+
+    public static final int HANGER_LEFT_ARM_LEFT_EXTEND_ID = 51;
+    public static final int HANGER_LEFT_ARM_RIGHT_EXTEND_ID = 51;
+    public static final int HANGER_RIGHT_ARM_LEFT_EXTEND_ID = 55;
+    public static final int HANGER_RIGHT_ARM_RIGHT_EXTEND_ID = 56;
 
     // Maximum voltage / amp states
     public static final double RAMP_RATE = 0.3;

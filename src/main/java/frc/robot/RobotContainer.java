@@ -14,9 +14,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AutonCommand;
+import frc.robot.commands.ClimbExtendCommand;
+import frc.robot.commands.ClimbRotateCommand;
 import frc.robot.commands.IndexIntakeCommand;
 import frc.robot.commands.ShootCommand;
-import frc.robot.commands.SpinDownCommand;
+import frc.robot.enums.ClimbDirection;
+import frc.robot.enums.ClimbRotationDirection;
 import frc.robot.enums.IntakeSystemMotors;
 import frc.robot.enums.ShootTarget;
 import frc.robot.enums.ShouldStop;
@@ -56,10 +59,12 @@ public class RobotContainer {
   public JoystickButton bButton = new JoystickButton(xboxController, 2);
   public JoystickButton xButton = new JoystickButton(xboxController, 3);
   public JoystickButton yButton = new JoystickButton(xboxController, 4);
+  public JoystickButton lbButton = new JoystickButton(xboxController, 5);
   public JoystickButton rbButton = new JoystickButton(xboxController, 6);
   public JoystickButton backButton = new JoystickButton(xboxController, 7);
   // xbox trigger
   public Trigger rightTrigger = new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75));
+  public Trigger leftTrigger = new Trigger(() -> (xboxController.getLeftTriggerAxis() > 0.75));
 
   public RobotContainer() {
     // Configure the button bindings
@@ -119,10 +124,10 @@ public class RobotContainer {
      */
     aButton.whenHeld(
         new IndexIntakeCommand(
-            indexer, intake, IntakeSystemMotors.IndexerIntakeForward, ShouldStop.No));
+            indexer, intake, shooter, IntakeSystemMotors.IndexerIntakeForward, ShouldStop.No));
     bButton.whenHeld(
         new IndexIntakeCommand(
-            indexer, intake, IntakeSystemMotors.IndexerIntakeBackward, ShouldStop.No));
+            indexer, intake, shooter, IntakeSystemMotors.IndexerIntakeBackward, ShouldStop.No));
     /*xButton.whenHeld(
     new IndexIntakeCommand(
         indexer,
@@ -143,8 +148,15 @@ public class RobotContainer {
 
     // xButton.toggleWhenActive();
 
-    rbButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight, ShootTarget.LOW_GOAL));
-    rbButton.whenReleased(new SpinDownCommand(shooter));
+    lbButton.whenHeld(new ClimbExtendCommand(climber, ClimbDirection.UP));
+    rbButton.whenHeld(new ClimbExtendCommand(climber, ClimbDirection.DOWN));
+
+    leftTrigger.whenActive(new ClimbRotateCommand(climber, ClimbRotationDirection.FORWARD));
+    rightTrigger.whenActive(new ClimbRotateCommand(climber, ClimbRotationDirection.BACKWARD));
+
+    // rbButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight,
+    // ShootTarget.LOW_GOAL));
+    // rbButton.whenReleased(new SpinDownCommand(shooter));
     /*
     xButton
         .whenHeld(new SpinUpCommand(shooter, limelight, true))

@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
 
   private RobotContainer m_robotContainer;
 
+  // private static Logger log = LogManager.getLogger(Robot.class.getName());
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -55,6 +56,9 @@ public class Robot extends TimedRobot {
     // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+
+    // log some information about the robot always
+    // log.info("voltage: " + RobotController.getBatteryVoltage());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */

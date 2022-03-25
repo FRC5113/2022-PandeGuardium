@@ -12,14 +12,16 @@ public class DriveAutonTimerCommand extends CommandBase {
   public DriveAutonTimerCommand(DriveTrain driveTrain) {
     addRequirements(driveTrain);
 
-    timer = new Timer();
-    timer.start();
+    
 
     this.driveTrain = driveTrain;
   }
 
   @Override
-  public void initialize() {}
+  public void initialize() {
+    timer = new Timer();
+    timer.start();
+  }
 
   @Override
   public void execute() {

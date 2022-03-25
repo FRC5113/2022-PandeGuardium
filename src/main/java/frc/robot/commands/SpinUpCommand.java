@@ -18,14 +18,19 @@ public class SpinUpCommand extends CommandBase {
     this.shooter = shooter;
     this.limelight = limelight;
     // shooter.coast();
-    flyWheelSpeed = shooter.getSpeed();
+    // flyWheelSpeed = shooter.getSpeed();
+    flyWheelSpeed = 0;
     this.target = target;
 
-    if (target == ShootTarget.HIGH_GOAL) {
-      desiredSpeed = 16000; // limelight.getDesiredSpeed();
+    if (target == ShootTarget.LOW_GOAL) {
+      desiredSpeed = 9000; // limelight.getDesiredSpeed();
     } else {
       // Must be low goal
-      desiredSpeed = ShooterConstants.lowSpinSpeed;
+
+      desiredSpeed = limelight.getDesiredSpeed();
+      if (limelight.getDistaceToTarget() > 192) {
+        desiredSpeed = 25000;
+      }
     }
     // this.shouldNotStop = shouldNotStop;
     // System.out.println("Running spinup command");
@@ -46,13 +51,19 @@ public class SpinUpCommand extends CommandBase {
   @Override
   public boolean isFinished() {
     if (flyWheelSpeed >= desiredSpeed) {
-      // System.out.println("DONESPINUP");
+      return true;
     }
     return false; // flyWheelSpeed >= desiredSpeed;
   }
 
   @Override
   public void end(boolean interrupted) {
-    shooter.coast();
+    if (flyWheelSpeed >= desiredSpeed) {
+      shooter.setSpeed(desiredSpeed);
+    } else {
+      shooter.coast();
+    }
+    flyWheelSpeed = 0;
+    // shooter.coast();
   }
 }
