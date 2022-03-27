@@ -13,13 +13,9 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.AutonCommand;
-import frc.robot.commands.ClimbExtendCommand;
-import frc.robot.commands.ClimbRotateCommand;
 import frc.robot.commands.IndexIntakeCommand;
+import frc.robot.commands.OneBallsAuton;
 import frc.robot.commands.ShootCommand;
-import frc.robot.enums.ClimbDirection;
-import frc.robot.enums.ClimbRotationDirection;
 import frc.robot.enums.IntakeSystemMotors;
 import frc.robot.enums.ShootTarget;
 import frc.robot.enums.ShouldStop;
@@ -49,7 +45,8 @@ public class RobotContainer {
   public Climber climber = new Climber();
   // public LED led = new LED();
 
-  // NOTE: The ports can be rearanged (by drag and drop) in the Driver Station Terminal
+  // NOTE: The ports can be rearanged (by drag and drop) in the Driver Station
+  // Terminal
   private Joystick leftDriveJoystick = new Joystick(0); // should be in port 0
   private Joystick rightDriveJoystick = new Joystick(1); // should be in port 1
   public XboxController xboxController = new XboxController(2); // should be in port 2
@@ -61,6 +58,7 @@ public class RobotContainer {
   public JoystickButton yButton = new JoystickButton(xboxController, 4);
   public JoystickButton lbButton = new JoystickButton(xboxController, 5);
   public JoystickButton rbButton = new JoystickButton(xboxController, 6);
+  public JoystickButton startButton = new JoystickButton(xboxController, 8);
   public JoystickButton backButton = new JoystickButton(xboxController, 7);
   // xbox trigger
   public Trigger rightTrigger = new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75));
@@ -86,33 +84,36 @@ public class RobotContainer {
     // .whenReleased(() -> driveTrain.setMaxOutput(1));
 
     // new JoystickButton(xboxController, xboxAButton) // toggleWhenActive???
-    //     .toggleWhenActive(new IndexerCommand(indexer), false);
-
-    /*new JoystickButton(xboxController, xboxRightBumper)
-        .whileHeld(new IndexCommand(indexer), false);
-
-    new JoystickButton(xboxController, xboxBButton)
-        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet17halffront));
-
-    new JoystickButton(xboxController, xboxAButton)
-        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet12halffront));
-
-    new JoystickButton(xboxController, xboxXButton)
-        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet7halffront));
-
-    new JoystickButton(xboxController, xboxYButton)
-        .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet7halfback));
-
-    //new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75))
-    //    .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet17halffront));
-
-    new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75))
-          .whileActiveContinuous(new IndexCommand(indexer), false);*/
+    // .toggleWhenActive(new IndexerCommand(indexer), false);
 
     /*
-        new Trigger(() -> (xboxController.getLeftTriggerAxis() > 0.75))
-            .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
-    */
+     * new JoystickButton(xboxController, xboxRightBumper)
+     * .whileHeld(new IndexCommand(indexer), false);
+     *
+     * new JoystickButton(xboxController, xboxBButton)
+     * .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet17halffront));
+     *
+     * new JoystickButton(xboxController, xboxAButton)
+     * .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet12halffront));
+     *
+     * new JoystickButton(xboxController, xboxXButton)
+     * .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet7halffront));
+     *
+     * new JoystickButton(xboxController, xboxYButton)
+     * .whileActiveContinuous(new SpinUpCommand(shooter, hopper, feet7halfback));
+     *
+     * //new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75))
+     * // .whileActiveContinuous(new SpinUpCommand(shooter, hopper,
+     * feet17halffront));
+     *
+     * new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75))
+     * .whileActiveContinuous(new IndexCommand(indexer), false);
+     */
+
+    /*
+     * new Trigger(() -> (xboxController.getLeftTriggerAxis() > 0.75))
+     * .whileActiveContinuous(new CenterTargetRobot(driveTrain, limelight));
+     */
     // toggleWhenActive => push to turn on, push to turn off
     // toggleWhenPressed => ??????
     // whenPressed => When but pressed
@@ -128,46 +129,56 @@ public class RobotContainer {
     bButton.whenHeld(
         new IndexIntakeCommand(
             indexer, intake, shooter, IntakeSystemMotors.IndexerIntakeBackward, ShouldStop.No));
-    /*xButton.whenHeld(
-    new IndexIntakeCommand(
-        indexer,
-        intake,
-        IntakeSystemMotors.IndexerForwardOnly,
-        ShouldStop.No));*/
+    /*
+     * xButton.whenHeld(
+     * new IndexIntakeCommand(
+     * indexer,
+     * intake,
+     * IntakeSystemMotors.IndexerForwardOnly,
+     * ShouldStop.No));
+     */
     // uses only the indexer
     // bButton.whenHeld(new IndexerOnlyCommand(indexer));
-    // xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight), true);
+    // xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight),
+    // true);
 
     yButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight, ShootTarget.HIGH_GOAL));
     xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight, ShootTarget.LOW_GOAL));
     // yButton.whenHeld(new SpinUpCommand(shooter, limelight, false));
     // yButton.whenReleased(new SpinDownCommand(shooter));
-    // rightTrigger.whileActiveContinuous(new ShootCommand(shooter, indexer, intake, limelight),
+    // rightTrigger.whileActiveContinuous(new ShootCommand(shooter, indexer, intake,
+    // limelight),
     // true);
     // rightTrigger.whenInactive(new SpinDownCommand(shooter), false);
 
     // xButton.toggleWhenActive();
 
-    lbButton.whenHeld(new ClimbExtendCommand(climber, ClimbDirection.UP));
-    rbButton.whenHeld(new ClimbExtendCommand(climber, ClimbDirection.DOWN));
+    // lbButton.whenHeld(new ClimbExtendCommand(climber, ClimbDirection.DOWN));
+    // rbButton.whenHeld(new ClimbExtendCommand(climber, ClimbDirection.UP));
 
-    leftTrigger.whenActive(new ClimbRotateCommand(climber, ClimbRotationDirection.FORWARD));
-    rightTrigger.whenActive(new ClimbRotateCommand(climber, ClimbRotationDirection.BACKWARD));
+    /*
+    if (FlagConstants.retractClimbersIndividually) {
+      backButton.whenHeld(new RetractLeftClimberCommand(climber));
+      startButton.whenHeld(new RetractRightClimberCommand(climber));
+    }
+
+    */
 
     // rbButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight,
     // ShootTarget.LOW_GOAL));
     // rbButton.whenReleased(new SpinDownCommand(shooter));
     /*
-    xButton
-        .whenHeld(new SpinUpCommand(shooter, limelight, true))
-        .whenReleased(new SpinDownCommand(shooter));
-    */
+     * xButton
+     * .whenHeld(new SpinUpCommand(shooter, limelight, true))
+     * .whenReleased(new SpinDownCommand(shooter));
+     */
     // yButton.whenHeld(new OuttakeCommand(intake, indexer));
     // yButton.whenHeld(new IndexerOnlyCommand(indexer));
 
     // rbButton.whenHeld(new CenterTargetRobotCommand(driveTrain, limelight));
 
-    // backButton.whenPressed(new StopAllMotersCommand(indexer, intake, shooter, driveTrain));
+    // backButton.whenPressed(new StopAllMotersCommand(indexer, intake, shooter,
+    // driveTrain));
 
     // aButton.toggleWhenActive(new IntakeCommand(intake));
     // bButton.toggleWhenActive(new IndexerCommand(indexer));
@@ -214,90 +225,94 @@ public class RobotContainer {
    */
 
   /*
-  public Command getAutonomousCommand() {
-    DifferentialDriveKinematics difDrive =
-        new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
-
-    // Create a voltage constraint to ensure we don't accelerate too fast
-    var autoVoltageConstraint =
-        new DifferentialDriveVoltageConstraint(
-            new SimpleMotorFeedforward(
-                DriveConstants.ksVolts,
-                DriveConstants.kvVoltSecondsPerMeter,
-                DriveConstants.kaVoltSecondsSquaredPerMeter),
-            difDrive,
-            12);
-
-    // Create config for trajectory
-    TrajectoryConfig config =
-        new TrajectoryConfig(
-                DriveConstants.kMaxSpeedMetersPerSecond,
-                DriveConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(difDrive)
-            // Apply the voltage constraint
-            .addConstraint(autoVoltageConstraint);
-
-    // An example trajectory to follow. All units in meters.
-
-    // String trajectoryJSON = "paths/output/AutonTestPathRapidReact.wpilib.json";
-    Trajectory trajectory = new Trajectory();
-
-    // try {
-    // System.out.println("Constacting " +
-    // Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON).toString());
-    // Path trajectoryPath =
-    // Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
-    // trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
-    // } catch (IOException ex) {
-    // // DriverStation.reportError("Unable to open trajectory: " + trajectoryJSON,
-    // ex.getStackTrace());
-    // System.out.println("No, it not work" + ex.getStackTrace());
-    // }
-
-    trajectory =
-        TrajectoryGenerator.generateTrajectory(
-            // Start at the origin facing the +X direction
-            new Pose2d(0, 0, new Rotation2d(0)),
-            // Pass through these two interior waypoints, making an 's' curve path
-            List.of(new Translation2d(3, 0)),
-            // End 3 meters straight ahead of where we started, facing forward
-            new Pose2d(3, 0, new Rotation2d(0.0)),
-            // Pass confi
-            config);
-
-    RamseteCommand ramseteCommand =
-        new RamseteCommand(
-            trajectory,
-            driveTrain::getPose,
-            new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
-            new SimpleMotorFeedforward(
-                DriveConstants.ksVolts,
-                DriveConstants.kvVoltSecondsPerMeter,
-                DriveConstants.kaVoltSecondsSquaredPerMeter),
-            difDrive,
-            driveTrain::getWheelSpeeds,
-            new PIDController(DriveConstants.kPDriveVel, 0, 0),
-            new PIDController(DriveConstants.kPDriveVel, 0, 0),
-            // RamseteCommand passes volts to the callback
-            driveTrain::tankDriveVolts,
-            driveTrain);
-
-    // Reset odometry to the starting pose of the trajectory.
-    // Pose2d autoPose = new Pose2d(new Translation2d(0.235, 4.326), new
-    // Rotation2d(0.0));
-    driveTrain.resetOdometry(trajectory.getInitialPose());
-    // driveTrain.resetEncoders();
-    // driveTrain.resetGyro();
-
-    // Run path following command, then stop at the end.
-    return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
-  }
-  */
+   * public Command getAutonomousCommand() {
+   * DifferentialDriveKinematics difDrive =
+   * new DifferentialDriveKinematics(DriveConstants.kTrackwidthMeters);
+   *
+   * // Create a voltage constraint to ensure we don't accelerate too fast
+   * var autoVoltageConstraint =
+   * new DifferentialDriveVoltageConstraint(
+   * new SimpleMotorFeedforward(
+   * DriveConstants.ksVolts,
+   * DriveConstants.kvVoltSecondsPerMeter,
+   * DriveConstants.kaVoltSecondsSquaredPerMeter),
+   * difDrive,
+   * 12);
+   *
+   * // Create config for trajectory
+   * TrajectoryConfig config =
+   * new TrajectoryConfig(
+   * DriveConstants.kMaxSpeedMetersPerSecond,
+   * DriveConstants.kMaxAccelerationMetersPerSecondSquared)
+   * // Add kinematics to ensure max speed is actually obeyed
+   * .setKinematics(difDrive)
+   * // Apply the voltage constraint
+   * .addConstraint(autoVoltageConstraint);
+   *
+   * // An example trajectory to follow. All units in meters.
+   *
+   * // String trajectoryJSON =
+   * "paths/output/AutonTestPathRapidReact.wpilib.json";
+   * Trajectory trajectory = new Trajectory();
+   *
+   * // try {
+   * // System.out.println("Constacting " +
+   * //
+   * Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON).toString());
+   * // Path trajectoryPath =
+   * // Filesystem.getDeployDirectory().toPath().resolve(trajectoryJSON);
+   * // trajectory = TrajectoryUtil.fromPathweaverJson(trajectoryPath);
+   * // } catch (IOException ex) {
+   * // // DriverStation.reportError("Unable to open trajectory: " +
+   * trajectoryJSON,
+   * // ex.getStackTrace());
+   * // System.out.println("No, it not work" + ex.getStackTrace());
+   * // }
+   *
+   * trajectory =
+   * TrajectoryGenerator.generateTrajectory(
+   * // Start at the origin facing the +X direction
+   * new Pose2d(0, 0, new Rotation2d(0)),
+   * // Pass through these two interior waypoints, making an 's' curve path
+   * List.of(new Translation2d(3, 0)),
+   * // End 3 meters straight ahead of where we started, facing forward
+   * new Pose2d(3, 0, new Rotation2d(0.0)),
+   * // Pass confi
+   * config);
+   *
+   * RamseteCommand ramseteCommand =
+   * new RamseteCommand(
+   * trajectory,
+   * driveTrain::getPose,
+   * new RamseteController(DriveConstants.kRamseteB, DriveConstants.kRamseteZeta),
+   * new SimpleMotorFeedforward(
+   * DriveConstants.ksVolts,
+   * DriveConstants.kvVoltSecondsPerMeter,
+   * DriveConstants.kaVoltSecondsSquaredPerMeter),
+   * difDrive,
+   * driveTrain::getWheelSpeeds,
+   * new PIDController(DriveConstants.kPDriveVel, 0, 0),
+   * new PIDController(DriveConstants.kPDriveVel, 0, 0),
+   * // RamseteCommand passes volts to the callback
+   * driveTrain::tankDriveVolts,
+   * driveTrain);
+   *
+   * // Reset odometry to the starting pose of the trajectory.
+   * // Pose2d autoPose = new Pose2d(new Translation2d(0.235, 4.326), new
+   * // Rotation2d(0.0));
+   * driveTrain.resetOdometry(trajectory.getInitialPose());
+   * // driveTrain.resetEncoders();
+   * // driveTrain.resetGyro();
+   *
+   * // Run path following command, then stop at the end.
+   * return ramseteCommand.andThen(() -> driveTrain.tankDriveVolts(0, 0));
+   * }
+   */
   public Command getAutonCommand() {
     // return new AutonCommand(shooter, indexer, limelight, driveTrain, intake);
     // return new DriveAutonTimerCommand(driveTrain);
-    return new AutonCommand(shooter, indexer, limelight, driveTrain, intake);
+    // return null;
+    return new OneBallsAuton(shooter, indexer, limelight, driveTrain, intake);
     // return new SequentialTestCommand(shooter, indexer, intake, driveTrain);
   }
 }

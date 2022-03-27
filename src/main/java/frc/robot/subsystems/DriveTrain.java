@@ -47,11 +47,19 @@ public class DriveTrain extends SubsystemBase {
     driveBase.setDeadband(DEADBAND);
     driveBase.setSafetyEnabled(false);
 
+    // setAllToBrake();
+
     gyro = new AHRS(SPI.Port.kMXP);
     gyro.enableLogging(true);
     odometry = new DifferentialDriveOdometry(gyro.getRotation2d());
   }
 
+  /**
+   * Configure the moters to make sure that their settings are correct
+   *
+   * @param motor Your moter
+   * @param left Wether its located on the left side of the robot in the direction it is facing
+   */
   private void configureMotor(WPI_TalonFX motor, boolean left) {
     motor.configFactoryDefault(); // Resetting the motors to make sure there's no junk on there
     // before configuring
@@ -101,8 +109,8 @@ public class DriveTrain extends SubsystemBase {
     // double leftAdjustedSpeed, rightAdjustedSpeed;
     // leftParent.set(computeSpeed(leftParent.get(), leftSpeed));
     // rightParent.set(computeSpeed(rightParent.get(), rightSpeed));
-    leftParent.set(leftSpeed);
-    rightParent.set(rightSpeed);
+    leftParent.set(leftSpeed * driveTrainRampDown);
+    rightParent.set(rightSpeed * driveTrainRampDown);
     // System.out.println(
     //    "Speed set to " + leftSpeed + " -> " + computeSpeed(leftParent.get(), leftSpeed));
     // SmartDashboard.putNumber("Motorspeed", leftSpeed);

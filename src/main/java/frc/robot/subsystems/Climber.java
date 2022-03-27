@@ -12,38 +12,38 @@ public class Climber extends SubsystemBase {
 
   // private WPI_TalonFX rightRotate;
   private WPI_TalonFX leftRotate;
-  // private WPI_TalonFX rightArmLeftExtend;
-  // private WPI_TalonFX rightArmRightExtend;
-  private WPI_TalonFX leftArmLeftExtend;
-  private WPI_TalonFX leftArmRightExtend;
+  private WPI_TalonFX rightArmMasterExtend;
+  private WPI_TalonFX rightArmSlaveExtend;
+  private WPI_TalonFX leftArmMasterExtend;
+  private WPI_TalonFX leftArmSlaveExtend;
 
   public Climber() {
     // rightRotate = new WPI_TalonFX(HANGER_RIGHT_ROTATE_ID);
     // leftRotate = new WPI_TalonFX(HANGER_LEFT_ROTATE_ID);
 
-    // rightArmLeftExtend = new WPI_TalonFX(HANGER_RIGHT_ARM_LEFT_EXTEND_ID);
-    // rightArmRightExtend = new WPI_TalonFX(HANGER_RIGHT_ARM_RIGHT_EXTEND_ID);
-    leftArmLeftExtend = new WPI_TalonFX(HANGER_LEFT_ARM_LEFT_EXTEND_ID);
-    leftArmRightExtend = new WPI_TalonFX(HANGER_LEFT_ARM_RIGHT_EXTEND_ID);
+    rightArmMasterExtend = new WPI_TalonFX(HANGER_RIGHT_ARM_MASTER_EXTEND_ID);
+    rightArmSlaveExtend = new WPI_TalonFX(HANGER_RIGHT_ARM_SLAVE_EXTEND_ID);
+    leftArmMasterExtend = new WPI_TalonFX(HANGER_LEFT_ARM_MASTER_EXTEND_ID);
+    leftArmSlaveExtend = new WPI_TalonFX(HANGER_LEFT_ARM_SLAVE_EXTEND_ID);
 
     // configureMotor(rightRotate);
     // configureMotor(leftRotate);
 
-    // configureMotor(rightArmLeftExtend);
-    // configureMotor(rightArmRightExtend);
-    configureMotor(leftArmLeftExtend);
-    configureMotor(leftArmRightExtend);
+    configureMotor(rightArmMasterExtend);
+    configureMotor(rightArmSlaveExtend);
+    configureMotor(leftArmMasterExtend);
+    configureMotor(leftArmSlaveExtend);
 
     // rightRotate.setInverted(true); //not sure if this line is needed
     // rightRotate.set(ControlMode.Follower, leftRotate.getDeviceID());
 
-    // leftArmRightExtend.setInverted(true);
-    leftArmRightExtend.set(ControlMode.Follower, leftArmLeftExtend.getDeviceID());
+    leftArmSlaveExtend.set(ControlMode.Follower, leftArmMasterExtend.getDeviceID());
 
-    // rightArmLeftExtend.set(ControlMode.Follower,
-    // leftArmLeftExtend.getDeviceID());
-    // rightArmRightExtend.set(ControlMode.Follower,
-    // rightArmLeftExtend.getDeviceID());
+    rightArmMasterExtend.setInverted(true);
+
+    // rightArmMasterExtend.set(ControlMode.Follower, leftArmMasterExtend.getDeviceID());
+    // rightArmSlaveExtend.set(ControlMode.Follower, rightArmMasterExtend.getDeviceID());
+    rightArmSlaveExtend.setInverted(true);
   }
 
   private void configureMotor(WPI_TalonFX motor) {
@@ -53,12 +53,11 @@ public class Climber extends SubsystemBase {
     // regardless of
     // battery voltage
     // motor.enableVoltageCompensation(true); // enable ^
-    motor.setNeutralMode(
-        NeutralMode.Brake); // set it so that when the motor is getting no input, it stops
+    motor.setNeutralMode(NeutralMode.Brake); // break for that nice controlability
     motor.configSelectedFeedbackSensor(
         FeedbackDevice.IntegratedSensor); // configure the encoder (it's inside)
     motor.setSelectedSensorPosition(0); // reset the encoder to have a value of 0
-    motor.configOpenloopRamp(RAMP_RATE); // how long it takes to go from 0 to the set speed
+    // motor.configOpenloopRamp(RAMP_RATE); // how long it takes to go from 0 to the set speed
     motor.setSensorPhase(true);
     // motor.config_kP(0, 0.001);
     // motor.config_kI(0, 0);
@@ -68,8 +67,13 @@ public class Climber extends SubsystemBase {
     // forward
   }
 
-  public void extend(double speed) {
-    leftArmLeftExtend.set(speed);
+  public void extendLeft(double speed) {
+    leftArmMasterExtend.set(speed);
+  }
+
+  public void extendRight(double speed) {
+    rightArmMasterExtend.set(speed);
+    rightArmSlaveExtend.set(speed);
   }
 
   // THE RIGHT COULD BE INVERSED
@@ -77,11 +81,28 @@ public class Climber extends SubsystemBase {
     leftRotate.set(speed);
   }
 
-  public void stopExtender() {
-    leftArmLeftExtend.set(0);
+  public void stopLeftExtender() {
+    leftArmMasterExtend.set(0);
+  }
+
+  public void stopRightExtender() {
+    rightArmMasterExtend.set(0);
   }
 
   public void stopRotator() {
     leftRotate.set(0);
+  }
+
+  public double getExtenderLeftEncoderValue() {
+    return leftArmMasterExtend.getSelectedSensorPosition();
+  }
+
+  public double getExtenderRightEncoderValue() {
+    return rightArmMasterExtend.getSelectedSensorPosition();
+  }
+
+  public void resetEncoders() {
+    rightArmMasterExtend.setSelectedSensorPosition(0);
+    leftArmMasterExtend.setSelectedSensorPosition(0);
   }
 }

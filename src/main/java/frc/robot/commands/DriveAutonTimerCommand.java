@@ -12,8 +12,6 @@ public class DriveAutonTimerCommand extends CommandBase {
   public DriveAutonTimerCommand(DriveTrain driveTrain) {
     addRequirements(driveTrain);
 
-    
-
     this.driveTrain = driveTrain;
   }
 

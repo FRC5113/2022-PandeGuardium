@@ -32,8 +32,7 @@ public class DriveCommand extends CommandBase {
     // System.out.println(leftValue.getAsDouble() + " " + rightValue.getAsDouble());
     // SmartDashboard.putString(
     //    "Joystick Vals", leftValue.getAsDouble() + " " + rightValue.getAsDouble());
-    leftVal = scale(leftValue.getAsDouble());
-    rightVal = scale(rightValue.getAsDouble());
+
     /*
     if (Math.abs(leftVal - prevLeftValue) > DriveTrainConstants.rampUpRate) {
       leftVal = prevLeftValue + (Math.signum(leftVal) * DriveTrainConstants.rampUpRate);
@@ -46,6 +45,17 @@ public class DriveCommand extends CommandBase {
     // driveTrain.curvatureDrive(leftVal, rightVal);
 
     // driveTrain.tankDrive(0.8 * leftVal, 0.8 * rightVal);
+    /*
+    if (Math.abs(leftVal) < 0.05) {
+      leftVal = 0;
+    }
+    if (Math.abs(rightVal) < 0.05) {
+      rightVal = 0;
+    }
+    */
+
+    leftVal = scale(leftValue.getAsDouble());
+    rightVal = scale(rightValue.getAsDouble());
 
     driveTrain.tankDrive(-leftVal, -rightVal);
 

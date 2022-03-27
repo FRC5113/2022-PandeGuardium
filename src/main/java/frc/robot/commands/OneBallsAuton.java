@@ -25,7 +25,7 @@ public class ShootCommand extends ParallelCommandGroup {
 */
 
 // public class AutonCommand extends SequentialCommandGroup {
-public class AutonCommand extends CommandBase {
+public class OneBallsAuton extends CommandBase {
   public Shooter shooter;
   public Indexer indexer;
   public Limelight limelight;
@@ -38,7 +38,7 @@ public class AutonCommand extends CommandBase {
   public double intakeStartTime;
   public boolean shouldstarttimer = true;
 
-  public AutonCommand(
+  public OneBallsAuton(
       Shooter shooter, Indexer indexer, Limelight limelight, DriveTrain drivetrain, Intake intake) {
     addRequirements(shooter, indexer, limelight, intake, drivetrain);
     this.shooter = shooter;
@@ -48,59 +48,43 @@ public class AutonCommand extends CommandBase {
     this.drivetrain = drivetrain;
     flyWheelSpeed = 0;
     desiredSpeed = 10000;
+  }
+
+  @Override
+  public void initialize() {
     timer = new Timer();
+    timer2 = new Timer();
     timer.start();
   }
 
   @Override
   public void execute() {
-    desiredSpeed = 10000;
     if (flyWheelSpeed < desiredSpeed && shouldstarttimer) {
       flyWheelSpeed += ShooterConstants.rampUpRate;
     }
     // 1.34 seconds to drive 1.5 meters
     if (timer.get() < 2) {
-      drivetrain.tankDrive(0.5 * DriveConstants.autonSpeed, 0.5 * DriveConstants.autonSpeed);
-      intake.setSpeed(4 * IntakeConstants.INTAKE_SPEED);
+      drivetrain.tankDrive(-0.5 * DriveConstants.autonSpeed, -0.5 * DriveConstants.autonSpeed);
     }
-
-    if (timer.get() >= 2 && timer.get() < 2.05) {
-      intake.setSpeed(0);
-    }
-    // 0.7 seconds
-    if (timer.get() >= 2.05 && timer.get() < 2.74) {
+    if (timer.get() >= 2) {
       drivetrain.tankDrive(0, 0);
-      intake.setSpeed(-0.25 * IntakeConstants.INTAKE_SPEED);
-    }
-    // 0.05 seconds
-    if (timer.get() >= 2.74 && timer.get() < 2.79) {
-      intake.setSpeed(0);
-    }
-    // 1.71 seconds to turn 180
-    if (timer.get() >= 2.79 && timer.get() < 5.21) {
-      drivetrain.tankDrive(-0.5 * DriveConstants.autonSpeed, 0.5 * DriveConstants.autonSpeed);
-    }
-
-    if (timer.get() >= 5.21) {
-      drivetrain.tankDrive(0, 0);
-    }
-
-    if (timer.get() >= 6) {
-
-      desiredSpeed = limelight.getDesiredSpeed();
+      desiredSpeed = limelight.getDesiredSpeed(); // 15000
       // limelight.getDesiredSpeed();
-      if (shooter.getSpeed() <= desiredSpeed) {
+      if (flyWheelSpeed >= desiredSpeed) {
         if (shouldstarttimer) {
           timer2.start();
         }
         shouldstarttimer = false;
-        if (timer2.get() > 7.5) {
-          flyWheelSpeed -= ShooterConstants.rampDownRate;
+      }
+      if (timer2.get() > 4) {
+        flyWheelSpeed -= ShooterConstants.rampDownRate;
+        if (flyWheelSpeed < 0) {
+          flyWheelSpeed = 0;
         }
       }
     }
 
-    if (timer.get() >= 7.5 && timer.get() < 14) {
+    if (flyWheelSpeed >= desiredSpeed && timer.get() < 14) {
       indexer.setSpeed(IndexerConstants.INDEXER_SPEED);
       intake.setSpeed(IntakeConstants.INTAKE_SPEED);
     }

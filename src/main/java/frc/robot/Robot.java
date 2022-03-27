@@ -12,6 +12,7 @@ import static frc.robot.Constants.FlagConstants.*;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ClimbCancelExtendCommand;
 import frc.robot.commands.DriveCommand;
 
 /**
@@ -89,12 +90,14 @@ public class Robot extends TimedRobot {
     // m_robotContainer.driveTrain.getPose();
     // m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
 
-    /*if (x.get() > 5) {
-      m_robotContainer.driveTrain.tankDrive(-1, 1);
-    } else {
-      m_robotContainer.driveTrain.tankDrive(1, -1);
-    }
-    m_robotContainer.*/
+    /*
+     * if (x.get() > 5) {
+     * m_robotContainer.driveTrain.tankDrive(-1, 1);
+     * } else {
+     * m_robotContainer.driveTrain.tankDrive(1, -1);
+     * }
+     * m_robotContainer.
+     */
   }
 
   @Override
@@ -109,6 +112,9 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().cancelAll();
     m_robotContainer.driveTrain.setAllToBrake();
     m_robotContainer.driveTrain.resetEncoders();
+
+    m_robotContainer.climber.setDefaultCommand(
+        new ClimbCancelExtendCommand(m_robotContainer.climber));
 
     // implement xbox or joystick
     if (driveTrainUseJoystick) {
@@ -125,11 +131,12 @@ public class Robot extends TimedRobot {
               m_robotContainer.driveTrain,
               () -> m_robotContainer.getControllerLeftY(),
               () -> m_robotContainer.getControllerRightX()));
-      // m_robotContainer.shooter.setDefaultCommand(new SpinDownCommand(m_robotContainer.shooter));
+      // m_robotContainer.shooter.setDefaultCommand(new
+      // SpinDownCommand(m_robotContainer.shooter));
     }
 
     // m_robotContainer.shooter.setDefaultCommand(
-    //   new SpinUpCommand(m_robotContainer.shooter, m_robotContainer.limelight, true)
+    // new SpinUpCommand(m_robotContainer.shooter, m_robotContainer.limelight, true)
     // );
     // m_robotContainer.shooter.setDefaultCommand(
     // new ShooterPulseCommand(m_robotContainer.shooter, 2000));
@@ -139,14 +146,14 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     /*
-    System.out.println(
-        "Left is being sent "
-            + m_robotContainer.getControllerLeftY()
-            + " Right is being sent "
-            + m_robotContainer.getControllerRightX());
-    m_robotContainer.shooter.getSpeed();
-    m_robotContainer.shooter.getCurrent();
-    */
+     * System.out.println(
+     * "Left is being sent "
+     * + m_robotContainer.getControllerLeftY()
+     * + " Right is being sent "
+     * + m_robotContainer.getControllerRightX());
+     * m_robotContainer.shooter.getSpeed();
+     * m_robotContainer.shooter.getCurrent();
+     */
     // m_robotContainer.driveTrain.putSpeed();
     // m_robotContainer.driveTrain.showAngle();
     // m_robotContainer.driveTrain.getPose();
@@ -162,7 +169,7 @@ public class Robot extends TimedRobot {
     // Cancels all running commands and runs the indexer
     CommandScheduler.getInstance().cancelAll();
     // m_robotContainer.driveTrain.setDefaultCommand(
-    //     new DriveCommand(m_robotContainer.driveTrain, () -> 0.2, () -> 0.2));
+    // new DriveCommand(m_robotContainer.driveTrain, () -> 0.2, () -> 0.2));
   }
 
   /** This function is called periodically during test mode. */

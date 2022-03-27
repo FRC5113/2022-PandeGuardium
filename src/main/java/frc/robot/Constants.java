@@ -23,6 +23,13 @@ public final class Constants {
   public static final class FlagConstants {
     /** Use the stand alone joystick (true) over xbox thumbpads (false) */
     public static final boolean driveTrainUseJoystick = true;
+    /**
+     * Check the encoder values of the climber bars to make sure we don't overextend or overretract
+     * (true) or ignore the encoders (false)
+     */
+    public static final boolean useClimberConstraints = true;
+
+    public static final boolean retractClimbersIndividually = true;
   }
 
   public static final class JoystickConstants {
@@ -91,7 +98,7 @@ public final class Constants {
     public static final int RIGHT_CHILD_ID = 22;
 
     public static final double DRIVE_MAX_VOLTAGE = 12.0;
-    public static final double RAMP_RATE = 0.9;
+    public static final double RAMP_RATE = 0.1;
     public static final double DEADBAND = 0.1;
 
     public static final double CONVERSTIONRATETEST =
@@ -103,6 +110,8 @@ public final class Constants {
     public static final double CONVERSION_RATE_POSITION =
         Units.inchesToMeters(6.5) * Math.PI / 2048 / 11.5;
     public static final double rightResistanceAdjustment = 1;
+
+    public static final double driveTrainRampDown = 0.8;
   }
 
   // VLAD: 2/27: TURN THE SPEED WAY DOWN
@@ -136,23 +145,30 @@ public final class Constants {
   public static final class ClimberConstants {
     // Can IDs of the six motors: 2 for rotating and 4 for extanding
 
-    public static final int HANGER_LEFT_ROTATE_ID = 50;
-    public static final int HANGER_RIGHT_ROTATE_ID = 50;
+    public static final int HANGER_LEFT_ROTATE_ID = 999;
+    public static final int HANGER_RIGHT_ROTATE_ID = 999;
 
-    public static final int HANGER_LEFT_ARM_LEFT_EXTEND_ID = 51;
-    public static final int HANGER_LEFT_ARM_RIGHT_EXTEND_ID = 51;
-    public static final int HANGER_RIGHT_ARM_LEFT_EXTEND_ID = 55;
-    public static final int HANGER_RIGHT_ARM_RIGHT_EXTEND_ID = 56;
+    public static final int HANGER_LEFT_ARM_MASTER_EXTEND_ID = 51;
+    public static final int HANGER_LEFT_ARM_SLAVE_EXTEND_ID = 52;
+    public static final int HANGER_RIGHT_ARM_MASTER_EXTEND_ID = 53;
+    public static final int HANGER_RIGHT_ARM_SLAVE_EXTEND_ID = 54;
 
     // Maximum voltage / amp states
     public static final double RAMP_RATE = 0.3;
 
-    // Speeds to get something done
-    public static final double EXTEND_SPEED = 0.2;
-    public static final double RETRACT_SPEED = -0.2;
+    public static final int LeftMaxEncoderRestraint = 244000;
+    public static final int LeftMinEncoderRestraint = 9000;
 
-    public static final double ROTATE_FORWARD_SPEED = 0.2;
-    public static final double ROTATE_BACKWARD_SPEED = -0.2;
+    public static final double RightMaxEncoderRestraint = 244000 * 2.7;
+    public static final double RightMinEncoderRestraint = 9000 * 2.7;
+    // Speeds to get something done
+    public static final double LEFT_EXTEND_SPEED = -0.6;
+    public static final double LEFT_RETRACT_SPEED = 0.2;
+
+    public static final double RIGHT_EXTEND_SPEED = -1.8;
+    public static final double RIGHT_RETRACT_SPEED = 0.75;
+    public static final double ROTATE_FORWARD_SPEED = 0.1;
+    public static final double ROTATE_BACKWARD_SPEED = -0.1;
   }
 
   public static final class ShooterConstants {
