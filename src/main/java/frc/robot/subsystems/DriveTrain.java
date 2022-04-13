@@ -109,6 +109,7 @@ public class DriveTrain extends SubsystemBase {
     // double leftAdjustedSpeed, rightAdjustedSpeed;
     // leftParent.set(computeSpeed(leftParent.get(), leftSpeed));
     // rightParent.set(computeSpeed(rightParent.get(), rightSpeed));
+
     leftParent.set(leftSpeed * driveTrainRampDown);
     rightParent.set(rightSpeed * driveTrainRampDown);
     // System.out.println(

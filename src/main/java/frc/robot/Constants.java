@@ -111,7 +111,7 @@ public final class Constants {
         Units.inchesToMeters(6.5) * Math.PI / 2048 / 11.5;
     public static final double rightResistanceAdjustment = 1;
 
-    public static final double driveTrainRampDown = 0.8;
+    public static final double driveTrainRampDown = 0.7;
   }
 
   // VLAD: 2/27: TURN THE SPEED WAY DOWN
@@ -159,8 +159,8 @@ public final class Constants {
     public static final int LeftMaxEncoderRestraint = 244000;
     public static final int LeftMinEncoderRestraint = 9000;
 
-    public static final double RightMaxEncoderRestraint = 244000 * 2.7;
-    public static final double RightMinEncoderRestraint = 9000 * 2.7;
+    public static final double RightMaxEncoderRestraint = 244000 * 2.55;
+    public static final double RightMinEncoderRestraint = 2500;
     // Speeds to get something done
     public static final double LEFT_EXTEND_SPEED = -0.6;
     public static final double LEFT_RETRACT_SPEED = 0.2;

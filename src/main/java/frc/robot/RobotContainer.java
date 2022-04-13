@@ -142,7 +142,8 @@ public class RobotContainer {
     // xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight),
     // true);
 
-    yButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight, ShootTarget.HIGH_GOAL));
+    // yButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight,
+    // ShootTarget.HIGH_GOAL));
     xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight, ShootTarget.LOW_GOAL));
     // yButton.whenHeld(new SpinUpCommand(shooter, limelight, false));
     // yButton.whenReleased(new SpinDownCommand(shooter));
@@ -156,14 +157,10 @@ public class RobotContainer {
     // lbButton.whenHeld(new ClimbExtendCommand(climber, ClimbDirection.DOWN));
     // rbButton.whenHeld(new ClimbExtendCommand(climber, ClimbDirection.UP));
 
-    /*
-    if (FlagConstants.retractClimbersIndividually) {
+    /*if (FlagConstants.retractClimbersIndividually) {
       backButton.whenHeld(new RetractLeftClimberCommand(climber));
       startButton.whenHeld(new RetractRightClimberCommand(climber));
-    }
-
-    */
-
+    }*/
     // rbButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight,
     // ShootTarget.LOW_GOAL));
     // rbButton.whenReleased(new SpinDownCommand(shooter));

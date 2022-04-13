@@ -23,7 +23,7 @@ public class SpinUpCommand extends CommandBase {
     this.target = target;
 
     if (target == ShootTarget.LOW_GOAL) {
-      desiredSpeed = 8000; // limelight.getDesiredSpeed();
+      desiredSpeed = 20000; // limelight.getDesiredSpeed();
     } else {
       // Must be low goal
 

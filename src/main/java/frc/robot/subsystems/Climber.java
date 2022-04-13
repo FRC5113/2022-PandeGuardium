@@ -42,8 +42,9 @@ public class Climber extends SubsystemBase {
     rightArmMasterExtend.setInverted(true);
 
     // rightArmMasterExtend.set(ControlMode.Follower, leftArmMasterExtend.getDeviceID());
-    // rightArmSlaveExtend.set(ControlMode.Follower, rightArmMasterExtend.getDeviceID());
-    rightArmSlaveExtend.setInverted(true);
+    //
+    rightArmSlaveExtend.set(ControlMode.Follower, rightArmMasterExtend.getDeviceID());
+    // rightArmSlaveExtend.setInverted(true);
   }
 
   private void configureMotor(WPI_TalonFX motor) {
@@ -73,7 +74,8 @@ public class Climber extends SubsystemBase {
 
   public void extendRight(double speed) {
     rightArmMasterExtend.set(speed);
-    rightArmSlaveExtend.set(speed);
+    rightArmSlaveExtend.set(-speed);
+    // rightArmSlaveExtend.set(speed);
   }
 
   // THE RIGHT COULD BE INVERSED
@@ -87,6 +89,7 @@ public class Climber extends SubsystemBase {
 
   public void stopRightExtender() {
     rightArmMasterExtend.set(0);
+    rightArmSlaveExtend.set(0);
   }
 
   public void stopRotator() {
