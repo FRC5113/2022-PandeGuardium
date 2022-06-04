@@ -22,14 +22,16 @@ public final class Constants {
 
   public static final class FlagConstants {
     /** Use the stand alone joystick (true) over xbox thumbpads (false) */
-    public static final boolean driveTrainUseJoystick = true;
+    public static final boolean driveTrainUseJoystick = false;
     /**
      * Check the encoder values of the climber bars to make sure we don't overextend or overretract
      * (true) or ignore the encoders (false)
      */
-    public static final boolean useClimberConstraints = true;
+    public static final boolean useClimberConstraints = false;
 
     public static final boolean retractClimbersIndividually = true;
+
+    public static final boolean useYButtonToggle = true;
   }
 
   public static final class JoystickConstants {
@@ -173,8 +175,8 @@ public final class Constants {
 
   public static final class ShooterConstants {
 
-    public static final int SHOOTER_PARENT_ID = 42;
-    public static final int SHOOTER_CHILD_ID = 41;
+    public static final int SHOOTER_PARENT_ID = 41;
+    public static final int SHOOTER_CHILD_ID = 42;
     public static final double MAX_VOLTAGE = 12.0;
     public static final double RAMP_RATE = 2.5;
 

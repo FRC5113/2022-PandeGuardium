@@ -15,9 +15,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.IndexIntakeCommand;
 import frc.robot.commands.OneBallsAuton;
-import frc.robot.commands.ShootCommand;
+import frc.robot.commands.SpinUpCommand;
 import frc.robot.enums.IntakeSystemMotors;
-import frc.robot.enums.ShootTarget;
 import frc.robot.enums.ShouldStop;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
@@ -129,6 +128,8 @@ public class RobotContainer {
     bButton.whenHeld(
         new IndexIntakeCommand(
             indexer, intake, shooter, IntakeSystemMotors.IndexerIntakeBackward, ShouldStop.No));
+    
+    xButton.whenHeld(new SpinUpCommand(shooter, limelight));
     /*
      * xButton.whenHeld(
      * new IndexIntakeCommand(
@@ -144,7 +145,10 @@ public class RobotContainer {
 
     // yButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight,
     // ShootTarget.HIGH_GOAL));
-    xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight, ShootTarget.LOW_GOAL));
+
+    // xButton.whenHeld(new ShootCommand(shooter, indexer, intake, limelight,
+    // ShootTarget.LOW_GOAL));
+
     // yButton.whenHeld(new SpinUpCommand(shooter, limelight, false));
     // yButton.whenReleased(new SpinDownCommand(shooter));
     // rightTrigger.whileActiveContinuous(new ShootCommand(shooter, indexer, intake,
@@ -200,6 +204,10 @@ public class RobotContainer {
 
   public double getControllerLeftY() {
     return -xboxController.getLeftY();
+  }
+
+  public double getControllerLeftX() {
+    return xboxController.getLeftX();
   }
 
   public double getControllerRightY() {

@@ -68,7 +68,7 @@ public class DriveTrain extends SubsystemBase {
     // motor.enableVoltageCompensation(true); // enable ^
     motor.setInverted(!left);
     motor.setNeutralMode(
-        NeutralMode.Brake); // set it so that when the motor is getting no input, it stops
+        NeutralMode.Coast); // set it so that when the motor is getting no input, it stops
     motor.configSelectedFeedbackSensor(
         FeedbackDevice.IntegratedSensor); // configure the encoder (it's inside)
     motor.setSelectedSensorPosition(0); // reset the encoder to have a value of 0

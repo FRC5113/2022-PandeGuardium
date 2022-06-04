@@ -123,14 +123,20 @@ public class Robot extends TimedRobot {
           new DriveCommand(
               m_robotContainer.driveTrain,
               () -> m_robotContainer.getJoysticksVal(false),
-              () -> m_robotContainer.getJoysticksVal(true)));
+              () -> m_robotContainer.getJoysticksVal(true),
+              () ->
+                  useYButtonToggle
+                      && m_robotContainer.yButton.get())); // m_robotContainer.yButton.get() &&
     } else {
       // xbox controller
       m_robotContainer.driveTrain.setDefaultCommand(
           new DriveCommand(
               m_robotContainer.driveTrain,
               () -> m_robotContainer.getControllerLeftY(),
-              () -> m_robotContainer.getControllerRightX()));
+              () -> m_robotContainer.getControllerRightX(),
+              () ->
+                  m_robotContainer.yButton.get()
+                      && useYButtonToggle)); // m_robotContainer.yButton.get() &&
       // m_robotContainer.shooter.setDefaultCommand(new
       // SpinDownCommand(m_robotContainer.shooter));
     }

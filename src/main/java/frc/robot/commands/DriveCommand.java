@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
+import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 public class DriveCommand extends CommandBase {
@@ -10,15 +11,21 @@ public class DriveCommand extends CommandBase {
 
   private DoubleSupplier leftValue;
   private DoubleSupplier rightValue;
+  private BooleanSupplier yButton;
 
   private double leftVal;
   private double rightVal;
 
-  public DriveCommand(DriveTrain driveTrain, DoubleSupplier leftVal, DoubleSupplier rightVal) {
+  public DriveCommand(
+      DriveTrain driveTrain,
+      DoubleSupplier leftVal,
+      DoubleSupplier rightVal,
+      BooleanSupplier yToggle) {
     this.driveTrain = driveTrain;
     addRequirements(driveTrain);
     this.leftValue = leftVal;
     this.rightValue = rightVal;
+    this.yButton = yToggle;
     // System.out.println("drive command!!");
   }
 
@@ -57,8 +64,15 @@ public class DriveCommand extends CommandBase {
     leftVal = scale(leftValue.getAsDouble());
     rightVal = scale(rightValue.getAsDouble());
 
-    driveTrain.tankDrive(-leftVal, -rightVal);
-
+    // driveTrain.tankDrive(-leftVal, -rightVal);
+    // lego night y button adjust
+    // System.out.println(yButton.getAsBoolean());
+    if (yButton.getAsBoolean()) {
+      driveTrain.arcadeDrive(leftVal, rightVal);
+    } else {
+      // driveTrain.arcadeDrive(0.35 * leftVal, 0.4 * rightVal);
+      driveTrain.arcadeDrive(0.3 * leftVal, 0.325 * rightVal);
+    }
     // prevLeftValue = leftVal;
     // prevRightValue = rightVal;
     // driveTrain.curvatureDrive(scale(leftValue.getAsDouble()),
@@ -66,7 +80,8 @@ public class DriveCommand extends CommandBase {
   }
 
   public void end() {
-    driveTrain.tankDrive(0, 0);
+    // driveTrain.tankDrive(0, 0);
+    driveTrain.arcadeDrive(0, 0);
   }
 
   public double scale(double value) {
@@ -74,6 +89,6 @@ public class DriveCommand extends CommandBase {
     // + DriveConstants.SCALE_FACTOR * (value));
     // return 0.75 * Math.pow(value, 3) + Math.signum(value) * 0.25 * Math.pow(value, 2);
     // return 0.5 * Math.pow(value, 5) + 0.5 * Math.pow(value, 3);
-    return (0.5 * value + (0.5 * Math.pow(value, 3)));
+    return (value + (Math.pow(value, 3)));
   }
 }

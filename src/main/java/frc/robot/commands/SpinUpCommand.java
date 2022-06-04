@@ -2,7 +2,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ShooterConstants;
-import frc.robot.enums.ShootTarget;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
@@ -11,35 +10,25 @@ public class SpinUpCommand extends CommandBase {
   private final Limelight limelight;
   private double flyWheelSpeed;
   private double desiredSpeed;
-  private ShootTarget target;
 
-  public SpinUpCommand(Shooter shooter, Limelight limelight, ShootTarget target) {
+  public SpinUpCommand(Shooter shooter, Limelight limelight) {
     addRequirements(shooter);
     this.shooter = shooter;
     this.limelight = limelight;
     // shooter.coast();
     // flyWheelSpeed = shooter.getSpeed();
     flyWheelSpeed = 0;
-    this.target = target;
 
-    if (target == ShootTarget.LOW_GOAL) {
-      desiredSpeed = 20000; // limelight.getDesiredSpeed();
-    } else {
-      // Must be low goal
+    desiredSpeed = 25000; // limelight.getDesiredSpeed();
 
-      desiredSpeed = limelight.getDesiredSpeed();
-      if (limelight.getDistaceToTarget() > 192) {
-        desiredSpeed = 25000;
-      }
-    }
     // this.shouldNotStop = shouldNotStop;
     // System.out.println("Running spinup command");
   }
 
   @Override
   public void execute() {
-    System.out.println("executing shoot command");
-    if (flyWheelSpeed < desiredSpeed + ShooterConstants.rampUpRate + 5) {
+
+    if (flyWheelSpeed < desiredSpeed) {
       flyWheelSpeed += ShooterConstants.rampUpRate;
     }
     shooter.setSpeed(flyWheelSpeed);

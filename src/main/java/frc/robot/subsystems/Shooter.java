@@ -12,16 +12,16 @@ import frc.robot.Constants.ShooterConstants;
 
 public class Shooter extends SubsystemBase {
 
-  private WPI_TalonFX shooterChild;
+  // private WPI_TalonFX shooterChild;
   private WPI_TalonFX shooterParent;
 
   public Shooter() {
     shooterParent = new WPI_TalonFX(SHOOTER_PARENT_ID);
-    shooterChild = new WPI_TalonFX(SHOOTER_CHILD_ID);
+    // shooterChild = new WPI_TalonFX(SHOOTER_CHILD_ID);
     configMotor(shooterParent);
-    configMotor(shooterChild);
+    // configMotor(shooterChild);
 
-    shooterChild.set(ControlMode.Follower, shooterParent.getDeviceID());
+    // shooterChild.set(ControlMode.Follower, shooterParent.getDeviceID());
 
     // shooterParent.set
 
@@ -29,8 +29,8 @@ public class Shooter extends SubsystemBase {
     shooterParent.config_kI(0, kI);
     shooterParent.config_kD(0, kD);
 
-    shooterParent.setInverted(false);
-    shooterChild.setInverted(true);
+    shooterParent.setInverted(true);
+    // shooterChild.setInverted(true);
   }
 
   public void configMotor(WPI_TalonFX motor) {
