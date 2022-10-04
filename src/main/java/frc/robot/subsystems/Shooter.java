@@ -19,18 +19,12 @@ public class Shooter extends SubsystemBase {
     shooterParent = new WPI_TalonFX(SHOOTER_PARENT_ID);
     // shooterChild = new WPI_TalonFX(SHOOTER_CHILD_ID);
     configMotor(shooterParent);
-    // configMotor(shooterChild);
-
-    // shooterChild.set(ControlMode.Follower, shooterParent.getDeviceID());
-
-    // shooterParent.set
 
     shooterParent.config_kP(0, kP);
     shooterParent.config_kI(0, kI);
     shooterParent.config_kD(0, kD);
 
     shooterParent.setInverted(true);
-    // shooterChild.setInverted(true);
   }
 
   public void configMotor(WPI_TalonFX motor) {
@@ -52,13 +46,10 @@ public class Shooter extends SubsystemBase {
   }
 
   public double getSpeed() {
-    // System.out.println(shooterParent.getSelectedSensorVelocity());
-    // SmartDashboard.putNumber("FlyWheelVelocity", shooterParent.getSelectedSensorVelocity());
     return shooterParent.getSelectedSensorVelocity();
   }
 
   public void getCurrent() {
-    // SmartDashboard.putNumber("Current", shooterParent.getSupplyCurrent());
   }
 
   /**

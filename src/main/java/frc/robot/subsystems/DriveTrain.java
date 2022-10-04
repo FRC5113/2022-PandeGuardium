@@ -101,20 +101,10 @@ public class DriveTrain extends SubsystemBase {
   */
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    // Controlling the left side and the right side seperately
-    // driveBase.tankDrive(leftSpeed, rightSpeed);
-    // calculate difs
-    // double leftDiff = leftSpeed - leftParent.get();
-    // double rightDiff = rightSpeed - rightParent.get();
-    // double leftAdjustedSpeed, rightAdjustedSpeed;
-    // leftParent.set(computeSpeed(leftParent.get(), leftSpeed));
-    // rightParent.set(computeSpeed(rightParent.get(), rightSpeed));
 
     leftParent.set(leftSpeed * driveTrainRampDown);
     rightParent.set(rightSpeed * driveTrainRampDown);
-    // System.out.println(
-    //    "Speed set to " + leftSpeed + " -> " + computeSpeed(leftParent.get(), leftSpeed));
-    // SmartDashboard.putNumber("Motorspeed", leftSpeed);
+
   }
 
   public void tankDriveVolts(double leftSpeed, double rightSpeed) {
@@ -168,34 +158,6 @@ public class DriveTrain extends SubsystemBase {
     rightChild.setNeutralMode(NeutralMode.Brake);
   }
 
-  /*
-  private double encoderTicksToMetersDriven(double ticks) {
-    //     ticks > moter rotations       * gear box ratio
-    return ((ticks * 2 * Math.PI * DriveConstants.wheelDiameterMeters)
-        / (DriveConstants.gearBoxRatio * DriveConstants.gearBoxRatio));
-  }
-
-  public void updateSmartDashboardEncoderValues() {
-    // SmartDashboard.putString(
-    //    "Encoders", getLeftMetersDriven() + "L - " + getRightMetersDriven() + "R");
-  }
-
-  public double getRightMetersDriven() {
-    return encoderTicksToMetersDriven(getRawRightEncoderValue());
-  }
-
-  public double getLeftMetersDriven() {
-    return encoderTicksToMetersDriven(getRawLeftEncoderValue());
-  }
-
-  public double getRawRightEncoderValue() {
-    return rightParent.getSelectedSensorPosition(0);
-  }
-
-  public double getRawLeftEncoderValue() {
-    return leftParent.getSelectedSensorPosition(0);
-  }
-  */
 
   public void resetEncoders() {
     leftParent.setSelectedSensorPosition(0);
@@ -204,53 +166,4 @@ public class DriveTrain extends SubsystemBase {
     rightChild.setSelectedSensorPosition(0);
   }
 
-  /*
-  public void resetOdometry(Pose2d pose) {
-    resetEncoders();
-    odometry.resetPosition(pose, gyro.getRotation2d());
-  }
-  */
-
-  /*
-  public void periodic() {
-    // Update the odometry in the periodic block
-
-    odometry.update(
-        gyro.getRotation2d(),
-        leftParent.getSelectedSensorPosition() * CONVERSION_RATE_POSITION,
-        rightParent.getSelectedSensorPosition() * -CONVERSION_RATE_POSITION);
-
-    var translation = odometry.getPoseMeters().getTranslation();
-    m_xEntry.setNumber(translation.getX());
-    m_yEntry.setNumber(translation.getY());
-
-  }
-
-  public DifferentialDriveWheelSpeeds getWheelSpeeds() {
-    return new DifferentialDriveWheelSpeeds(
-        leftParent.getSelectedSensorVelocity() * CONVERSION_RATE_VELOCITY,
-        rightParent.getSelectedSensorVelocity() * -CONVERSION_RATE_VELOCITY);
-  }
-
-  public double getAngle() {
-    return gyro.getRotation2d().getDegrees();
-  }
-
-  public Pose2d getPose() {
-    return odometry.getPoseMeters();
-  }
-
-  public void showAngle() {
-    // SmartDashboard.putNumber("Angle", gyro.getAngle());
-  }
-
-  public void putSpeed() {
-    // SmartDashboard.putNumber(
-    //    "LeftSpeed", leftParent.getSelectedSensorVelocity() * CONVERSION_RATE_VELOCITY);
-    // SmartDashboard.putNumber(
-    //    "RightSpeed", rightParent.getSelectedSensorVelocity() * -CONVERSION_RATE_VELOCITY);
-    // SmartDashboard.putNumber("LeftEncoder", leftParent.getSelectedSensorPosition());
-    // SmartDashboard.putNumber("RightEncoder", rightParent.getSelectedSensorVelocity());
-  }
-  */
 }
