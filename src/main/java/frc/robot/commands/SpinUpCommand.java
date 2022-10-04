@@ -15,14 +15,9 @@ public class SpinUpCommand extends CommandBase {
     addRequirements(shooter);
     this.shooter = shooter;
     this.limelight = limelight;
-    // shooter.coast();
-    // flyWheelSpeed = shooter.getSpeed();
     flyWheelSpeed = 0;
 
-    desiredSpeed = 25000; // limelight.getDesiredSpeed();
-
-    // this.shouldNotStop = shouldNotStop;
-    // System.out.println("Running spinup command");
+    desiredSpeed = 25000; 
   }
 
   @Override
@@ -32,9 +27,6 @@ public class SpinUpCommand extends CommandBase {
       flyWheelSpeed += ShooterConstants.rampUpRate;
     }
     shooter.setSpeed(flyWheelSpeed);
-    // if (target == ShootTarget.HIGH_GOAL) shooter.setSpeed(5000);
-    // else shooter.setSpeed(flyWheelSpeed); // shooter.setSpeed(2000);
-    // shooter.setSpeed(6380); // Why is this not ramping
   }
 
   @Override

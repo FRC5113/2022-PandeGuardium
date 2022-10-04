@@ -12,19 +12,6 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-/*
-public class ShootCommand extends ParallelCommandGroup {
-
-  public ShootCommand(Shooter shooter, Indexer indexer, Limelight limelight) {
-    super(
-        new SpinUpCommand(shooter, limelight),
-        new SequentialCommandGroup(new WaitCommand(5), new IndexerCommand(indexer)));
-  }
-}
-
-*/
-
-// public class AutonCommand extends SequentialCommandGroup {
 public class OneBallsAuton extends CommandBase {
   public Shooter shooter;
   public Indexer indexer;
@@ -95,7 +82,7 @@ public class OneBallsAuton extends CommandBase {
       shooter.setSpeed(0);
     }
 
-    shooter.setSpeed(flyWheelSpeed); // put this back in
+    shooter.setSpeed(flyWheelSpeed);
   }
 
   @Override

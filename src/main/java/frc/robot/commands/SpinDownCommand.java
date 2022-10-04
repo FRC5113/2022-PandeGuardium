@@ -35,7 +35,6 @@ public class SpinDownCommand extends CommandBase {
   }
 
   public boolean isFinished() {
-    // System.out.println("!!!!!" + (flyWheelSpeed == 0)); // =kjyt5432  <- xbox controller
     return flyWheelSpeed <= flyWheelSpeed;
   }
 

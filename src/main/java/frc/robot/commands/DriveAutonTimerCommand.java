@@ -24,13 +24,11 @@ public class DriveAutonTimerCommand extends CommandBase {
   @Override
   public void execute() {
     driveTrain.tankDrive(0.2, -0.2);
-    // driveTrain.curvatureDrive(scale(leftValue.getAsDouble()),
-    // scale(rightValue.getAsDouble()));
   }
 
   @Override
   public boolean isFinished() {
-    return timer.get() >= 1; // adjust to go forward or backwards
+    return timer.get() >= 1;
   }
 
   @Override

@@ -26,25 +26,14 @@ public class Climber extends SubsystemBase {
     leftArmMasterExtend = new WPI_TalonFX(HANGER_LEFT_ARM_MASTER_EXTEND_ID);
     leftArmSlaveExtend = new WPI_TalonFX(HANGER_LEFT_ARM_SLAVE_EXTEND_ID);
 
-    // configureMotor(rightRotate);
-    // configureMotor(leftRotate);
-
     configureMotor(rightArmMasterExtend);
     configureMotor(rightArmSlaveExtend);
     configureMotor(leftArmMasterExtend);
     configureMotor(leftArmSlaveExtend);
 
-    // rightRotate.setInverted(true); //not sure if this line is needed
-    // rightRotate.set(ControlMode.Follower, leftRotate.getDeviceID());
-
     leftArmSlaveExtend.set(ControlMode.Follower, leftArmMasterExtend.getDeviceID());
-
     rightArmMasterExtend.setInverted(true);
-
-    // rightArmMasterExtend.set(ControlMode.Follower, leftArmMasterExtend.getDeviceID());
-    //
     rightArmSlaveExtend.set(ControlMode.Follower, rightArmMasterExtend.getDeviceID());
-    // rightArmSlaveExtend.setInverted(true);
   }
 
   private void configureMotor(WPI_TalonFX motor) {
