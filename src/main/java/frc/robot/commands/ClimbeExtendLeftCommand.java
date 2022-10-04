@@ -14,12 +14,9 @@ public class ClimbeExtendLeftCommand extends CommandBase {
   public ClimbeExtendLeftCommand(Climber climber, ClimbDirection direction) {
     mClimber = climber;
     this.direction = direction;
-
-    System.out.println("shut up vlad");
   }
 
   public void execute() {
-    // System.out.println(mClimber.getExtenderEncoderValue());
     if (FlagConstants.useClimberConstraints) {
       if (direction == ClimbDirection.DOWN) {
         if (mClimber.getExtenderLeftEncoderValue() <= -ClimberConstants.LeftMinEncoderRestraint) {

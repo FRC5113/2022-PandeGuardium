@@ -32,10 +32,6 @@ public class IndexIntakeCommand extends CommandBase {
     mIntake = intake;
     mShooter = shooter;
     this.useMotors = useMotors;
-    // this.shouldStop = shouldStop;
-    // timer = new Timer();
-    // timer.start();
-    // System.out.println("Running indexer");
   }
 
   @Override
@@ -51,35 +47,19 @@ public class IndexIntakeCommand extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    /*if (shouldStop.shouldStop()) {
-      // timer.get() is in seconds
-      if (timer.get() > 1.5) {
-        return true;
-      }
-    }*/
     return false;
   }
 
   // @Override
   public void end(boolean interrupted) {
-    // if (useMotors.usingIndexer()) {
     mIndexer.stop();
-    // }
-    // if (useMotors.usingIntake()) {
     mIntake.stop();
-    // }
-
     mShooter.coast();
   }
 
   public void end() {
-    // if (useMotors.usingIndexer()) {
     mIndexer.stop();
-    // }
-    // if (useMotors.usingIntake()) {
     mIntake.stop();
-    // }
-
     mShooter.coast();
   }
 }

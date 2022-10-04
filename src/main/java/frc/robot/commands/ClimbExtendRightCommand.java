@@ -19,7 +19,6 @@ public class ClimbExtendRightCommand extends CommandBase {
   }
 
   public void execute() {
-    // System.out.println(mClimber.getExtenderEncoderValue());
     if (FlagConstants.useClimberConstraints) {
       if (direction == ClimbDirection.DOWN) {
         if (mClimber.getExtenderRightEncoderValue() <= -ClimberConstants.RightMinEncoderRestraint) {
