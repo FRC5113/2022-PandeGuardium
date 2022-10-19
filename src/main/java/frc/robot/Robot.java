@@ -9,7 +9,7 @@ package frc.robot;
 
 import static frc.robot.Constants.FlagConstants.*;
 
-import edu.wpi.first.wpilibj.TimedRobot;
+import com.frc5113.library.primative.SmartTimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.ClimbCancelExtendCommand;
@@ -21,10 +21,10 @@ import frc.robot.commands.DriveCommand;
  * the package after creating this project, you must also update the build.gradle file in the
  * project.
  */
-public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+public class Robot extends SmartTimedRobot {
+  private Command autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+  private RobotContainer robotContainer;
 
   // private static Logger log = LogManager.getLogger(Robot.class.getName());
   /**
@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer. This will perform all our button bindings,
     // and put our
     // autonomous chooser on the dashboard.
-    m_robotContainer = new RobotContainer();
+    robotContainer = new RobotContainer();
     System.out.println("Initialized robot");
   }
 
@@ -74,13 +74,13 @@ public class Robot extends TimedRobot {
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
   public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonCommand();
-    m_robotContainer.driveTrain.resetEncoders();
-    m_robotContainer.driveTrain.setAllToBrake();
+    autonomousCommand = robotContainer.getAutoCommand();
+    robotContainer.driveTrain.resetEncoders();
+    robotContainer.driveTrain.setAllToBrake();
 
     // schedule the autonomous command (example)
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    if (autonomousCommand != null) {
+      autonomousCommand.schedule();
     }
   }
 
@@ -106,36 +106,36 @@ public class Robot extends TimedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+    if (autonomousCommand != null) {
+      autonomousCommand.cancel();
     }
     CommandScheduler.getInstance().cancelAll();
-    m_robotContainer.driveTrain.setAllToBrake();
-    m_robotContainer.driveTrain.resetEncoders();
+    robotContainer.driveTrain.setAllToBrake();
+    robotContainer.driveTrain.resetEncoders();
 
-    m_robotContainer.climber.setDefaultCommand(
-        new ClimbCancelExtendCommand(m_robotContainer.climber));
+    robotContainer.climber.setDefaultCommand(
+        new ClimbCancelExtendCommand(robotContainer.climber));
 
     // implement xbox or joystick
     if (driveTrainUseJoystick) {
-      // stand alone joystick
-      m_robotContainer.driveTrain.setDefaultCommand(
+      // stand-alone joystick
+      robotContainer.driveTrain.setDefaultCommand(
           new DriveCommand(
-              m_robotContainer.driveTrain,
-              () -> m_robotContainer.getJoysticksVal(false),
-              () -> m_robotContainer.getJoysticksVal(true),
+              robotContainer.driveTrain,
+              () -> robotContainer.getJoysticksVal(false),
+              () -> robotContainer.getJoysticksVal(true),
               () ->
                   useYButtonToggle
-                      && m_robotContainer.yButton.get())); // m_robotContainer.yButton.get() &&
+                      && robotContainer.xboxPad.yButton.get())); // m_robotContainer.yButton.get() &&
     } else {
       // xbox controller
-      m_robotContainer.driveTrain.setDefaultCommand(
+      robotContainer.driveTrain.setDefaultCommand(
           new DriveCommand(
-              m_robotContainer.driveTrain,
-              () -> m_robotContainer.getControllerLeftY(),
-              () -> m_robotContainer.getControllerRightX(),
+              robotContainer.driveTrain,
+              () -> robotContainer.getControllerLeftY(),
+              () -> robotContainer.getControllerRightX(),
               () ->
-                  m_robotContainer.yButton.get()
+                  robotContainer.xboxPad.yButton.get()
                       && useYButtonToggle)); // m_robotContainer.yButton.get() &&
       // m_robotContainer.shooter.setDefaultCommand(new
       // SpinDownCommand(m_robotContainer.shooter));

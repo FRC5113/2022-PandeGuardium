@@ -8,11 +8,8 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.IndexIntakeCommand;
 import frc.robot.commands.OneBallsAuton;
 import frc.robot.commands.SpinUpCommand;
@@ -24,6 +21,8 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
+import com.frc5113.library.oi.joystick.Joystick;
+import com.frc5113.library.oi.xbox.XboxGamepad;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -42,26 +41,11 @@ public class RobotContainer {
   public Limelight limelight = new Limelight();
   public Shooter shooter = new Shooter();
   public Climber climber = new Climber();
-  // public LED led = new LED();
 
-  // NOTE: The ports can be rearanged (by drag and drop) in the Driver Station
-  // Terminal
-  private Joystick leftDriveJoystick = new Joystick(0); // should be in port 0
-  private Joystick rightDriveJoystick = new Joystick(1); // should be in port 1
-  public XboxController xboxController = new XboxController(2); // should be in port 2
-
-  // xbox controller buttons
-  public JoystickButton aButton = new JoystickButton(xboxController, 1);
-  public JoystickButton bButton = new JoystickButton(xboxController, 2);
-  public JoystickButton xButton = new JoystickButton(xboxController, 3);
-  public JoystickButton yButton = new JoystickButton(xboxController, 4);
-  public JoystickButton lbButton = new JoystickButton(xboxController, 5);
-  public JoystickButton rbButton = new JoystickButton(xboxController, 6);
-  public JoystickButton startButton = new JoystickButton(xboxController, 8);
-  public JoystickButton backButton = new JoystickButton(xboxController, 7);
-  // xbox trigger
-  public Trigger rightTrigger = new Trigger(() -> (xboxController.getRightTriggerAxis() > 0.75));
-  public Trigger leftTrigger = new Trigger(() -> (xboxController.getLeftTriggerAxis() > 0.75));
+  // NOTE: The ports can be rearranged (by drag and drop) in the Driver Station
+  private final Joystick leftDriveJoystick = new Joystick(0); // should be in port 0
+  private final Joystick rightDriveJoystick = new Joystick(1); // should be in port 1
+  public XboxGamepad xboxPad = new XboxGamepad(2); // should be in port 2
 
   public RobotContainer() {
     // Configure the button bindings
@@ -76,14 +60,14 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
   
-    aButton.whenHeld(
+    xboxPad.aButton.whenHeld(
         new IndexIntakeCommand(
             indexer, intake, shooter, IntakeSystemMotors.IndexerIntakeForward, ShouldStop.No));
-    bButton.whenHeld(
+    xboxPad.bButton.whenHeld(
         new IndexIntakeCommand(
             indexer, intake, shooter, IntakeSystemMotors.IndexerIntakeBackward, ShouldStop.No));
     
-    xButton.whenHeld(new SpinUpCommand(shooter, limelight));    
+    xboxPad.xButton.whenHeld(new SpinUpCommand(shooter, limelight));
   }
 
   public double getLeftJoystickY() {
@@ -103,19 +87,19 @@ public class RobotContainer {
   }
 
   public double getControllerLeftY() {
-    return -xboxController.getLeftY();
+    return -xboxPad.leftStick.getY();
   }
 
   public double getControllerLeftX() {
-    return xboxController.getLeftX();
+    return xboxPad.leftStick.getX();
   }
 
   public double getControllerRightY() {
-    return -xboxController.getRightY();
+    return -xboxPad.rightStick.getY();
   }
 
   public double getControllerRightX() {
-    return xboxController.getRightX();
+    return xboxPad.rightStick.getX();
   }
 
   /**
@@ -123,14 +107,7 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
-
-  
-  public Command getAutonCommand() {
+  public Command getAutoCommand() {
     return new OneBallsAuton(shooter, indexer, limelight, driveTrain, intake);
   }
 }
