@@ -26,7 +26,6 @@ public class Robot extends SmartTimedRobot {
 
   private RobotContainer robotContainer;
 
-  // private static Logger log = LogManager.getLogger(Robot.class.getName());
   /**
    * This function is run when the robot is first started up and should be used for any
    * initialization code.
@@ -34,8 +33,7 @@ public class Robot extends SmartTimedRobot {
   @Override
   public void robotInit() {
     // Instantiate our RobotContainer. This will perform all our button bindings,
-    // and put our
-    // autonomous chooser on the dashboard.
+    // and put our autonomous chooser on the dashboard (if it exists).
     robotContainer = new RobotContainer();
     System.out.println("Initialized robot");
   }
@@ -50,23 +48,15 @@ public class Robot extends SmartTimedRobot {
   @Override
   public void robotPeriodic() {
     // Runs the Scheduler. This is responsible for polling buttons, adding
-    // newly-scheduled
-    // commands, running already-scheduled commands, removing finished or
-    // interrupted commands,
-    // and running subsystem periodic() methods. This must be called from the
-    // robot's periodic
-    // block in order for anything in the Command-based framework to work.
+    // newly-scheduled commands, running already-scheduled commands, removing finished or
+    // interrupted commands, and running subsystem periodic() methods. This must be called from the
+    // robot's periodic, block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-
-    // log some information about the robot always
-    // log.info("voltage: " + RobotController.getBatteryVoltage());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
   @Override
-  public void disabledInit() {
-    // m_robotContainer.driveTrain.setAllToCoast();
-  }
+  public void disabledInit() {}
 
   @Override
   public void disabledPeriodic() {}
@@ -78,7 +68,6 @@ public class Robot extends SmartTimedRobot {
     robotContainer.driveTrain.resetEncoders();
     robotContainer.driveTrain.setAllToBrake();
 
-    // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
     }
@@ -86,19 +75,7 @@ public class Robot extends SmartTimedRobot {
 
   /** This function is called periodically during autonomous. */
   @Override
-  public void autonomousPeriodic() {
-    // m_robotContainer.driveTrain.getPose();
-    // m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
-
-    /*
-     * if (x.get() > 5) {
-     * m_robotContainer.driveTrain.tankDrive(-1, 1);
-     * } else {
-     * m_robotContainer.driveTrain.tankDrive(1, -1);
-     * }
-     * m_robotContainer.
-     */
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {
@@ -116,7 +93,6 @@ public class Robot extends SmartTimedRobot {
     robotContainer.climber.setDefaultCommand(
         new ClimbCancelExtendCommand(robotContainer.climber));
 
-    // implement xbox or joystick
     if (driveTrainUseJoystick) {
       // stand-alone joystick
       robotContainer.driveTrain.setDefaultCommand(
@@ -136,51 +112,21 @@ public class Robot extends SmartTimedRobot {
               () -> robotContainer.getControllerRightX(),
               () ->
                   robotContainer.xboxPad.yButton.get()
-                      && useYButtonToggle)); // m_robotContainer.yButton.get() &&
-      // m_robotContainer.shooter.setDefaultCommand(new
-      // SpinDownCommand(m_robotContainer.shooter));
+                      && useYButtonToggle));
     }
-
-    // m_robotContainer.shooter.setDefaultCommand(
-    // new SpinUpCommand(m_robotContainer.shooter, m_robotContainer.limelight, true)
-    // );
-    // m_robotContainer.shooter.setDefaultCommand(
-    // new ShooterPulseCommand(m_robotContainer.shooter, 2000));
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {
-    /*
-     * System.out.println(
-     * "Left is being sent "
-     * + m_robotContainer.getControllerLeftY()
-     * + " Right is being sent "
-     * + m_robotContainer.getControllerRightX());
-     * m_robotContainer.shooter.getSpeed();
-     * m_robotContainer.shooter.getCurrent();
-     */
-    // m_robotContainer.driveTrain.putSpeed();
-    // m_robotContainer.driveTrain.showAngle();
-    // m_robotContainer.driveTrain.getPose();
-    // m_robotContainer.driveTrain.updateSmartDashboardEncoderValues();
-
-    // System.out.println(m_robotContainer.getControllerLeftY());
-    // System.out.println(m_robotContainer.getControllerRightX());
-    // m_robotContainer.led.rainbow();
-  }
+  public void teleopPeriodic() {}
 
   @Override
   public void testInit() {
     // Cancels all running commands and runs the indexer
     CommandScheduler.getInstance().cancelAll();
-    // m_robotContainer.driveTrain.setDefaultCommand(
-    // new DriveCommand(m_robotContainer.driveTrain, () -> 0.2, () -> 0.2));
   }
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {
-    // m_robotContainer.driveTrain.tankDrive(1, -1);
-  }
+  public void testPeriodic() {}
 }
