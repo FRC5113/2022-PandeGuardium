@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class DriveTrain extends SubsystemBase {
-
   public final WPI_TalonFX leftParent;
   public final WPI_TalonFX rightParent;
   private final WPI_TalonFX leftChild;
@@ -82,29 +81,10 @@ public class DriveTrain extends SubsystemBase {
     // forward
   }
 
-  /*
-  private double computeSpeed(double currentSpeed, double desiredSpeed) {
-    if ((desiredSpeed > 0 && desiredSpeed > currentSpeed)
-        || (desiredSpeed < 0 && desiredSpeed < currentSpeed)) {
-      if (Math.abs(desiredSpeed - currentSpeed) >= 0.01) {
-        if (currentSpeed > desiredSpeed) {
-          return currentSpeed - 0.02;
-        } else {
-          return currentSpeed + 0.02;
-        }
-      }
-      return desiredSpeed;
-    } else {
-      return desiredSpeed;
-    }
-  }
-  */
-
   public void tankDrive(double leftSpeed, double rightSpeed) {
 
     leftParent.set(leftSpeed * driveTrainRampDown);
     rightParent.set(rightSpeed * driveTrainRampDown);
-
   }
 
   public void tankDriveVolts(double leftSpeed, double rightSpeed) {
@@ -158,12 +138,10 @@ public class DriveTrain extends SubsystemBase {
     rightChild.setNeutralMode(NeutralMode.Brake);
   }
 
-
   public void resetEncoders() {
     leftParent.setSelectedSensorPosition(0);
     leftChild.setSelectedSensorPosition(0);
     rightParent.setSelectedSensorPosition(0);
     rightChild.setSelectedSensorPosition(0);
   }
-
 }

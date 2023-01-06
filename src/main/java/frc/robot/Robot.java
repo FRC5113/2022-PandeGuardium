@@ -90,8 +90,7 @@ public class Robot extends SmartTimedRobot {
     robotContainer.driveTrain.setAllToBrake();
     robotContainer.driveTrain.resetEncoders();
 
-    robotContainer.climber.setDefaultCommand(
-        new ClimbCancelExtendCommand(robotContainer.climber));
+    robotContainer.climber.setDefaultCommand(new ClimbCancelExtendCommand(robotContainer.climber));
 
     if (driveTrainUseJoystick) {
       // stand-alone joystick
@@ -102,7 +101,8 @@ public class Robot extends SmartTimedRobot {
               () -> robotContainer.getJoysticksVal(true),
               () ->
                   useYButtonToggle
-                      && robotContainer.xboxPad.yButton.get())); // m_robotContainer.yButton.get() &&
+                      && robotContainer.xboxPad.yButton
+                          .get())); // m_robotContainer.yButton.get() &&
     } else {
       // xbox controller
       robotContainer.driveTrain.setDefaultCommand(
@@ -110,9 +110,7 @@ public class Robot extends SmartTimedRobot {
               robotContainer.driveTrain,
               () -> robotContainer.getControllerLeftY(),
               () -> robotContainer.getControllerRightX(),
-              () ->
-                  robotContainer.xboxPad.yButton.get()
-                      && useYButtonToggle));
+              () -> robotContainer.xboxPad.yButton.get() && useYButtonToggle));
     }
   }
 

@@ -49,8 +49,7 @@ public class Shooter extends SubsystemBase {
     return shooterParent.getSelectedSensorVelocity();
   }
 
-  public void getCurrent() {
-  }
+  public void getCurrent() {}
 
   /**
    * @param desiredSpeed Set the speed at which the shooter should run when it is done

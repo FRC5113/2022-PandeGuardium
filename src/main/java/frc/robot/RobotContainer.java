@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import com.frc5113.library.oi.joystick.Joystick;
+import com.frc5113.library.oi.xbox.XboxGamepad;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -21,8 +23,6 @@ import frc.robot.subsystems.Indexer;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
-import com.frc5113.library.oi.joystick.Joystick;
-import com.frc5113.library.oi.xbox.XboxGamepad;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -59,14 +59,14 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj2.command.button.JoystickButton} along with the number of the button.
    */
   private void configureButtonBindings() {
-  
+
     xboxPad.aButton.whenHeld(
         new IndexIntakeCommand(
             indexer, intake, shooter, IntakeSystemMotors.IndexerIntakeForward, ShouldStop.No));
     xboxPad.bButton.whenHeld(
         new IndexIntakeCommand(
             indexer, intake, shooter, IntakeSystemMotors.IndexerIntakeBackward, ShouldStop.No));
-    
+
     xboxPad.xButton.whenHeld(new SpinUpCommand(shooter, limelight));
   }
 

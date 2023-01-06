@@ -17,7 +17,7 @@ public class SpinUpCommand extends CommandBase {
     this.limelight = limelight;
     flyWheelSpeed = 0;
 
-    desiredSpeed = 25000; 
+    desiredSpeed = 25000;
   }
 
   @Override
